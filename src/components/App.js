@@ -1,9 +1,9 @@
-import Signup from "./Signup";
+import InviteCouple from "./InviteCouple";
 
 function App() {
   return (
     <div>
-      <Signup />
+      <InviteCouple />
     </div>
   );
 }
