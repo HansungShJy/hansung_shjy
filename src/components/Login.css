@@ -1,0 +1,25 @@
+.login-container {
+  margin: 90px;
+  margin-left: 400px;
+  padding: 30px;
+  position: relative;
+}
+
+.id-form {
+  position: absolute;
+  left: 33px;
+  padding: 3px;
+  font-size: small;
+  font-weight: bold;
+}
+
+.pw-form {
+  position: absolute;
+  left: 35px;
+  font-size: small;
+  font-weight: bold;
+}
+
+div {
+  margin-top: 13px;
+}
