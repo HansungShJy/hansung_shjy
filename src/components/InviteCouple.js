@@ -61,6 +61,7 @@ function InviteCouple() {
           }}
           onChange={InviteCoupleHandler}
         />
+        <br />
         <button
           type="button"
           onChange={onSubmitHandler}
