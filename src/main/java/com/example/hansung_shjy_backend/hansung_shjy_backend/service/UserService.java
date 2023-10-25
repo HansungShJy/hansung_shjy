@@ -15,5 +15,8 @@ public interface UserService {
     UserDTO signup(UserDTO user) throws ExecutionException, InterruptedException;
 
     // 커플 연결
+    String sendAuthenticationMessage(String to) throws Exception;
 
+    // 로그인
+    UserDTO login(String id, String pw) throws ExecutionException, InterruptedException;
 }

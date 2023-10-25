@@ -10,6 +10,10 @@ import java.sql.Date;
 @Getter
 @Setter
 @Builder
+
+//Data Transfer Object
+//계층간의 데이터 교환을 위한 객체
+//DB에서 데이터를 받아와서 Service나 Controller 등으로 보낼 때 사용하는 객체
 public class UserDTO {
 
     private Integer userID;

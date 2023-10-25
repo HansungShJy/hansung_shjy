@@ -1,7 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.service.EmailService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,6 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class UserController {
     private UserService userService;
-    private EmailService emailService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -43,9 +42,15 @@ public class UserController {
     @PostMapping("/connect")
     public String emailConnect(@RequestParam String email) throws Exception {
 
-        String connectCheck = emailService.sendAuthenticationMessage(email);
-        System.out.println("connect:: " + connectCheck);
+        String code = userService.sendAuthenticationMessage(email);
+        System.out.println("connect:: " + code);
 
-        return connectCheck;
+        return code;
     }
+
+    // 로그인 ======================================================================================================
+//    @PostMapping("/login")
+//    public ResponseEntity<Object> loginRequest(@RequestBody LoginRequest loginRequest) throws ExecutionException, InterruptedException {
+//
+//    }
 }
