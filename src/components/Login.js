@@ -1,28 +1,39 @@
 import React, { useState } from "react";
 import "./Login.css";
 import homelogo from "../assets/homelogoset.png";
+import axios from "axios";
 
 function Login() {
-  const [Id, setId] = useState("");
-  const [Password, setPassword] = useState("");
+  const [userId, setuserId] = useState("");
+  const [userPW, setuserPW] = useState("");
 
   const onIDHandler = (e) => {
-    setId(e.target.value);
+    setuserId(e.target.value);
   };
   const onPWHandler = (e) => {
-    setPassword(e.target.value);
+    setuserPW(e.target.value);
   };
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    document.location.href = "./Signup";
 
-    console.log("ID", Id);
-    console.log("Password", Password);
-
-    // let body = {
-    //   id: Id,
-    //   password: Password,
-    // };
+    console.log("ID", userId);
+    console.log("Password", userPW);
   };
+
+  function Login() {
+    axios
+      .post(`http://localhost:3000/login`, {
+        id: userId,
+        pw: userPW,
+      })
+      .then((response) => {
+        console.log(response);
+        document.location.href = "./Signup";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <div className="login-container">
@@ -38,7 +49,7 @@ function Login() {
         <input
           type="text"
           name="id"
-          value={Id}
+          value={userId}
           style={{
             width: "280px",
             height: "40px",
@@ -59,7 +70,7 @@ function Login() {
         <input
           className="Login-pw-Form"
           type="password"
-          value={Password}
+          value={userPW}
           style={{
             width: "280px",
             height: "40px",

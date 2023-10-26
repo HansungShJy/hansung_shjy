@@ -1,29 +1,30 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./Signup.css";
 import signuplogo from "../assets/signuplogo.png";
 
 function Signup() {
-  const [Id, setId] = useState("");
-  const [Password, setPassword] = useState("");
+  const [userId, setuserId] = useState("");
+  const [userPW, setuserPW] = useState("");
   const [CheckPW, setCheckPW] = useState("");
-  const [Name, setName] = useState("");
-  const [NickName, setNickName] = useState("");
-  const [Birth, setBirth] = useState(Date);
-  const [Email, setEmail] = useState("");
+  const [userName, setuserName] = useState("");
+  const [userNickName, setuserNickName] = useState("");
+  const [userBirth, setuserBirth] = useState(Date);
+  const [userEmail, setuserEmail] = useState("");
 
-  const [DoubleCheckId, setDoubleCheckId] = useState("");
-  const [ConfirmEmail, setConfirmEmail] = useState("");
+  const [usableId, setUsableId] = useState("");
+  const [usableEmail, setusableEmail] = useState("");
 
-  const onIDHandler = (e) => {
-    setId(e.target.value);
+  const onIdHandler = (e) => {
+    setuserId(e.target.value);
   };
 
   const onPWHandler = (e) => {
-    setPassword(e.target.value);
+    setuserPW(e.target.value);
   };
 
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    document.location.href = "./InviteCouple";
   };
 
   const onCheckPWHandler = (e) => {
@@ -31,19 +32,57 @@ function Signup() {
   };
 
   const onNameHandler = (e) => {
-    setName(e.target.value);
+    setuserName(e.target.value);
   };
 
   const onNickNameHandler = (e) => {
-    setNickName(e.target.value);
+    setuserNickName(e.target.value);
   };
 
   const onBirthHandler = (e) => {
-    setBirth(e.target.value);
+    setuserBirth(e.target.value);
   };
 
   const onEmailHandler = (e) => {
-    setEmail(e.target.value);
+    setuserEmail(e.target.value);
+  };
+
+  function Signup1() {
+    axios
+      .post(`http://localhost:3000/signup`, {
+        id: userId,
+        pw: userPW,
+        name: userName,
+        nickname: userNickName,
+        birth: userBirth,
+        email: userEmail,
+      })
+      .then((response) => {
+        console.log(response);
+        document.location.href = "./InviteCouple";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const idValidation = () => {
+    axios
+      .post("http://localhost:3000/verify/id", {
+        id: userId,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response === "false") {
+          alert("사용 가능");
+          setUsableId(true);
+        } else {
+          alert("중복 아이디");
+          setuserId("");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -69,8 +108,8 @@ function Signup() {
         </label>
         <input
           type="text"
-          name="id"
-          value={Id}
+          userName="userId"
+          value={userId}
           style={{
             width: "280px",
             height: "40px",
@@ -81,11 +120,11 @@ function Signup() {
             border: "none",
             marginLeft: "10px",
           }}
-          onChange={onIDHandler}
+          onChange={onIdHandler}
         />
         <button
           type="button"
-          onClick={DoubleCheckId}
+          onClick={idValidation}
           style={{
             fontSize: "11px",
             width: "70px",
@@ -103,7 +142,12 @@ function Signup() {
         </button>
         <br />
         <label
-          style={{ fontSize: "17px", fontWeight: "bold", marginLeft: "483px" }}
+          style={{
+            fontSize: "17px",
+            fontWeight: "bold",
+            marginLeft: "450px",
+            marginTop: "26px",
+          }}
           className="pw-form"
           for="password"
         >
@@ -111,7 +155,7 @@ function Signup() {
         </label>
         <input
           type="password"
-          value={Password}
+          value={userPW}
           placeholder="   대소문자, 숫자, 특수문자 포함 10자 이상"
           style={{
             width: "280px",
@@ -122,7 +166,7 @@ function Signup() {
             borderRadius: "8px",
             border: "none",
             marginTop: "15px",
-            marginLeft: "10px",
+            marginLeft: "552px",
           }}
           onChange={onPWHandler}
         />
@@ -159,8 +203,8 @@ function Signup() {
         </label>
         <input
           type="text"
-          name="name"
-          value={Name}
+          userName="userName"
+          value={userName}
           style={{
             width: "280px",
             height: "40px",
@@ -183,8 +227,8 @@ function Signup() {
         </label>
         <input
           type="text"
-          name="nickname"
-          value={NickName}
+          name="nickName"
+          value={userNickName}
           style={{
             width: "280px",
             height: "40px",
@@ -206,8 +250,8 @@ function Signup() {
         </label>
         <input
           type="date"
-          name="birth"
-          value={Birth}
+          userName="userBirth"
+          value={userBirth}
           placeholder="8자리로 입력해주세요 ex)19990101"
           style={{
             width: "280px",
@@ -229,10 +273,10 @@ function Signup() {
           이메일
         </label>
         <input
-          type="email"
-          name="email"
-          value={Email}
-          placeholder="  ex) email@gamil.com"
+          type="Email"
+          name="Email"
+          value={userEmail}
+          placeholder="  ex) Email@gamil.com"
           style={{
             width: "280px",
             height: "40px",
@@ -248,7 +292,7 @@ function Signup() {
         />
         <button
           type="button"
-          onClick={ConfirmEmail}
+          onClick={usableEmail}
           style={{
             fontSize: "11px",
             width: "70px",
@@ -267,7 +311,7 @@ function Signup() {
         <br />
         <button
           type="button"
-          onChange={onSubmitHandler}
+          onClick={onSubmitHandler}
           formAction=""
           style={{
             fontSize: "15px",
