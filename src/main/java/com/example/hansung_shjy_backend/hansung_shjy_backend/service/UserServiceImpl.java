@@ -1,6 +1,8 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
@@ -103,5 +105,37 @@ public class UserServiceImpl implements UserService {
             return user;
         }
         else return null;
+    }
+
+    // 비밀번호 찾기 ======================================================================================
+    @Override
+    public String findPwById(String userId) throws ExecutionException, InterruptedException {
+        User userEntity = userRepository.findUserById(userId);
+        if (userEntity == null) return null;
+
+        UserDTO user = UserDTO.toDTO(userEntity);
+        if (user == null) return null;
+
+        if (user.getId().equals(userId)) {
+            return user.getPw();
+        } else {
+            return null;
+        }
+    }
+
+    // 아이디 찾기 =========================================================================================
+    @Override
+    public String findIdByEmail(String userEmail) throws ExecutionException, InterruptedException {
+        User userEntity = userRepository.findUserByEmail(userEmail);
+        if (userEntity == null) return null;
+
+        UserDTO user = UserDTO.toDTO(userEntity);
+        if (user == null) return null;
+
+        if (user.getEmail().equals(userEmail)) {
+            return user.getId();
+        } else {
+            return null;
+        }
     }
 }

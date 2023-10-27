@@ -1,6 +1,8 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 
 import java.util.concurrent.ExecutionException;
@@ -18,6 +20,12 @@ public interface UserService {
     // 커플 연결
     String sendAuthenticationMessage(String to) throws Exception;
 
-    // 로그인
+    // 로그인 ==================================================================
     UserDTO login(LoginRequest loginRequest) throws ExecutionException, InterruptedException;
+
+    // 비밀번호 찾기 ============================================================
+    String findPwById(String userId) throws ExecutionException, InterruptedException;
+
+    // 아이디 찾기 ==============================================================
+    String findIdByEmail(String userEmail) throws ExecutionException, InterruptedException;
 }

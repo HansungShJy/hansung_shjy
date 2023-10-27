@@ -1,6 +1,8 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +58,23 @@ public class UserController {
         UserDTO userLogin = userService.login(loginRequest);
         if (userLogin == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(userLogin);
+    }
+
+    // 비밀번호 찾기 ==============================================================================================
+    @PostMapping("/findpw")
+    public ResponseEntity<Object> findPwRequest(@RequestBody PwFindRequest pwFindRequest) throws ExecutionException, InterruptedException {
+        System.out.println("findpw:: " + pwFindRequest);
+        String userPw = userService.findPwById(pwFindRequest.getId());
+        if (userPw == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        else return ResponseEntity.ok().body(userPw);
+    }
+
+    // 아이디 찾기 ==============================================================================================
+    @PostMapping("/findid")
+    public ResponseEntity<Object> findIdRequest(@RequestBody IdFindRequest idFindRequest) throws ExecutionException, InterruptedException {
+        System.out.println("findid:: " + idFindRequest);
+        String userId = userService.findIdByEmail(idFindRequest.getEmail());
+        if (userId == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        else return ResponseEntity.ok().body(userId);
     }
 }
