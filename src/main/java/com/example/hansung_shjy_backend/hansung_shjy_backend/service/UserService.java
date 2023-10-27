@@ -1,9 +1,8 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
-import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public interface UserService {
@@ -20,5 +19,5 @@ public interface UserService {
     String sendAuthenticationMessage(String to) throws Exception;
 
     // 로그인
-    Map<Long, String> login(String id, String pw, HttpServletResponse response) throws ExecutionException, InterruptedException;
+    UserDTO login(LoginRequest loginRequest) throws ExecutionException, InterruptedException;
 }
