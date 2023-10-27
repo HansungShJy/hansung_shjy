@@ -28,4 +28,7 @@ public interface UserService {
 
     // 아이디 찾기 ==============================================================
     String findIdByEmail(String userEmail) throws ExecutionException, InterruptedException;
+
+    // 로그아웃 =================================================================
+    String logout() throws ExecutionException, InterruptedException;
 }

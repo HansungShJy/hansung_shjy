@@ -77,4 +77,10 @@ public class UserController {
         if (userId == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(userId);
     }
+
+    // 로그아웃 =================================================================================================
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout() throws ExecutionException, InterruptedException {
+        return ResponseEntity.ok().body(userService.logout());
+    }
 }

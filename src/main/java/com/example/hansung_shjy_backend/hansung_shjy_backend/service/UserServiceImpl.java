@@ -138,4 +138,10 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    // 로그아웃 =============================================================================================
+    @Override
+    public String logout() throws ExecutionException, InterruptedException {
+        return "logout";
+    }
 }
