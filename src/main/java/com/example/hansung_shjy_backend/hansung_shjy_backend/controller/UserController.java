@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
 
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserController {
     private UserService userService;
@@ -21,10 +22,11 @@ public class UserController {
 
     // 회원가입 ====================================================================================================
     // 아이디 중복확인
-    @GetMapping("/verify/id")
+    @PostMapping("/verify/id")
     public ResponseEntity<Object> verifyID(@RequestBody String id) throws ExecutionException, InterruptedException {
         System.out.println("verifyID:: " + id);
         String verifyResult = userService.verifyID(id);
+        System.out.println("verifyResult:: " + verifyResult);
         if(verifyResult.equals("null exception")) return ResponseEntity.badRequest().body("null exception");
         else return ResponseEntity.ok().body(verifyResult);
     }

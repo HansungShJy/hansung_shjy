@@ -3,6 +3,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.InternetAddress;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JavaMailSender emailSender;
 
+    User user;
+
     public static final String ePw = createKey();
 
     // 회원가입 ====================================================================================
@@ -35,7 +39,11 @@ public class UserServiceImpl implements UserService {
     public String verifyID(String id) {
         if (id == null) return "null exception";
 
-        User user = userRepository.findUserById(id);
+        if (userRepository != null) {
+            user = userRepository.findUserById(id);
+        } else {
+            return "false";
+        }
 
         if (user == null) return "false";
         else return "true";
@@ -92,14 +100,18 @@ public class UserServiceImpl implements UserService {
     // 로그인 ======================================================================================
     // FE: 로그인할 때 user 넘겨주면 거기서 userID랑 otherID 받아와서 쿠키에 저장
     @Override
-    public UserDTO login(String id, String pw) throws ExecutionException, InterruptedException {
-        User userEntity = userRepository.findUserById(id);
-        if (userEntity == null) return null;        //id에 맞는 entity가 없을 때
-
-        UserDTO user = UserDTO.toDTO(userEntity);
-        if (user == null) return null;              //userEntity에 맞는 user가 없을 때
-
-        if (user.getPw().equals(pw)) return user;   //user db에 pw와 받아온 pw가 일치하면 user 리턴
-        else return null;
+    public Map<Long, String> login(String id, String pw, HttpServletResponse response) throws ExecutionException, InterruptedException {
+        return null;
     }
+//        User userEntity = userRepository.findUserById(id);
+//        if (userEntity == null) return null;        //id에 맞는 entity가 없을 때
+//
+//        UserDTO user = UserDTO.toDTO(userEntity);
+//        if (user == null) return null;              //userEntity에 맞는 user가 없을 때
+//
+//        if (user.getPw().equals(pw)) { //user db에 pw와 받아온 pw가 일치하면 user 리턴
+//            return user;
+//        }
+//        else return null;
+//    }
 }
