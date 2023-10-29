@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import homelogoset from "../assets/homelogoset.png";
+import axios from "axios";
 
 function InviteCouple() {
   const [CoupleEmail, setCoupleEmail] = useState("");
@@ -8,8 +9,17 @@ function InviteCouple() {
     setCoupleEmail(e.target.value);
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onClickConnect = (e) => {
+    axios
+      .post("http://localhost:3000/connect", {
+        otherid: CoupleEmail,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -64,7 +74,7 @@ function InviteCouple() {
         <br />
         <button
           type="button"
-          onChange={onSubmitHandler}
+          onChange={onClickConnect}
           formAction=""
           style={{
             fontSize: "17px",

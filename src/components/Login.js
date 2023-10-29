@@ -13,14 +13,8 @@ function Login() {
   const onPWHandler = (e) => {
     setuserPW(e.target.value);
   };
-  const onSubmitHandler = (e) => {
-    document.location.href = "./Signup";
 
-    console.log("ID", userId);
-    console.log("Password", userPW);
-  };
-
-  function Login() {
+  function onClickLogin() {
     axios
       .post(`http://localhost:3000/login`, {
         id: userId,
@@ -28,21 +22,36 @@ function Login() {
       })
       .then((response) => {
         console.log(response);
-        document.location.href = "./Signup";
+        document.location.href = "/";
       })
       .catch((error) => {
         console.log(error);
+        if (error.message === 400) {
+          alert("ID나 PW를 확인해주세요.");
+        }
       });
+  }
+
+  function onClickSignup() {
+    document.location.href = "/Signup";
+  }
+
+  function onClickFindID() {
+    document.location.href = "/findid";
+  }
+
+  function onClickFindPW() {
+    document.location.href = "/findpw";
   }
 
   return (
     <div className="login-container">
       <div>
-        <img src={homelogo} alt="homelogoset.png" width="290" />
+        <img src={homelogo} alt="homelogoset.png" width="330" />
       </div>
 
       <div>
-        <label className="id-form" htmlFor="id">
+        <label className="id-form" htmlFor="id" style={{ fontSize: "15px" }}>
           아이디
         </label>
 
@@ -51,7 +60,7 @@ function Login() {
           name="id"
           value={userId}
           style={{
-            width: "280px",
+            width: "290px",
             height: "40px",
             fontSize: "15px",
             left: "200px",
@@ -64,7 +73,11 @@ function Login() {
         />
       </div>
       <div>
-        <label className="pw-form" htmlFor="password">
+        <label
+          className="pw-form"
+          htmlFor="password"
+          style={{ fontSize: "15px" }}
+        >
           비밀번호
         </label>
         <input
@@ -72,7 +85,7 @@ function Login() {
           type="password"
           value={userPW}
           style={{
-            width: "280px",
+            width: "290px",
             height: "40px",
             fontSize: "15px",
             left: "200px",
@@ -89,12 +102,12 @@ function Login() {
         <button
           className="Login-submit-button"
           type="button"
-          onChange={onSubmitHandler}
+          onChange={onClickLogin}
           formAction=""
           style={{
-            fontSize: "13px",
+            fontSize: "15px",
             fontWeight: "bold",
-            width: "280px",
+            width: "290px",
             height: "30px",
             backgroundColor: "rgba(175, 205, 245, 0.4)",
             color: "000000",
@@ -107,11 +120,12 @@ function Login() {
         </button>
       </div>
       <label
+        onClick={onClickFindID}
         style={{
-          fontSize: "6px",
+          fontSize: "13px",
           fontWeight: "bold",
           color: "000000",
-          marginLeft: "50px",
+          marginLeft: "40px",
         }}
       >
         아이디 찾기
@@ -126,7 +140,10 @@ function Login() {
       >
         |
       </label>
-      <label style={{ fontSize: "6px", fontWeight: "bold", color: "000000" }}>
+      <label
+        onClick={onClickFindPW}
+        style={{ fontSize: "13px", fontWeight: "bold", color: "000000" }}
+      >
         비밀번호 찾기
       </label>
       <label
@@ -139,7 +156,10 @@ function Login() {
       >
         |
       </label>
-      <label style={{ fontSize: "6px", fontWeight: "bold", color: "000000" }}>
+      <label
+        onClick={onClickSignup}
+        style={{ fontSize: "13px", fontWeight: "bold", color: "000000" }}
+      >
         회원가입
       </label>
     </div>

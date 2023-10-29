@@ -12,7 +12,7 @@ function Signup() {
   const [userBirth, setuserBirth] = useState(Date);
   const [userEmail, setuserEmail] = useState("");
 
-  const [usableId, setUsableId] = useState("");
+  const [usableId, setUsableId] = useState(false);
   const [usableEmail, setusableEmail] = useState("");
 
   const onIdHandler = (e) => {
@@ -21,10 +21,6 @@ function Signup() {
 
   const onPWHandler = (e) => {
     setuserPW(e.target.value);
-  };
-
-  const onSubmitHandler = (e) => {
-    document.location.href = "./InviteCouple";
   };
 
   const onCheckPWHandler = (e) => {
@@ -47,24 +43,10 @@ function Signup() {
     setuserEmail(e.target.value);
   };
 
-  function Signup1() {
-    axios
-      .post(`http://localhost:3000/signup`, {
-        id: userId,
-        pw: userPW,
-        name: userName,
-        nickname: userNickName,
-        birth: userBirth,
-        email: userEmail,
-      })
-      .then((response) => {
-        console.log(response);
-        document.location.href = "./InviteCouple";
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const EmailConfirm = () => {
+    // 모르겠다
+  };
+
   const idValidation = () => {
     axios
       .post("http://localhost:3000/verify/id", {
@@ -72,11 +54,11 @@ function Signup() {
       })
       .then((response) => {
         console.log(response);
-        if (response === "false") {
-          alert("사용 가능");
+        if (response.data === false) {
+          alert("사용 가능한 아이디입니다.");
           setUsableId(true);
         } else {
-          alert("중복 아이디");
+          alert("이미 사용중인 아이디입니다.");
           setuserId("");
         }
       })
@@ -84,6 +66,46 @@ function Signup() {
         console.log(error);
       });
   };
+
+  function SignUpContinue() {
+    const DoubleCheckPW =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/;
+    if (userPW !== CheckPW) {
+      alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요!");
+    } else if (!DoubleCheckPW.test(userPW)) {
+      alert(
+        "대소문자, 숫자, 특수문자 포함 10자 이상입니다. 다시 입력해주세요."
+      );
+    } else if (
+      userId === "" ||
+      userPW === "" ||
+      userName === "" ||
+      userNickName === "" ||
+      userBirth === "" ||
+      userEmail === ""
+    ) {
+      alert("빈칸을 모두 채워주세요!");
+    } else {
+      axios
+        .post(`http://localhost:3000/signup`, {
+          id: userId,
+          pw: userPW,
+          name: userName,
+          nickname: userNickName,
+          birth: userBirth,
+          email: userEmail,
+        })
+        .then((response) => {
+          console.log(response);
+          alert("회원가입 완료!");
+          document.location.href = "./";
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("실패했습니다.");
+        });
+    }
+  }
 
   return (
     <div>
@@ -311,7 +333,7 @@ function Signup() {
         <br />
         <button
           type="button"
-          onClick={onSubmitHandler}
+          onClick={SignUpContinue}
           formAction=""
           style={{
             fontSize: "15px",
