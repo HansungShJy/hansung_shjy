@@ -34,7 +34,7 @@ public class UserController {
 
     // 이메일 인증
     @PostMapping("/confirm/email")
-    public String emailCode(@RequestParam("email") String email) throws Exception {
+    public String emailCode(@RequestParam(value = "email", required = false) String email) throws Exception {
         System.out.println("confirm Email:: " + email);
         String code = userService.sendAuthenticationMessage(email);
         System.out.println("connect:: " + code);
