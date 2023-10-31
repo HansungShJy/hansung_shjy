@@ -2,15 +2,13 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -25,7 +23,7 @@ public class DiaryController {
     @GetMapping("/diary")
     public ResponseEntity<Object> diaryFirst(@RequestBody Integer user_id) throws ExecutionException, InterruptedException {
         System.out.println("diary userID:: " + user_id);
-        Optional<Diary> diaryDTO = diaryService.diary(user_id);
+        List<Diary> diaryDTO = diaryService.listDiary(user_id);
         System.out.println("diaryDTO:: " + diaryDTO);
         return ResponseEntity.ok().body(diaryDTO);
     }
@@ -55,7 +53,7 @@ public class DiaryController {
     @GetMapping("/diary/list/{user_id}")
     public ResponseEntity<Object> listAllDiary(@PathVariable Integer user_id) throws ExecutionException, InterruptedException {
         System.out.println("<diary> user_id::" + user_id);
-        Optional<Diary> diaryDTO = diaryService.diary(user_id);
+        List<Diary> diaryDTO = diaryService.listDiary(user_id);
         System.out.println("diary listAll:: " + diaryDTO);
         if (diaryDTO.isEmpty()) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(diaryDTO);

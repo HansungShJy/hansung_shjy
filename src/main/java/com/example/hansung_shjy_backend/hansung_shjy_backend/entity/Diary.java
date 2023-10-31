@@ -1,7 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnADTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,9 +33,9 @@ public class Diary implements Serializable {
     private String otherDiary;
 
     //foreign key
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: User
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: Diary, One: User
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Diary"))
-    private User userid;
+    private User userID;
 
     public static Diary toEntity(DiaryDTO dto) {
         return Diary.builder()
