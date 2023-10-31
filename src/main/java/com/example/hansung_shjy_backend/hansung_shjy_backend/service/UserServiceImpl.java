@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("message to:: " + to);
         MimeMessage message = createMessage(to);
         try{//예외처리
-            emailSender.send((MimeMessagePreparator) message);
+            emailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();
             throw new IllegalArgumentException();
