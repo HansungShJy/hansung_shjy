@@ -32,6 +32,16 @@ public class UserController {
         else return ResponseEntity.ok().body(verifyResult);
     }
 
+    // 이메일 인증
+    @PostMapping("/confirm/email")
+    public String emailCode(@RequestParam String email) throws Exception {
+        System.out.println("confirm Email:: " + email);
+        String code = userService.sendAuthenticationMessage(email);
+        System.out.println("connect:: " + code);
+
+        return code;
+    }
+
     // 회원 등록
     @PostMapping("/signup")
     public ResponseEntity<Object> signupRequest(@RequestBody UserDTO user) throws ExecutionException, InterruptedException {
@@ -43,7 +53,7 @@ public class UserController {
 
     // 커플 연결
     @PostMapping("/connect")
-    public String emailConnect(@RequestParam String email) throws Exception {
+    public String coupleConnect(@RequestParam String email) throws Exception {
 
         String code = userService.sendAuthenticationMessage(email);
         System.out.println("connect:: " + code);
