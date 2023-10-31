@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnADTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.sql.Date;
 @Builder
 @Entity
 
-public class QnA {
+public class QnA implements Serializable {
 
     @Id
     @GeneratedValue     //auto_increment
