@@ -4,10 +4,12 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
@@ -15,6 +17,10 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class UserController {
     private UserService userService;
+
+    private UserRepository userRepository;
+
+    private UserDTO userDTO;
 
     @Autowired
     public UserController(UserService userService) {
@@ -51,14 +57,27 @@ public class UserController {
         else return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    // 커플 연결
-    @PostMapping("/connect")
-    public String coupleConnect(@RequestParam String email) throws Exception {
+    // 커플 이메일 인증
+    @PostMapping("/confirm/email/couple")
+    public String coupleEmailCode(@RequestParam String email) throws Exception {
 
         String code = userService.sendAuthenticationMessage(email);
         System.out.println("connect:: " + code);
 
         return code;
+    }
+
+    // 커플 연결
+    @PostMapping("/connect")
+    public ResponseEntity<Object> connectCouple(@RequestBody String email) throws Exception {
+
+        String other_id = userService.findIdByEmail(email);
+
+        if (other_id == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
+        else {
+            userDTO.setOtherID(other_id);
+            return ResponseEntity.ok().body(userDTO);
+        }
     }
 
     // 로그인 ======================================================================================================

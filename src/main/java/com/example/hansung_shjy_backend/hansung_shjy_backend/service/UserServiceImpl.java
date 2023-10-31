@@ -57,10 +57,13 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
+        user.setOtherID("null");
+
         userRepository.save(User.toEntity(user));
         return user;
     }
 
+    // 이메일 인증 ==========================================================================================
     private jakarta.mail.internet.MimeMessage createMessage(String to)throws Exception{
         System.out.println("보내는 대상 : "+ to);
         System.out.println("인증 번호 : "+ ePw);
@@ -181,5 +184,10 @@ public class UserServiceImpl implements UserService {
 
     public Integer findUserByUserid(Integer user_id) throws ExecutionException, InterruptedException {
         return userRepository.findUserByUserID(user_id).getUserID();
+    }
+
+    @Override
+    public Integer findUseridByEmail(String user_email) throws ExecutionException, InterruptedException {
+        return userRepository.findUserByEmail(user_email).getUserID();
     }
 }

@@ -31,4 +31,6 @@ public interface UserService {
     String logout() throws ExecutionException, InterruptedException;
 
     Integer findUserByUserid(Integer user_id) throws ExecutionException, InterruptedException;
+
+    Integer findUseridByEmail(String user_email) throws ExecutionException, InterruptedException;
 }
