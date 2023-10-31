@@ -4,10 +4,17 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+
+import javax.mail.internet.InternetAddress;
+
+import org.springframework.mail.MailException;
+
 
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -54,6 +61,34 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    private jakarta.mail.internet.MimeMessage createMessage(String to)throws Exception{
+        System.out.println("보내는 대상 : "+ to);
+        System.out.println("인증 번호 : "+ ePw);
+        jakarta.mail.internet.MimeMessage message = emailSender.createMimeMessage();
+
+        message.addRecipients(jakarta.mail.Message.RecipientType.TO, to);//보내는 대상
+        message.setSubject("이메일 인증"); //제목
+
+        String msgg="";
+        msgg+= "<div style='margin:20px;'>";
+        msgg+= "<h1> 안녕하세요 LoveMore입니다. </h1>";
+        msgg+= "<br>";
+        msgg+= "<p>아래 코드를 복사해 입력해주세요<p>";
+        msgg+= "<br>";
+        msgg+= "<p>감사합니다.<p>";
+        msgg+= "<br>";
+        msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
+        msgg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
+        msgg+= "<div style='font-size:130%'>";
+        msgg+= "CODE : <strong>";
+        msgg+= ePw+"</strong><div><br/> ";
+        msgg+= "</div>";
+        message.setText(msgg, "utf-8", "html");//내용
+        message.setFrom(String.valueOf(new InternetAddress("sunho010416@gmail.com","LoveMore")));//보내는 사람
+
+        return message;
+    }
+
     // 커플 연결 -> 코드 생성 & 부여
     public static String createKey() {
         StringBuffer key = new StringBuffer();
@@ -79,15 +114,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public String sendAuthenticationMessage(String to) throws Exception {
         System.out.println("message to:: " + to);
-//        MimeMessage message = createMessage(to);
-//        try{//예외처리
-//            emailSender.send(message);
-//        }catch(MailException es){
-//            es.printStackTrace();
-//            throw new IllegalArgumentException();
-//        }
+        MimeMessage message = createMessage(to);
+        try{//예외처리
+            emailSender.send((MimeMessagePreparator) message);
+        }catch(MailException es){
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        }
         return ePw;
     }
+
 
     // 로그인 ======================================================================================
     // FE: 로그인할 때 user 넘겨주면 거기서 userID 쿠키에 저장
