@@ -1,8 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 
 import java.util.concurrent.ExecutionException;
@@ -31,4 +29,6 @@ public interface UserService {
 
     // 로그아웃 =================================================================
     String logout() throws ExecutionException, InterruptedException;
+
+    Integer findUserByUserid(Integer user_id) throws ExecutionException, InterruptedException;
 }

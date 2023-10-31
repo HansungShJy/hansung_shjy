@@ -1,8 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
@@ -143,5 +141,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String logout() throws ExecutionException, InterruptedException {
         return "logout";
+    }
+
+    public Integer findUserByUserid(Integer user_id) throws ExecutionException, InterruptedException {
+        return userRepository.findUserByUserID(user_id).getUserID();
     }
 }
