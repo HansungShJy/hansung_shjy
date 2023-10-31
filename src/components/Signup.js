@@ -13,7 +13,8 @@ function Signup() {
   const [userEmail, setuserEmail] = useState("");
 
   const [usableId, setUsableId] = useState(false);
-  const [usableEmail, setusableEmail] = useState("");
+  const [confirmcode, setConfirmCode] = useState("");
+  const [emailConfirmResponse, setEmailConfirmResponse] = useState(null);
 
   const onIdHandler = (e) => {
     setuserId(e.target.value);
@@ -43,8 +44,39 @@ function Signup() {
     setuserEmail(e.target.value);
   };
 
+  const onCodeHandler = (e) => {
+    setConfirmCode(e.target.value);
+  };
+
   const EmailConfirm = () => {
-    // 모르겠다
+    //이메일 인증 요청을 누르면 code가 감
+    axios
+      .post(
+        "http://localhost:3000/confirm/email",
+        {},
+        {
+          params: { email: userEmail },
+        }
+      )
+
+      .then((response) => {
+        console.log(response);
+        alert("인증 코드가 이메일로 전송되었습니다.");
+        setEmailConfirmResponse(response.data);
+      })
+      .catch((error) => {
+        console.log("email error", error);
+      });
+  };
+
+  const CodeConfirm = () => {
+    const inputCode = document.getElementById("authCode").value; // 인증코드 입력값 가져오기
+    console.log(emailConfirmResponse);
+    if (inputCode === emailConfirmResponse) {
+      alert("이메일이 인증되었습니다.");
+    } else {
+      alert("이메일이 인증되지 않았습니다. 다시 시도해주세요.");
+    }
   };
 
   const idValidation = () => {
@@ -63,11 +95,11 @@ function Signup() {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log("ID Vaildation error", error);
       });
   };
 
-  function SignUpContinue() {
+  const SignUpContinue = async () => {
     const DoubleCheckPW =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/;
     if (userPW !== CheckPW) {
@@ -86,7 +118,7 @@ function Signup() {
     ) {
       alert("빈칸을 모두 채워주세요!");
     } else {
-      axios
+      await axios
         .post(`http://localhost:3000/signup`, {
           id: userId,
           pw: userPW,
@@ -105,7 +137,7 @@ function Signup() {
           alert("실패했습니다.");
         });
     }
-  }
+  };
 
   return (
     <div>
@@ -115,9 +147,9 @@ function Signup() {
           alt="signuplogo.png"
           width="380"
           style={{
-            paddingTop: "10px",
+            paddingTop: "5px",
             marginLeft: "495px",
-            marginBottom: "-15px",
+            marginBottom: "-45px",
           }}
         />
       </div>
@@ -297,8 +329,9 @@ function Signup() {
         <input
           type="Email"
           name="Email"
+          id="email"
           value={userEmail}
-          placeholder="  ex) Email@gamil.com"
+          placeholder="    ex) Email@gamil.com"
           style={{
             width: "280px",
             height: "40px",
@@ -314,7 +347,8 @@ function Signup() {
         />
         <button
           type="button"
-          onClick={usableEmail}
+          id="emailAuth"
+          onClick={EmailConfirm}
           style={{
             fontSize: "11px",
             width: "70px",
@@ -330,6 +364,51 @@ function Signup() {
         >
           인증 요청
         </button>
+        <br />
+        <label
+          style={{ fontSize: "17px", fontWeight: "bold", marginLeft: "485px" }}
+        >
+          인증코드
+        </label>
+        <input
+          type="code"
+          name="code"
+          id="authCode"
+          value={confirmcode}
+          placeholder="    인증코드를 입력해주세요."
+          style={{
+            width: "280px",
+            height: "40px",
+            fontSize: "15px",
+            left: "200px",
+            backgroundColor: "rgba(202, 225, 245, 0.3)",
+            borderRadius: "8px",
+            border: "none",
+            marginTop: "20px",
+            marginLeft: "11px",
+          }}
+          onChange={onCodeHandler}
+        />
+        <button
+          type="button"
+          onClick={CodeConfirm}
+          style={{
+            fontSize: "11px",
+            width: "70px",
+            height: "25px",
+            marginLeft: "10px",
+            marginTop: "30px",
+            backgroundColor: "rgba(175, 205, 245, 0.4)",
+            color: "black",
+            border: "0px",
+            borderRadius: "5px",
+            fontWeight: "bold",
+          }}
+        >
+          확인
+        </button>
+        <br />
+        <span id="emailAuthWarn"></span>
         <br />
         <button
           type="button"

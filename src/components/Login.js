@@ -45,123 +45,124 @@ function Login() {
   }
 
   return (
-    <div className="login-container">
-      <div>
+    <div>
+      <div className="home_logo">
         <img src={homelogo} alt="homelogoset.png" width="330" />
       </div>
+      <div className="login-container">
+        <div>
+          <label className="id-form" htmlFor="id" style={{ fontSize: "15px" }}>
+            아이디
+          </label>
 
-      <div>
-        <label className="id-form" htmlFor="id" style={{ fontSize: "15px" }}>
-          아이디
-        </label>
-
-        <input
-          type="text"
-          name="id"
-          value={userId}
-          style={{
-            width: "290px",
-            height: "40px",
-            fontSize: "15px",
-            left: "200px",
-            backgroundColor: "rgba(202, 225, 245, 0.3)",
-            borderRadius: "8px",
-            border: "none",
-            marginTop: "20px",
-          }}
-          onChange={onIDHandler}
-        />
-      </div>
-      <div>
+          <input
+            type="text"
+            name="id"
+            value={userId}
+            style={{
+              width: "290px",
+              height: "40px",
+              fontSize: "15px",
+              left: "200px",
+              backgroundColor: "rgba(202, 225, 245, 0.3)",
+              borderRadius: "8px",
+              border: "none",
+              marginTop: "20px",
+            }}
+            onChange={onIDHandler}
+          />
+        </div>
+        <div>
+          <label
+            className="pw-form"
+            htmlFor="password"
+            style={{ fontSize: "15px" }}
+          >
+            비밀번호
+          </label>
+          <input
+            className="Login-pw-Form"
+            type="password"
+            value={userPW}
+            style={{
+              width: "290px",
+              height: "40px",
+              fontSize: "15px",
+              left: "200px",
+              backgroundColor: "rgba(202, 225, 245, 0.3)",
+              borderRadius: "8px",
+              border: "none",
+              marginTop: "15px",
+            }}
+            onChange={onPWHandler}
+          />
+        </div>
+        <br />
+        <div>
+          <button
+            className="Login-submit-button"
+            type="button"
+            onChange={onClickLogin}
+            formAction=""
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              width: "290px",
+              height: "30px",
+              backgroundColor: "rgba(175, 205, 245, 0.4)",
+              color: "000000",
+              border: "0px",
+              borderRadius: "10px",
+              marginBottom: "11px",
+            }}
+          >
+            로그인
+          </button>
+        </div>
         <label
-          className="pw-form"
-          htmlFor="password"
-          style={{ fontSize: "15px" }}
-        >
-          비밀번호
-        </label>
-        <input
-          className="Login-pw-Form"
-          type="password"
-          value={userPW}
+          onClick={onClickFindID}
           style={{
-            width: "290px",
-            height: "40px",
-            fontSize: "15px",
-            left: "200px",
-            backgroundColor: "rgba(202, 225, 245, 0.3)",
-            borderRadius: "8px",
-            border: "none",
-            marginTop: "15px",
-          }}
-          onChange={onPWHandler}
-        />
-      </div>
-      <br />
-      <div>
-        <button
-          className="Login-submit-button"
-          type="button"
-          onChange={onClickLogin}
-          formAction=""
-          style={{
-            fontSize: "15px",
+            fontSize: "13px",
             fontWeight: "bold",
-            width: "290px",
-            height: "30px",
-            backgroundColor: "rgba(175, 205, 245, 0.4)",
             color: "000000",
-            border: "0px",
-            borderRadius: "10px",
-            marginBottom: "6px",
+            marginLeft: "37px",
           }}
         >
-          로그인
-        </button>
+          아이디 찾기
+        </label>
+        <label
+          style={{
+            fontSize: "8px",
+            color: "#d9d9d9",
+            marginLeft: "8px",
+            marginRight: "8px",
+          }}
+        >
+          |
+        </label>
+        <label
+          onClick={onClickFindPW}
+          style={{ fontSize: "13px", fontWeight: "bold", color: "000000" }}
+        >
+          비밀번호 찾기
+        </label>
+        <label
+          style={{
+            fontSize: "7px",
+            color: "#d9d9d9",
+            marginLeft: "8px",
+            marginRight: "8px",
+          }}
+        >
+          |
+        </label>
+        <label
+          onClick={onClickSignup}
+          style={{ fontSize: "13px", fontWeight: "bold", color: "000000" }}
+        >
+          회원가입
+        </label>
       </div>
-      <label
-        onClick={onClickFindID}
-        style={{
-          fontSize: "13px",
-          fontWeight: "bold",
-          color: "000000",
-          marginLeft: "40px",
-        }}
-      >
-        아이디 찾기
-      </label>
-      <label
-        style={{
-          fontSize: "8px",
-          color: "#d9d9d9",
-          marginLeft: "8px",
-          marginRight: "8px",
-        }}
-      >
-        |
-      </label>
-      <label
-        onClick={onClickFindPW}
-        style={{ fontSize: "13px", fontWeight: "bold", color: "000000" }}
-      >
-        비밀번호 찾기
-      </label>
-      <label
-        style={{
-          fontSize: "7px",
-          color: "#d9d9d9",
-          marginLeft: "8px",
-          marginRight: "8px",
-        }}
-      >
-        |
-      </label>
-      <label
-        onClick={onClickSignup}
-        style={{ fontSize: "13px", fontWeight: "bold", color: "000000" }}
-      >
-        회원가입
-      </label>
     </div>
   );
 }
