@@ -24,6 +24,7 @@ public class DiaryServiceImpl implements DiaryService {
     // 홈 화면 & 전체 보기 리스트 =============================================================
     @Override
     public List<Diary> listDiary(Integer user_id) throws ExecutionException, InterruptedException {
+        System.out.println("listDiary:: " + user_id);
         return diaryRepository.findAllByDiaryID(user_id);
     }
 
@@ -34,8 +35,8 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDTO createDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
         Diary diary = new Diary();
         diary.setDiaryDate(diaryDTO.getDiaryDate());
-        diary.setMyDiary(diary.getMyDiary());
-        diary.setOtherDiary(diary.getOtherDiary());
+        diary.setMyDiary(diaryDTO.getMyDiary());
+        diary.setOtherDiary(diaryDTO.getOtherDiary());
         diary.setUserID(userRepository.findUserByUserID(diaryDTO.getUserID()));
         diaryRepository.save(Diary.toEntity(diaryDTO));
         return diaryDTO;
@@ -43,14 +44,15 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 일기 수정 ============================================================
     @Override
-    public DiaryDTO modifyDiary(Integer diary_id, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
-        Diary diary = diaryRepository.findByDiaryID(diary_id);
+    public DiaryDTO modifyDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+        Diary diary = diaryRepository.findByDiaryID(diaryDTO.getUserID(), diaryDTO.getDiaryID());
+        System.out.println("modifyDiary:: " + diary);
         if (diary == null) return null;
 
         diary.setDiaryDate(diaryDTO.getDiaryDate());
         diary.setMyDiary(diary.getMyDiary());
         diary.setOtherDiary(diary.getOtherDiary());
-        diary.setUserID(userRepository.findUserByUserID(diaryDTO.getUserID()));
+        diary.setUserID(diary.getUserID());
         diaryRepository.save(Diary.toEntity(diaryDTO));
         return diaryDTO;
     }

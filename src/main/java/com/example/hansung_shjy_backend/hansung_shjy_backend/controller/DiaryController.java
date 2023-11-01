@@ -29,11 +29,13 @@ public class DiaryController {
     }
 
     // 일기 저장 ===========================================================================
-    @PostMapping("/diary/save")
-    public ResponseEntity<Object> createDiary(@RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+    @PostMapping("/diary/save/{user_id}")
+    public ResponseEntity<Object> createDiary(@PathVariable Integer user_id, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+        System.out.println("create Diary User:: " + user_id);
         System.out.println("create Diary:: " + diaryDTO);
         DiaryDTO diary = diaryService.createDiary(diaryDTO);
-        if (diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+
+        if (diaryDTO == null || diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(diary);
     }
 
@@ -44,7 +46,7 @@ public class DiaryController {
         System.out.println("diayDTO:: " + diaryDTO);
         diaryDTO.setDiaryID(diary_id);
         diaryDTO.setUserID(userService.findUserByUserid(diaryDTO.getUserID()));
-        DiaryDTO diary = diaryService.modifyDiary(diary_id, diaryDTO);
+        DiaryDTO diary = diaryService.modifyDiary(diaryDTO);
         if (diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(diary);
     }

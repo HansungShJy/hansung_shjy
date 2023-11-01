@@ -15,6 +15,6 @@ public interface DiaryService {
     DiaryDTO createDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;
 
     // 일기 수정 =============================================================
-    DiaryDTO modifyDiary(Integer diary_id, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;
+    DiaryDTO modifyDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;
 
 }
