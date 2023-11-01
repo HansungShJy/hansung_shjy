@@ -27,9 +27,11 @@ function Findpw() {
       })
       .then((response) => {
         console.log(response);
+        alert("비밀번호는 " + response.data + " 입니다.");
       })
       .catch((error) => {
         console.log(error);
+        alert("비밀번호를 찾을 수 없습니다. 다시 시도해주세요!");
       });
   };
   return (

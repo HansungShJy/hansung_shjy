@@ -22,9 +22,11 @@ function Findid() {
       })
       .then((response) => {
         console.log(response);
+        alert("아이디는 " + response.data + " 입니다");
       })
       .catch((error) => {
         console.log(error);
+        alert("아이디를 찾을 수 없습니다. 다시 시도해주세요!");
       });
   };
   return (
