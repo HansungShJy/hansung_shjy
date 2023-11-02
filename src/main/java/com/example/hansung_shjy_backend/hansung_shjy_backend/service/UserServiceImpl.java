@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     // 유저 등록
     @Override
     public UserDTO signup(UserDTO user) {
-        if (user.getUserID() == null || user.getId() == null | user.getPw() == null ||
+        if (user.getId() == null | user.getPw() == null ||
             user.getName() == null || user.getEmail() == null || user.getBirth() == null ||
                 user.getNickname() == null) {
             return null;
