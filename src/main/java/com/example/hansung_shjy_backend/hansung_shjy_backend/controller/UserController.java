@@ -40,6 +40,7 @@ public class UserController {
         System.out.println("verifyID:: " + id);
 
         String userid = (String) id.get("id");      // 내 아이디
+        System.out.println("verfityidid:: " + userid);
 
         String verifyResult = userService.verifyID(userid);
         System.out.println("verifyResult:: " + verifyResult);
