@@ -20,6 +20,7 @@ public interface UserService {
     String sendAuthenticationMessage(String to) throws Exception;
     String findNicknameByEmail(String email) throws ExecutionException, InterruptedException;
     User findUserByUserid(String id) throws ExecutionException, InterruptedException;
+    User findUserByNickname(String nickname) throws ExecutionException, InterruptedException;
 
     // 로그인 ==================================================================
     UserDTO login(LoginRequest loginRequest) throws ExecutionException, InterruptedException;

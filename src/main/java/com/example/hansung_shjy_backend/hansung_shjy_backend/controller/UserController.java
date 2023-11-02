@@ -23,7 +23,7 @@ public class UserController {
 
     private UserService userService;
 
-
+    @Autowired
     private UserRepository userRepository;
 
     private UserDTO userDTO;
@@ -81,22 +81,32 @@ public class UserController {
     public ResponseEntity<Object> connectCouple(@RequestBody HashMap<String, Object> coupleInfo) throws Exception {
         System.out.println("connectCouple:: " + coupleInfo);
 
-        String userid = (String) coupleInfo.get("id");
-        String email = (String) coupleInfo.get("otherid");
-        String dday = (String) coupleInfo.get("dday");
+        String userid = (String) coupleInfo.get("id");      // 내 아이디
+        String email = (String) coupleInfo.get("otherid");  // 상대방 아이디
+        String dday = (String) coupleInfo.get("dday");      // 디데이
         System.out.println("id:: " + ", " + userid + "email:: " + email + ", " + dday);
+
 
         String other_nickname = userService.findNicknameByEmail(email);
         System.out.println("connect nickname:: " + other_nickname);
+        // 상대방도 otherID, Dday 서로의 값으로 들어가야함
+
 
         if (other_nickname == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
         else {
             User user = userService.findUserByUserid(userid);
+            User otheruser = userService.findUserByNickname(other_nickname);
             System.out.println("user: " + user);
+            System.out.println("otherUser: " + otheruser);
 
             user.setOtherID(other_nickname);
             user.setDday(dday);
+
+            otheruser.setOtherID(user.getNickname());
+            otheruser.setDday(dday);
+
+            userRepository.save(user);
             return ResponseEntity.ok().body(user);
         }
     }
