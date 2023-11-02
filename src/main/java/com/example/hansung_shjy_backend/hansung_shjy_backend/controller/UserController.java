@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,9 @@ public class UserController {
     public ResponseEntity<Object> signupRequest(@RequestBody UserDTO user) throws ExecutionException, InterruptedException {
         System.out.println("signup:: " + user);
 
-        UserDTO userSignup =userService.signup(user);
+        User userSignup =userService.signup(User.toEntity(user));
+        System.out.println("signupup:: " + userSignup);
+
         if (userSignup == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(user, HttpStatus.CREATED);
     }

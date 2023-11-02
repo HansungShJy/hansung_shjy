@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 
 import java.util.concurrent.ExecutionException;
 
@@ -13,7 +14,7 @@ public interface UserService {
     String verifyID(String id) throws ExecutionException, InterruptedException;
 
     // 유저 등록
-    UserDTO signup(UserDTO user) throws ExecutionException, InterruptedException;
+    User signup(User user) throws ExecutionException, InterruptedException;
 
     // 커플 연결
     String sendAuthenticationMessage(String to) throws Exception;

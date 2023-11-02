@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     // 유저 등록
     @Override
-    public UserDTO signup(UserDTO user) {
+    public User signup(User user) {
         if (user.getId() == null | user.getPw() == null ||
             user.getName() == null || user.getEmail() == null || user.getBirth() == null ||
                 user.getNickname() == null) {
@@ -60,8 +60,7 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("signup11:: " + user);
 
-
-        userRepository.save(User.toEntity(user));
+        userRepository.save(user);
         return user;
     }
 
