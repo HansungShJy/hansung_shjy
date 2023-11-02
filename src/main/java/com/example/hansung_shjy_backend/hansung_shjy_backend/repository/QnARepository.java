@@ -1,6 +1,5 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.repository;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,7 +19,7 @@ public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecifica
         QnA findAllByQnaID(@Param("user_id") Integer user_id, @Param("qna_id") Integer qna_id);
 
     // QnA Detail
-    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :user_id AND q.qnaID = :qna_id", nativeQuery = true)
-        QnA findByQnaID(@Param("user_id") Integer user_id, @Param("qna_id") Integer qna_id);
+    @Query(value = "SELECT * FROM QnA q WHERE q.qnaID = :qna_id", nativeQuery = true)
+        QnA findByQnaID(@Param("qna_id") Integer qna_id);
 
 }

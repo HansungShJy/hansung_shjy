@@ -23,24 +23,28 @@ public class QnAServiceImpl implements QnAService {
     @Override
     public List<QnA> listQnA(Integer user_id) throws ExecutionException, InterruptedException {
         System.out.println("listQnA:: " + user_id);
-        return qnARepository.findAllByQnaID(user_id);
+        if(user_id == null) return null;
+
+        List<QnA> qnA = qnARepository.findAllByQnaID(user_id);
+        if (qnA == null) return null;
+        else return qnA;
     }
 
     // 오늘의 질문 디테일 화면
     @Override
-    public QnADTO detailQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException {
-        QnA qnA = qnARepository.findByQnaID(qnADTO.getUserID(), qnADTO.getQnaID());
+    public QnA detailQnA(Integer qnaID) throws ExecutionException, InterruptedException {
+        System.out.println("detailQnADTO:: " + qnaID);
+        if (qnaID == null) return null;
+
+        QnA qnA = qnARepository.findByQnaID(qnaID);
         System.out.println("detailQnA:: " + qnA);
         if (qnA == null) return null;
-
-//        return qnA;
-        // 여기 다시 고쳐야됨 ****************
-        return null;
+        else return qnA;
     }
 
-    // 오늘의 질문 생성
+    // 오늘의 질문 저장
     @Override
-    public QnADTO createQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException {
+    public QnADTO saveQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException {
         QnA qnA = new QnA();
         qnA.setQnaTitle(qnADTO.getQnaTitle());
         qnA.setQnaDate(qnADTO.getQnaDate());

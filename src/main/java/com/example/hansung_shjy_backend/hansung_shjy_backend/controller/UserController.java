@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<Object> verifyID(@RequestBody HashMap<String, Object> id) throws ExecutionException, InterruptedException {
         System.out.println("verifyID:: " + id);
 
-        String userid = (String) id.get("id");      // 내 아이디
+        String userid = (String) id.get("id");
         System.out.println("verfityidid:: " + userid);
 
         String verifyResult = userService.verifyID(userid);
