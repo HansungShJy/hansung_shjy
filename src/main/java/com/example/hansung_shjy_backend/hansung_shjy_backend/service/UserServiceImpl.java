@@ -56,8 +56,10 @@ public class UserServiceImpl implements UserService {
                 user.getNickname() == null) {
             return null;
         }
+        user.setOtherID("otherID");
 
-        user.setOtherID("null");
+        System.out.println("signup11:: " + user);
+
 
         userRepository.save(User.toEntity(user));
         return user;
