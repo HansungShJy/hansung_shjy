@@ -7,6 +7,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,9 +75,14 @@ public class UserController {
 
     // 커플 연결
     @PostMapping("/connect")
-    public ResponseEntity<Object> connectCouple(@RequestBody String email, Date dday) throws Exception {
-        System.out.println("connectCouple:: " + email + " , " + dday);
-        if (email == null || dday == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> connectCouple(@RequestBody String coupleInfo) throws Exception {
+        System.out.println("connectCouple:: " + coupleInfo);
+
+        JSONObject parser = new JSONObject();
+        String email = (String) parser.get("email");
+        Date dday = (Date) parser.get("dday");
+
+        if (coupleInfo == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
         String other_nickname = userService.findNicknameByEmail(email);
 

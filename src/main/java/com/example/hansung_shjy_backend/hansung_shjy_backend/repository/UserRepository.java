@@ -18,5 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     User findUserByUserID(Integer user_id);
 
     @Query(value = "SELECT nickname FROM user u WHERE u.email = :email", nativeQuery = true)
-    String findAllByEmail(@Param("other_id") String email);
+    String findAllByEmail(@Param("email") String email);
 }
