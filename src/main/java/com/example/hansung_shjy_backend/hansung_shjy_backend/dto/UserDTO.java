@@ -24,7 +24,7 @@ public class UserDTO {
     private String nickname;
     private Date birth;
     private String otherID;
-    private int Dday;
+    private Date Dday;
 
     public static UserDTO toDTO(User entity) {
         try {

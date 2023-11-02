@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -73,13 +74,17 @@ public class UserController {
 
     // 커플 연결
     @PostMapping("/connect")
-    public ResponseEntity<Object> connectCouple(@RequestBody String email) throws Exception {
+    public ResponseEntity<Object> connectCouple(@RequestBody String email, Date dday) throws Exception {
+        System.out.println("connectCouple:: " + email + " , " + dday);
+        if (email == null || dday == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
-        String other_id = userService.findIdByEmail(email);
+        String other_id = userRepository.findAllByEmail(email);
 
         if (other_id == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
+
         else {
             userDTO.setOtherID(other_id);
+            userDTO.setDday(dday);
             return ResponseEntity.ok().body(userDTO);
         }
     }
