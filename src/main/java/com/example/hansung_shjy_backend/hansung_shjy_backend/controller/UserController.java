@@ -36,9 +36,12 @@ public class UserController {
     // 회원가입 ====================================================================================================
     // 아이디 중복확인
     @PostMapping("/verify/id")
-    public ResponseEntity<Object> verifyID(@RequestBody String id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> verifyID(@RequestBody HashMap<String, Object> id) throws ExecutionException, InterruptedException {
         System.out.println("verifyID:: " + id);
-        String verifyResult = userService.verifyID(id);
+
+        String userid = (String) id.get("id");      // 내 아이디
+
+        String verifyResult = userService.verifyID(userid);
         System.out.println("verifyResult:: " + verifyResult);
         if(verifyResult.equals("null exception")) return ResponseEntity.badRequest().body("null exception");
         else return ResponseEntity.ok().body(verifyResult);
