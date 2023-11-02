@@ -46,7 +46,7 @@ public class User implements Serializable {
     private Date birth;  //0000-00-00 형식
 
     @Column(name = "Dday")
-    private Date Dday;   //0000-00-00 형식
+    private String Dday;   //0000-00-00 형식
 
     public static User toEntity(UserDTO dto) {
         return User.builder()

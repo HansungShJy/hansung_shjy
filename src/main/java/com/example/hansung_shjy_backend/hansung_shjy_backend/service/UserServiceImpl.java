@@ -136,6 +136,13 @@ public class UserServiceImpl implements UserService {
         else return other_nickname;
     }
 
+    @Override
+    public User findUserByUserid(String id) throws ExecutionException, InterruptedException {
+        User user = userRepository.findUserById(id);
+        if (user == null) return null;
+        else return user;
+    }
+
 
     // 로그인 ======================================================================================
     // FE: 로그인할 때 user 넘겨주면 거기서 userID 쿠키에 저장

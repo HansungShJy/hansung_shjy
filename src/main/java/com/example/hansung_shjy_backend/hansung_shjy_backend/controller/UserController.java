@@ -21,13 +21,11 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
     private UserDTO userDTO;
 
     @Autowired
@@ -83,9 +81,10 @@ public class UserController {
     public ResponseEntity<Object> connectCouple(@RequestBody HashMap<String, Object> coupleInfo) throws Exception {
         System.out.println("connectCouple:: " + coupleInfo);
 
-        String email = (String) coupleInfo.get("email");
-        Date dday = (Date) coupleInfo.get("dday");
-        System.out.println("email:: " + email + ", " + dday);
+        String userid = (String) coupleInfo.get("id");
+        String email = (String) coupleInfo.get("otherid");
+        String dday = (String) coupleInfo.get("dday");
+        System.out.println("id:: " + ", " + userid + "email:: " + email + ", " + dday);
 
         String other_nickname = userService.findNicknameByEmail(email);
         System.out.println("connect nickname:: " + other_nickname);
@@ -93,9 +92,12 @@ public class UserController {
         if (other_nickname == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
         else {
-            userDTO.setOtherID(other_nickname);
-            userDTO.setDday(dday);
-            return ResponseEntity.ok().body(userDTO);
+            User user = userService.findUserByUserid(userid);
+            System.out.println("user: " + user);
+
+            user.setOtherID(other_nickname);
+            user.setDday(dday);
+            return ResponseEntity.ok().body(user);
         }
     }
 
