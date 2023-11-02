@@ -128,6 +128,14 @@ public class UserServiceImpl implements UserService {
         return ePw;
     }
 
+    @Override
+    public String findNicknameByEmail(String email) throws ExecutionException, InterruptedException {
+        String other_nickname = userRepository.findAllByEmail(email);
+        if (other_nickname == null) return null;
+
+        else return other_nickname;
+    }
+
 
     // 로그인 ======================================================================================
     // FE: 로그인할 때 user 넘겨주면 거기서 userID 쿠키에 저장

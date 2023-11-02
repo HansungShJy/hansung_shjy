@@ -78,12 +78,12 @@ public class UserController {
         System.out.println("connectCouple:: " + email + " , " + dday);
         if (email == null || dday == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
-        String other_id = userRepository.findAllByEmail(email);
+        String other_nickname = userService.findNicknameByEmail(email);
 
-        if (other_id == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
+        if (other_nickname == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
         else {
-            userDTO.setOtherID(other_id);
+            userDTO.setOtherID(other_nickname);
             userDTO.setDday(dday);
             return ResponseEntity.ok().body(userDTO);
         }
