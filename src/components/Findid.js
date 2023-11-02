@@ -22,7 +22,18 @@ function Findid() {
       })
       .then((response) => {
         console.log(response);
-        alert("아이디는 " + response.data + " 입니다");
+        if (
+          window.confirm(
+            "아이디는 " +
+              response.data +
+              " 입니다" +
+              "\n비밀번호도 찾고싶으신 분은 확인을 눌러주세요."
+          ) === true
+        ) {
+          document.location.href = "./findpw";
+        } else {
+          console.log("아이디 찾기 종료");
+        }
       })
       .catch((error) => {
         console.log(error);

@@ -27,7 +27,19 @@ function Findpw() {
       })
       .then((response) => {
         console.log(response);
-        alert("비밀번호는 " + response.data + " 입니다.");
+        //alert("비밀번호는 " + response.data + " 입니다.");
+        if (
+          window.confirm(
+            "비밀번호는 " +
+              response.data +
+              " 입니다." +
+              "\n확인을 누르면 로그인창으로 돌아갑니다."
+          ) === true
+        ) {
+          document.location.href = "./";
+        } else {
+          console.log("비밀번호 찾기 종료");
+        }
       })
       .catch((error) => {
         console.log(error);

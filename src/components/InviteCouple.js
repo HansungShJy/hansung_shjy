@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { Cookies } from "react-cookie";
 import homelogoset from "../assets/homelogoset.png";
 import axios from "axios";
 
 function InviteCouple() {
   const [CoupleEmail, setCoupleEmail] = useState("");
   const [confirmcode, setConfirmCode] = useState("");
+  const [userDday, setuserDday] = useState(Date);
   const [emailConfirmResponse, setEmailConfirmResponse] = useState(null);
+  const cookie = new Cookies();
+  const userId = cookie.get("userId");
 
   const InviteCoupleHandler = (e) => {
     setCoupleEmail(e.target.value);
@@ -13,6 +17,10 @@ function InviteCouple() {
 
   const onCodeHandler = (e) => {
     setConfirmCode(e.target.value);
+  };
+
+  const onDdayHandler = (e) => {
+    setuserDday(e.target.value);
   };
 
   const EmailConfirm = () => {
@@ -41,25 +49,32 @@ function InviteCouple() {
     console.log(emailConfirmResponse);
     if (inputCode === emailConfirmResponse) {
       alert("상대방의 이메일이 인증되었습니다.");
+      console.log(userId);
     } else {
       alert("상대방의 이메일이 인증되지 않았습니다. 다시 시도해주세요.");
     }
   };
 
   const onClickConnect = () => {
-    axios
-      .post("http://localhost:3000/connect", {
-        otherid: CoupleEmail,
-      })
-      .then((response) => {
-        console.log(response);
-        alert("상대방과 연결되었습니다.");
-        document.location.href = "./";
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("상대방과 연결 실패! 다시 시도해주세요.");
-      });
+    if (CoupleEmail === "" || userDday === "" || confirmcode === "") {
+      alert("입력 하지 않은 칸이 있습니다.");
+    } else {
+      axios
+        .post("http://localhost:3000/connect", {
+          id: userId,
+          otherid: CoupleEmail,
+          dday: userDday,
+        })
+        .then((response) => {
+          console.log(response);
+          alert("상대방과 연결되었습니다.");
+          // document.location.href = "./";
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("상대방과 연결 실패! 다시 시도해주세요.");
+        });
+    }
   };
 
   return (
@@ -89,6 +104,29 @@ function InviteCouple() {
         </label>
         <br />
         <label
+          style={{ fontSize: "17px", fontWeight: "bold", marginLeft: "452px" }}
+        >
+          연애 시작일
+        </label>
+        <input
+          type="date"
+          userName="userdday"
+          value={userDday}
+          style={{
+            width: "280px",
+            height: "40px",
+            fontSize: "15px",
+            left: "200px",
+            backgroundColor: "rgba(202, 225, 245, 0.3)",
+            borderRadius: "8px",
+            border: "none",
+            marginTop: "20px",
+            marginLeft: "15px",
+          }}
+          onChange={onDdayHandler}
+        />
+        <br />
+        <label
           style={{
             fontSize: "17px",
             fontWeight: "bold",
@@ -109,7 +147,7 @@ function InviteCouple() {
             backgroundColor: "rgba(202, 225, 245, 0.3)",
             borderRadius: "8px",
             border: "none",
-            marginTop: "60px",
+            marginTop: "15px",
             marginLeft: "20px",
           }}
           onChange={InviteCoupleHandler}
@@ -179,7 +217,7 @@ function InviteCouple() {
         <br />
         <button
           type="button"
-          onChange={onClickConnect}
+          onClick={onClickConnect}
           style={{
             fontSize: "17px",
             fontWeight: "bold",
