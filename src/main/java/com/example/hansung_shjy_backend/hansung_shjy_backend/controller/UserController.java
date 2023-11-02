@@ -15,14 +15,19 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 public class UserController {
+
+    @Autowired
     private UserService userService;
 
+    @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private UserDTO userDTO;
 
     @Autowired
@@ -75,16 +80,15 @@ public class UserController {
 
     // 커플 연결
     @PostMapping("/connect")
-    public ResponseEntity<Object> connectCouple(@RequestBody String coupleInfo) throws Exception {
+    public ResponseEntity<Object> connectCouple(@RequestBody HashMap<String, Object> coupleInfo) throws Exception {
         System.out.println("connectCouple:: " + coupleInfo);
 
-        JSONObject parser = new JSONObject();
-        String email = (String) parser.get("email");
-        Date dday = (Date) parser.get("dday");
-
-        if (coupleInfo == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
+        String email = (String) coupleInfo.get("email");
+        Date dday = (Date) coupleInfo.get("dday");
+        System.out.println("email:: " + email + ", " + dday);
 
         String other_nickname = userService.findNicknameByEmail(email);
+        System.out.println("connect nickname:: " + other_nickname);
 
         if (other_nickname == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
