@@ -25,7 +25,7 @@ public class QnAServiceImpl implements QnAService {
         System.out.println("listQnA:: " + user_id);
         if(user_id == null) return null;
 
-        List<QnA> qnA = qnARepository.findAllByQnaID(user_id);
+        List<QnA> qnA = qnARepository.findAllByUserID(user_id);
         if (qnA == null) return null;
         else return qnA;
     }
@@ -58,7 +58,7 @@ public class QnAServiceImpl implements QnAService {
     // 오늘의 질문 수정
     @Override
     public QnADTO modifyQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException {
-        QnA qnA = qnARepository.findAllByQnaID(qnADTO.getUserID(), qnADTO.getQnaID());
+        QnA qnA = qnARepository.findAllByUserIDAndQnaID(qnADTO.getUserID(), qnADTO.getQnaID());
         System.out.println("modifyQnA:: " + qnA);
         if (qnA == null) return null;
 

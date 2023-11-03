@@ -26,7 +26,7 @@ public class BankServiceImpl implements BankService {
         System.out.println("listBank user_id:: " + user_id);
         if (user_id == null) return null;
 
-        List<Bank> bank = bankRepository.findAllByBankID(user_id);
+        List<Bank> bank = bankRepository.findByUserID(user_id);
         if (bank == null) return null;
         else return bank;
     }
@@ -37,7 +37,7 @@ public class BankServiceImpl implements BankService {
         System.out.println("modalBank:: " + user_id + ", " + bank_date);
         if (user_id == null || bank_date == null) return null;
 
-        List<Bank> bankList = bankRepository.findAllByBankTitle(user_id, bank_date);
+        List<Bank> bankList = bankRepository.findAllByUserIDAndBankDate(user_id, bank_date);
         System.out.println("bankList:: " + bankList);
         if (bankList == null) return null;
         else return bankList;
@@ -59,7 +59,7 @@ public class BankServiceImpl implements BankService {
     // 우리의 지출 수정
     @Override
     public BankDTO modifyBank(BankDTO bankDTO) throws ExecutionException, InterruptedException {
-        Bank bank = bankRepository.findAllByBankID(bankDTO.getUserID(), bankDTO.getBankID());
+        Bank bank = bankRepository.findAllByUserIDAndBankID (bankDTO.getUserID(), bankDTO.getBankID());
         System.out.println("modifyBank:: " + bank);
         if (bank == null) return null;
 
@@ -74,7 +74,7 @@ public class BankServiceImpl implements BankService {
     // 우리의 지출 삭제
     @Override
     public String deleteBank(Integer bank_id) throws ExecutionException, InterruptedException {
-        Bank bank = bankRepository.findBankByBankID(bank_id);
+        Bank bank = bankRepository.findByBankID(bank_id);
         if (bank == null) return null;
         else return "delete";
     }

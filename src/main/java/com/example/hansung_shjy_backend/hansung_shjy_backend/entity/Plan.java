@@ -43,7 +43,7 @@ public class Plan implements Serializable {
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: User
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Plan"))
-    private User userid;
+    private User userID;
 
 
     public static Plan toEntity(PlanDTO dto) {

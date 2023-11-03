@@ -25,7 +25,7 @@ public class PlanDTO {
 
         Integer userid = null;
 
-        if(entity.getUserid() != null) userid = entity.getUserid().getUserID();
+        if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
 
         try {
             return PlanDTO.builder()

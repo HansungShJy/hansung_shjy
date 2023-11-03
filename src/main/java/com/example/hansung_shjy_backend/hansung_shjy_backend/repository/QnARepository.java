@@ -12,11 +12,11 @@ public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecifica
 
     // QnA all
     @Query(value = "SELECT * FROM QnA q WHERE q.userID = :user_id", nativeQuery = true)
-        List<QnA> findAllByQnaID(@Param("user_id") Integer user_id);
+        List<QnA> findAllByUserID(@Param("user_id") Integer user_id);
 
     // QnA modify
     @Query(value = "SELECT * FROM QnA q WHERE q.userID = :user_id AND q.qnaID = :qna_id", nativeQuery = true)
-        QnA findAllByQnaID(@Param("user_id") Integer user_id, @Param("qna_id") Integer qna_id);
+        QnA findAllByUserIDAndQnaID(@Param("user_id") Integer user_id, @Param("qna_id") Integer qna_id);
 
     // QnA Detail
     @Query(value = "SELECT * FROM QnA q WHERE q.qnaID = :qna_id", nativeQuery = true)
