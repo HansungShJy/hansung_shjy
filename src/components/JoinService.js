@@ -89,7 +89,7 @@ function JoinService() {
               </label>
             </div>
             <div className="form-detail">
-              <p>
+              <p style={{ marginLeft: "18px", marginRight: "18px" }}>
                 LOVE MORE에 오신 여러분을 환영합니다. LOVE MORE 서비스 및
                 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한
                 LOVE MORE 서비스의 이용과 관련하여 LOVE MORE 서비스를 제공하는
@@ -117,7 +117,7 @@ function JoinService() {
               </label>
             </div>
             <div className="form-detail">
-              <p>
+              <p style={{ marginLeft: "18px", marginRight: "18px" }}>
                 LOVE MORE 개인정보보호법에 따라 회원가입 신청하시는 분께
                 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적,
                 개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시
@@ -143,7 +143,7 @@ function JoinService() {
               </label>
             </div>
             <div className="form-detail">
-              <p>
+              <p style={{ marginLeft: "18px", marginRight: "18px" }}>
                 제공하는 이벤트 등 다양한 정보를 이메일로 받아보실 수 있습니다.
                 일부 서비스(별도 회원 체계로 운영하거나 가입 이후 추가 가입하여
                 이용하는 서비스 등)의 경우, 개별 서비스에 대해 별도 수신 동의를
