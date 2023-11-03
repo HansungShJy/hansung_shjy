@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { Cookies } from "react-cookie";
 import homelogo from "../assets/homelogoset.png";
 import axios from "axios";
 
 function Login() {
   const [userId, setuserId] = useState("");
   const [userPW, setuserPW] = useState("");
+  const [data, setData] = useState([]);
+  const [intId, setIntId] = useState("");
+  const cookie = new Cookies();
 
   const onIDHandler = (e) => {
     setuserId(e.target.value);
@@ -22,7 +26,13 @@ function Login() {
       })
       .then((response) => {
         console.log(response);
-        document.location.href = "/";
+        alert("반갑습니다 회원님");
+        cookie.remove("userId");
+        cookie.set("id", userId);
+        console.log(response.data.userID);
+
+        cookie.set("userID", response.data.userID);
+        //document.location.href = "/";
       })
       .catch((error) => {
         console.log(error);
@@ -33,7 +43,7 @@ function Login() {
   }
 
   function onClickSignup() {
-    document.location.href = "/Signup";
+    document.location.href = "/joinservice";
   }
 
   function onClickFindID() {
@@ -102,7 +112,7 @@ function Login() {
           <button
             className="Login-submit-button"
             type="button"
-            onChange={onClickLogin}
+            onClick={onClickLogin}
             formAction=""
             style={{
               fontSize: "15px",

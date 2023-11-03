@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import axios from "axios";
 import "./Signup.css";
 import signuplogo from "../assets/signuplogo.png";
@@ -85,7 +86,8 @@ function Signup() {
         id: userId,
       })
       .then((response) => {
-        console.log(response);
+        console.log(typeof response.data);
+        console.log(userId);
         if (response.data === false) {
           alert("사용 가능한 아이디입니다.");
           setUsableId(true);
@@ -114,7 +116,8 @@ function Signup() {
       userName === "" ||
       userNickName === "" ||
       userBirth === "" ||
-      userEmail === ""
+      userEmail === "" ||
+      confirmcode === ""
     ) {
       alert("빈칸을 모두 채워주세요!");
     } else {
@@ -130,7 +133,8 @@ function Signup() {
         .then((response) => {
           console.log(response);
           alert("회원가입 완료!");
-          document.location.href = "./";
+
+          document.location.href = "./invitecouple";
         })
         .catch((error) => {
           console.log(error);
@@ -423,7 +427,7 @@ function Signup() {
             color: "000000",
             border: "0px",
             borderRadius: "4px",
-            marginTop: "30px",
+            marginTop: "5px",
             marginLeft: "600px",
           }}
         >
