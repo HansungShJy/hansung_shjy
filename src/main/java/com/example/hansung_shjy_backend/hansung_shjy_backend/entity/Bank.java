@@ -1,7 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,9 +37,9 @@ public class Bank implements Serializable {
     private Integer money;
 
     //foreign key
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: User
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: Bank, One: User
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Bank"))
-    private User userid;
+    private User userID;
 
 
     public static Bank toEntity(BankDTO dto) {

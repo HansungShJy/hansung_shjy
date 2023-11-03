@@ -1,7 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.dto;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import lombok.*;
 
 import java.sql.Date;
@@ -13,6 +12,7 @@ import java.sql.Date;
 @Builder
 
 public class BankDTO {
+
     private Integer bankID;
     private Date bankDate;
     private Boolean payMethod;
@@ -24,7 +24,7 @@ public class BankDTO {
 
         Integer userid = null;
 
-        if(entity.getUserid() != null) userid = entity.getUserid().getUserID();
+        if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
 
         try {
             return BankDTO.builder()

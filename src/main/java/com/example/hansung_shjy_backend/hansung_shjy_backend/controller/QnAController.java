@@ -15,8 +15,6 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class QnAController {
 
-    private QnAController qnAController;
-
     private QnAService qnAService;
 
     private UserService userService;
@@ -26,13 +24,12 @@ public class QnAController {
     @GetMapping("/qna")
     public ResponseEntity<Object> firstQnA(@RequestBody Integer user_id) throws ExecutionException, InterruptedException {
         System.out.println("qna userID:: " + user_id);
-        List<QnA> qnaDTO = qnAService.listQnA(user_id);
-        System.out.println("qnaDTO:: " + qnaDTO);
-        return ResponseEntity.ok().body(qnaDTO);
+        List<QnA> qnAList = qnAService.listQnA(user_id);
+        System.out.println("qnAList:: " + qnAList);
+        return ResponseEntity.ok().body(qnAList);
     }
 
     // 오늘의 질문 세부화면 =========================================================
-    // 여기도 고쳐야됨 ****************
     @GetMapping("/qna/detail/{qna_id}")
     public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id) throws ExecutionException, InterruptedException {
         System.out.println("qnaDetail qnaID:: " + qna_id);
