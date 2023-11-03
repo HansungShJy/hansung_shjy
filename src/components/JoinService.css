@@ -17,7 +17,8 @@
 }
 
 .checkbox-group input[type="checkbox"] {
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-inline-start: 30px;
 }
 
 .checkbox-group label {
@@ -25,6 +26,7 @@
 }
 
 .form-detail {
+  margin: 10px;
   margin-left: 25px;
   width: 525px;
   height: 100px;
@@ -63,8 +65,8 @@
 
 .join-checkbox {
   margin-bottom: 20px;
-  width: 580px;
-  height: 550px;
+  width: 600px;
+  height: 530px;
   border: 1px solid #ccc;
   overflow: auto;
 }
