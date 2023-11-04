@@ -7,8 +7,7 @@ import axios from "axios";
 function Login() {
   const [userId, setuserId] = useState("");
   const [userPW, setuserPW] = useState("");
-  const [data, setData] = useState([]);
-  const [intId, setIntId] = useState("");
+
   const cookie = new Cookies();
 
   const onIDHandler = (e) => {
@@ -30,8 +29,8 @@ function Login() {
         cookie.remove("userId");
         cookie.set("id", userId);
         console.log(response.data.userID);
-
-        cookie.set("userID", response.data.userID);
+        const loginUser = response.data.userID;
+        cookie.set("userID", loginUser);
         //document.location.href = "/";
       })
       .catch((error) => {
