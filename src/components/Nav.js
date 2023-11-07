@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import React from "react";
 import "./Nav.css";
 
@@ -6,21 +6,56 @@ function Nav() {
   return (
     <div>
       <div className="navbar">
-        <Link className="navbarMenu" to={"/diary"}>
+        <NavLink
+          to="/diary"
+          className="navbarMenu"
+          style={({ isActive }) => ({
+            backgroundColor: isActive ? "rgba(202, 225, 245, 0.5)" : "white",
+            borderRadius: isActive ? "30px" : "0px",
+          })}
+        >
           캘린더
-        </Link>
-        <Link className="navbarMenu" to={"/qna"}>
+        </NavLink>
+        <NavLink
+          className="navbarMenu"
+          to="/qna"
+          style={({ isActive }) => ({
+            backgroundColor: isActive ? "rgba(202, 225, 245, 0.5)" : "white",
+            borderRadius: isActive ? "30px" : "0px",
+          })}
+        >
           오늘의 질문
-        </Link>
-        <Link className="navbarMenu" to={"/pay"}>
+        </NavLink>
+        <NavLink
+          className="navbarMenu"
+          to="/pay"
+          style={({ isActive }) => ({
+            backgroundColor: isActive ? "rgba(202, 225, 245, 0.5)" : "white",
+            borderRadius: isActive ? "30px" : "0px",
+          })}
+        >
           우리의 지출
-        </Link>
-        <Link className="navbarMenu" to={"/plan"}>
+        </NavLink>
+        <NavLink
+          className="navbarMenu"
+          to="/plan"
+          style={({ isActive }) => ({
+            backgroundColor: isActive ? "rgba(202, 225, 245, 0.5)" : "white",
+            borderRadius: isActive ? "30px" : "0px",
+          })}
+        >
           우리의 여행 계획
-        </Link>
-        <Link className="navbarMenu" to={"/mypage"}>
+        </NavLink>
+        <NavLink
+          className="navbarMenu"
+          to="/mypage"
+          style={({ isActive }) => ({
+            backgroundColor: isActive ? "rgba(202, 225, 245, 0.5)" : "white",
+            borderRadius: isActive ? "30px" : "0px",
+          })}
+        >
           마이페이지
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
