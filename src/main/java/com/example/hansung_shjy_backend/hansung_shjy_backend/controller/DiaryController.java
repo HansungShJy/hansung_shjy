@@ -21,9 +21,9 @@ public class DiaryController {
 
     // 홈 화면 ============================================================================
     @GetMapping("/diary")
-    public ResponseEntity<Object> diaryFirst(@RequestBody Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("diary userID:: " + user_id);
-        List<Diary> diaryDTO = diaryService.listDiary(user_id);
+    public ResponseEntity<Object> diaryFirst(@RequestBody Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("diary userID:: " + userid);
+        List<Diary> diaryDTO = diaryService.listDiary(userid);
         System.out.println("diaryDTO:: " + diaryDTO);
         return ResponseEntity.ok().body(diaryDTO);
     }
