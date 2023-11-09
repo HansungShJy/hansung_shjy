@@ -141,7 +141,7 @@ public class UserController {
 
     // 로그아웃 =================================================================================================
     // @GetMapping("/logout") -> 405 error
-    @RequestMapping(value ="/logout", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value ="/logout", produces = "application/json",  method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<String> logout(@RequestBody Integer id) throws ExecutionException, InterruptedException {
         System.out.println("logout id" + id);
         return ResponseEntity.ok().body(userService.logout());
