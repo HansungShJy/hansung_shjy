@@ -24,7 +24,7 @@ public class SecurityConfig implements WebSecurityConfigurer {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT"));
+        configuration.setAllowedMethods(Arrays.asList("*"));  //Arrays.asList("HEAD","POST","GET","DELETE","PUT")
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.setAllowCredentials(true);
@@ -42,7 +42,7 @@ public class SecurityConfig implements WebSecurityConfigurer {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/logout").permitAll()
+                .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
