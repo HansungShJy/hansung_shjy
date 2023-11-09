@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserController {
 
