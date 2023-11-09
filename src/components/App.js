@@ -6,6 +6,12 @@ import Findid from "./Findid";
 import Findpw from "./Findpw";
 import JoinService from "./JoinService";
 import Header from "./Header";
+import Diary from "./Diary";
+import Mypage from "./Mypage";
+import Qna from "./Qna";
+import Pay from "./Pay";
+import Plan from "./Plan";
+import Calendar from "./Calendar";
 
 function App() {
   return (
@@ -18,6 +24,12 @@ function App() {
         <Route path="/findid" element={<Findid />} />
         <Route path="/findpw" element={<Findpw />} />
         <Route path="/joinservice" element={<JoinService />} />
+        <Route path="/diary" element={<Diary />} />
+        <Route path="/qna" element={<Qna />} />
+        <Route path="/plan" element={<Plan />} />
+        <Route path="/pay" element={<Pay />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </BrowserRouter>
   );

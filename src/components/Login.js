@@ -28,10 +28,11 @@ function Login() {
         alert("반갑습니다 회원님");
         cookie.remove("userId");
         cookie.set("id", userId);
-        console.log(response.data.userID);
-        const loginUser = response.data.userID;
-        cookie.set("userID", loginUser);
-        //document.location.href = "/";
+        cookie.set("INT_ID", response.data.userID);
+        cookie.set("nickname", encodeURIComponent(response.data.nickname));
+        //sessionStorage.setItem("id", userId);
+        //localStorage.setItem("id", userId);
+        document.location.href = "/diary";
       })
       .catch((error) => {
         console.log(error);
