@@ -1,0 +1,16 @@
+.custom-modal {
+  width: 700px;
+  height: 250px;
+  display: none;
+  border: 10px;
+  border-color: grba(96, 159, 213, 0.8);
+  border-width: 10px;
+  border-style: groove;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 130px;
+  margin-bottom: 40px;
+}
