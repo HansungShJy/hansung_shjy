@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.BankService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,10 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class BankController {
 
+    @Autowired
     private BankService bankService;
 
+    @Autowired
     private UserService userService;
 
 

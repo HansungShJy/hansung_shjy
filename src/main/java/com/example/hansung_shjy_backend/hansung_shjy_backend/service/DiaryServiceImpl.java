@@ -6,6 +6,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,10 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class DiaryServiceImpl implements DiaryService {
 
+    @Autowired
     DiaryRepository diaryRepository;
 
+    @Autowired
     UserRepository userRepository;
 
 
