@@ -13,7 +13,7 @@ public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecifi
 
     // Bank All
     @Query(value = "SELECT * FROM Bank b WHERE b.userID = :user_id", nativeQuery = true)
-    List<Bank> findByUserID(@Param("user_id") Integer user_id);
+    List<Bank> findAllByUserID(@Param("user_id") Integer user_id);
 
     // Bank Modal
     @Query(value = "SELECT * FROM Bank b WHERE b.userID = :user_id AND b.bankDate = :bank_date", nativeQuery = true)

@@ -49,7 +49,6 @@ public class BankController {
         System.out.println("createBank:: " + bank);
         if (bank == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(bank);
-//        else return new ResponseEntity<>(bank, HttpStatus.CREATED);
     }
 
     // 우리의 지출 수정 =====================================================================

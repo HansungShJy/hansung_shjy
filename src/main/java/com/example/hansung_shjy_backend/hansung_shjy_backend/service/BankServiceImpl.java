@@ -30,7 +30,8 @@ public class BankServiceImpl implements BankService {
         System.out.println("listBank user_id:: " + user_id);
         if (user_id == null) return null;
 
-        List<Bank> bank = bankRepository.findByUserID(user_id);
+        List<Bank> bank = bankRepository.findAllByUserID(user_id);
+        System.out.println("bank list:: " + bank);
         if (bank == null) return null;
         else return bank;
     }
