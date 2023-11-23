@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.BankRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,13 +50,17 @@ public class BankServiceImpl implements BankService {
     // 우리의 지출 등록
     @Override
     public BankDTO createBank(BankDTO bankDTO) throws ExecutionException, InterruptedException {
-//        Bank bank = new Bank();
-//        bank.setBankDate(bankDTO.getBankDate());
-//        bank.setBankTitle(bankDTO.getBankTitle());
-//        bank.setPayMethod(bankDTO.getPayMethod());
-//        bank.setMoney(bankDTO.getMoney());
+        Bank bank = new Bank();
+        bank.setBankDate(bankDTO.getBankDate());
+        bank.setBankTitle(bankDTO.getBankTitle());
+        bank.setPayMethod(bankDTO.getPayMethod());
+        bank.setMoney(bankDTO.getMoney());
+        User user = userRepository.findUserByUserID((bankDTO.getUserID())); // Adjust the repository method accordingly
+        bank.setUserID(user);
+        System.out.println("bank user:: " + user);
+
 //        bank.setUserID(bankDTO.getUserID());
-        Bank bank = Bank.toEntity(bankDTO);
+//        Bank bank = Bank.toEntity(bankDTO);
         System.out.println("BANK service:: " + bankDTO.getUserID());
         Bank savedBank = bankRepository.save(bank);
         return BankDTO.toDTO(savedBank);

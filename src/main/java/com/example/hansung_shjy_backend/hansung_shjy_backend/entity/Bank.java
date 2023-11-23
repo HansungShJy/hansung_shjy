@@ -49,7 +49,6 @@ public class Bank implements Serializable {
                 .payMethod(dto.getPayMethod())
                 .bankTitle(dto.getBankTitle())
                 .money(dto.getMoney())
-                .userID(User.builder().userID(dto.getUserID()).build())
                 .build();
     }
 }
