@@ -32,12 +32,7 @@ public class BankController {
         System.out.println("bank userID:: " + userid);
         List<Bank> bankList = bankService.listBank(userid);
         System.out.println("bankList:: " + bankList);
-
-        List<UserDTO> userDTOList = bankList.stream()
-                .map(bank -> new UserDTO(bank.getUserID().getUserID()))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok().body(userDTOList);
+        return ResponseEntity.ok().body(bankList);
     }
 
     // 우리의 지출 모달창 ====================================================================
