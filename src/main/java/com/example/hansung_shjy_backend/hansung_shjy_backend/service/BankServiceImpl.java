@@ -5,6 +5,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.BankRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -15,8 +16,10 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class BankServiceImpl implements BankService {
 
+    @Autowired
     private BankRepository bankRepository;
 
+    @Autowired
     private UserRepository userRepository;
 
 
