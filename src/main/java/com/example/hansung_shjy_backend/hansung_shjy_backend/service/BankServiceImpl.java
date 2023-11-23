@@ -57,11 +57,6 @@ public class BankServiceImpl implements BankService {
         bank.setMoney(bankDTO.getMoney());
         User user = userRepository.findUserByUserID((bankDTO.getUserID()));
         bank.setUserID(user);
-        System.out.println("bank user:: " + user);
-
-//        bank.setUserID(bankDTO.getUserID());
-//        Bank bank = Bank.toEntity(bankDTO);
-        System.out.println("BANK service:: " + bankDTO.getUserID());
         Bank savedBank = bankRepository.save(bank);
         return BankDTO.toDTO(savedBank);
     }

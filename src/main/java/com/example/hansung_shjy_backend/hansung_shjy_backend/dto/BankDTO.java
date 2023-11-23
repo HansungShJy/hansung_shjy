@@ -22,9 +22,7 @@ public class BankDTO {
 
     public static BankDTO toDTO(Bank entity) {
 
-        Integer userid = null;
-
-        if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
+        Integer userid = (entity.getUserID() != null) ? entity.getUserID().getUserID() : null;
 
         try {
             return BankDTO.builder()

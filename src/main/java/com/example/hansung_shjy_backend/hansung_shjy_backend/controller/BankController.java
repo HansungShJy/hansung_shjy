@@ -45,11 +45,11 @@ public class BankController {
     // 우리의 지출 등록 =====================================================================
     @PostMapping("/pay/save")
     public ResponseEntity<Object> createBank(@RequestBody BankDTO bankDTO) throws ExecutionException, InterruptedException {
-        System.out.println("bankDTO:: " + bankDTO.getUserID());
         BankDTO bank = bankService.createBank(bankDTO);  // 얘만 찍힘
         System.out.println("createBank:: " + bank);
         if (bank == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
-        else return new ResponseEntity<>(bank, HttpStatus.CREATED);
+        else return ResponseEntity.ok().body(bank);
+//        else return new ResponseEntity<>(bank, HttpStatus.CREATED);
     }
 
     // 우리의 지출 수정 =====================================================================
