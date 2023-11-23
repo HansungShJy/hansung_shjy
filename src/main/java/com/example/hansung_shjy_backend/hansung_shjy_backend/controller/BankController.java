@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.BankService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
@@ -13,6 +14,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @RestController
 public class BankController {
@@ -30,7 +32,12 @@ public class BankController {
         System.out.println("bank userID:: " + userid);
         List<Bank> bankList = bankService.listBank(userid);
         System.out.println("bankList:: " + bankList);
-        return ResponseEntity.ok().body(bankList);
+
+        List<UserDTO> userDTOList = bankList.stream()
+                .map(bank -> new UserDTO(bank.getUserID().getUserID()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(userDTOList);
     }
 
     // 우리의 지출 모달창 ====================================================================

@@ -26,6 +26,10 @@ public class UserDTO {
     private String otherID;
     private String Dday;
 
+    public UserDTO(Integer userid) {
+        this.userID = userid;
+    }
+
     public static UserDTO toDTO(User entity) {
         try {
             return UserDTO.builder()
