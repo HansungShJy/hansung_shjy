@@ -49,15 +49,16 @@ public class BankServiceImpl implements BankService {
     // 우리의 지출 등록
     @Override
     public BankDTO createBank(BankDTO bankDTO) throws ExecutionException, InterruptedException {
-        Bank bank = new Bank();
-        bank.setBankDate(bankDTO.getBankDate());
-        bank.setBankTitle(bankDTO.getBankTitle());
-        bank.setPayMethod(bankDTO.getPayMethod());
-        bank.setMoney(bankDTO.getMoney());
-        bank.setUserID(userRepository.findByUserID(bankDTO.getUserID()));
+//        Bank bank = new Bank();
+//        bank.setBankDate(bankDTO.getBankDate());
+//        bank.setBankTitle(bankDTO.getBankTitle());
+//        bank.setPayMethod(bankDTO.getPayMethod());
+//        bank.setMoney(bankDTO.getMoney());
+//        bank.setUserID(bankDTO.getUserID());
+        Bank bank = Bank.toEntity(bankDTO);
         System.out.println("BANK service:: " + bankDTO.getUserID());
-        bankRepository.save(Bank.toEntity(bankDTO));
-        return bankDTO;
+        Bank savedBank = bankRepository.save(bank);
+        return BankDTO.toDTO(savedBank);
     }
 
     // 우리의 지출 수정
