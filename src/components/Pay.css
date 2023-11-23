@@ -2,10 +2,10 @@
   width: 700px;
   height: 250px;
   display: none;
-  border: 10px;
+  border: 4px;
   border-color: grba(96, 159, 213, 0.8);
   border-width: 10px;
-  border-style: groove;
+  border-style: ridge;
 }
 
 .modal-title {

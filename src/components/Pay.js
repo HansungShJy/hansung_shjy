@@ -1,7 +1,7 @@
 import Header from "./Header";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { Modal, Button } from "react-bootstrap";
@@ -12,12 +12,26 @@ function Pay() {
   const [paymethod, setPayMethod] = useState("");
   const [banktitle, setBankTitle] = useState("");
   const [money, setMoney] = useState("");
-  const [events, setEvents] = useState([]);
   const [cookies] = useCookies(["user_id"]);
   const userid = cookies.user_id;
-
+  const calendarRef = useRef(null);
   const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setPayMethod("");
+    setBankTitle("");
+    setMoney("");
+    setShowModal(false);
+  };
+
+  const [ViewData, setViewData] = useState([
+    {
+      id: "",
+      title: "",
+      start: "",
+      method: "",
+      paymoney: "",
+    },
+  ]);
 
   useEffect(() => {
     axios
@@ -26,54 +40,81 @@ function Pay() {
           userid: userid,
         },
       })
-      .then((res) => setEvents(res.data.event))
+      .then((res) => {
+        console.log(JSON.stringify(res.data) + "33333");
+        const formattedEvents = res.data.map((event) => ({
+          title: event.bankTitle,
+          start: new Date(event.bankDate),
+          extendedProps: {
+            method: event.payMethod,
+            paymoney: event.money,
+          },
+        }));
+        console.log(JSON.stringify(formattedEvents) + "evvvvvvv");
+        setViewData(formattedEvents);
+      })
       .catch((err) => {
-        console.log(err);
+        console.log(err + "::err");
       });
-  }, []);
+  }, [userid]);
 
   const handleAddEvent = () => {
-    if (!paymethod || !banktitle || !money) {
+    if (paymethod === "" || banktitle === "" || money === "") {
       alert("빈칸을 모두 입력하세요.");
     } else {
       const newEvent = {
         title: banktitle,
-        start: paymethod,
-        end: money,
+        start: new Date(),
+        extendedProps: {
+          method: paymethod,
+          paymoney: money,
+        },
       };
 
-      console.log(newEvent);
+      console.log(newEvent + "::newevent");
+      console.log(userid);
 
       axios
         .post(`http://localhost:3000/pay/save`, {
-          bankDate: bank_date,
+          bankDate: new Date(),
           payMethod: paymethod,
           bankTitle: banktitle,
           money: money,
+          userID: userid,
         })
-        .then((res) => setEvents(res.data.event))
+        .then((response) => {
+          console.log(JSON.stringify(response.data) + "::res");
+          const calendarApi = calendarRef.current.getApi();
+          calendarApi.addEvent(newEvent);
+          calendarApi.refetchEvents();
+          handleCloseModal();
+        })
         .catch((err) => {
-          console.log(err);
+          console.log(err + "::err2");
         });
-      handleCloseModal();
     }
   };
 
+  console.log(calendarRef + "::ref");
   var today = new Date();
   var year = today.getFullYear();
   var month = ("0" + (today.getMonth() + 1)).slice(-2);
   var day = ("0" + today.getDate()).slice(-2);
-  var bank_date = year + "-" + month + "-" + day;
   var dateString = year + "년 " + month + "월 " + day + "일";
+
+  //dateClick(info) 날짜클릭 -> 수정하기
 
   return (
     <div>
       <Header />
       <div id="calendarBox">
         <FullCalendar
+          ref={calendarRef}
           timeZone="UTC"
           initialView="dayGridMonth"
           plugins={[dayGridPlugin]}
+          dayMaxEventRows={4}
+          events={ViewData}
           headerToolbar={{
             start: "addEventButton",
             center: "title",
