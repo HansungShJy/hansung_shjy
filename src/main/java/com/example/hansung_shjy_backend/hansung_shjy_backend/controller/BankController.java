@@ -26,9 +26,9 @@ public class BankController {
 
     // 우리의 지출 첫 화면 ===================================================================
     @GetMapping("/pay")
-    public ResponseEntity<Object> firstBank(@RequestParam Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("bank userID:: " + user_id);
-        List<Bank> bankList = bankService.listBank(user_id);
+    public ResponseEntity<Object> firstBank(@RequestParam Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("bank userID:: " + userid);
+        List<Bank> bankList = bankService.listBank(userid);
         System.out.println("bankList:: " + bankList);
         return ResponseEntity.ok().body(bankList);
     }
@@ -45,7 +45,7 @@ public class BankController {
     // 우리의 지출 등록 =====================================================================
     @PostMapping("/pay/save")
     public ResponseEntity<Object> createBank(@RequestBody BankDTO bankDTO) throws ExecutionException, InterruptedException {
-        System.out.println("bankDTO:: " + bankDTO);
+        System.out.println("bankDTO:: " + bankDTO.getUserID());
         BankDTO bank = bankService.createBank(bankDTO);
         System.out.println("createBank:: " + bank);
         if (bank == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
