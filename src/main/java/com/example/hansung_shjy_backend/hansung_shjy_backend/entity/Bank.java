@@ -41,14 +41,25 @@ public class Bank implements Serializable {
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Bank"))
     private User userID;
 
+    public void setUserID(User user) {
+        this.userID = user;
+    }
 
     public static Bank toEntity(BankDTO dto) {
-        return Bank.builder()
+        Bank bank =  Bank.builder()
                 .bankID(dto.getBankID())
                 .bankDate(dto.getBankDate())
                 .payMethod(dto.getPayMethod())
                 .bankTitle(dto.getBankTitle())
                 .money(dto.getMoney())
                 .build();
+
+        if (dto.getUserID() != null) {
+            User user = new User();
+            user.setUserID(dto.getUserID());
+            bank.setUserID(user);
+        }
+
+        return bank;
     }
 }

@@ -55,7 +55,7 @@ public class BankServiceImpl implements BankService {
         bank.setBankTitle(bankDTO.getBankTitle());
         bank.setPayMethod(bankDTO.getPayMethod());
         bank.setMoney(bankDTO.getMoney());
-        User user = userRepository.findUserByUserID((bankDTO.getUserID())); // Adjust the repository method accordingly
+        User user = userRepository.findUserByUserID((bankDTO.getUserID()));
         bank.setUserID(user);
         System.out.println("bank user:: " + user);
 
