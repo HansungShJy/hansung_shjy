@@ -49,6 +49,7 @@ function Pay() {
             method: event.payMethod,
             paymoney: event.money,
           },
+          color: event.payMethod === false ? "#FAD9D9" : "rgba(255,233,37,0.5)",
         }));
         console.log(JSON.stringify(formattedEvents) + "evvvvvvv");
         setViewData(formattedEvents);
@@ -56,7 +57,7 @@ function Pay() {
       .catch((err) => {
         console.log(err + "::err");
       });
-  }, [userid]);
+  }, [userid, paymethod]);
 
   const handleAddEvent = () => {
     if (paymethod === "" || banktitle === "" || money === "") {
@@ -110,10 +111,12 @@ function Pay() {
       <div id="calendarBox">
         <FullCalendar
           ref={calendarRef}
+          //eventDisplay="block"
           timeZone="UTC"
           initialView="dayGridMonth"
           plugins={[dayGridPlugin]}
-          dayMaxEventRows={4}
+          dayMaxEvents={true}
+          //dayMaxEventRows={4}
           events={ViewData}
           headerToolbar={{
             start: "addEventButton",
@@ -137,15 +140,6 @@ function Pay() {
           backdrop="static"
           keyboard={false}
           bsPrefix="custom-modal"
-          style={{
-            backgroundColor: "white",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            borderRadius: "15px",
-            maxWidth: "80%",
-          }}
         >
           <Modal.Header>
             <Modal.Title className="modal-title">
@@ -155,51 +149,22 @@ function Pay() {
           <Modal.Body>
             <form>
               <div className="form-group">
-                <label
-                  htmlFor="pay-method"
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    marginLeft: "120px",
-                  }}
-                >
+                <label className="pay-method-lb" htmlFor="pay-method">
                   입/출금
                 </label>
 
-                <label
-                  htmlFor="pay-detail"
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    marginLeft: "155px",
-                  }}
-                >
+                <label className="pay-detail-lb" htmlFor="pay-detail">
                   내역
                 </label>
-                <label
-                  htmlFor="pay-money"
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    marginLeft: "185px",
-                  }}
-                >
+                <label className="pay-money-lb" htmlFor="pay-money">
                   금액
                 </label>
                 <br />
                 <br />
                 <select
                   type="dropbox"
-                  className="form-control"
+                  className="pay-method-drop"
                   id="pay-method"
-                  style={{
-                    fontWeight: "bold",
-                    marginLeft: "100px",
-                    width: "120px",
-                    height: "23px",
-                    outline: "none",
-                    border: "0",
-                  }}
                   onChange={(e) => setPayMethod(e.target.value)}
                 >
                   <option value="">선택해주세요</option>
@@ -209,37 +174,17 @@ function Pay() {
 
                 <input
                   type="text"
-                  className="form-control"
+                  className="pay-detail-ip"
                   id="pay-detail"
                   placeholder="  내용을 입력해주세요."
-                  style={{
-                    borderRadius: "6px",
-                    marginLeft: "60px",
-                    borderColor: "#D9D9D9",
-                    width: "150px",
-                    height: "25px",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                    outline: "none",
-                  }}
                   onChange={(e) => setBankTitle(e.target.value)}
                 />
 
                 <input
                   type="text"
-                  className="form-control"
+                  className="pay-money-ip"
                   id="pay-money"
                   placeholder="  금액을 입력해주세요."
-                  style={{
-                    borderRadius: "6px",
-                    marginLeft: "60px",
-                    borderColor: "#D9D9D9",
-                    width: "150px",
-                    height: "25px",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                    outline: "none",
-                  }}
                   onChange={(e) => setMoney(e.target.value)}
                 />
               </div>
@@ -247,37 +192,16 @@ function Pay() {
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="secondary"
+              variant="close-modal"
+              className="modal-close"
               onClick={handleCloseModal}
-              style={{
-                fontSize: "15px",
-                fontWeight: "bold",
-                width: "230px",
-                height: "30px",
-                backgroundColor: "rgba(175, 205, 245, 0.7)",
-                color: "000000",
-                border: "0px",
-                borderRadius: "10px",
-                marginTop: "10px",
-                marginLeft: "100px",
-              }}
             >
               닫기
             </Button>
             <Button
-              variant="primary"
+              className="modal-addevent"
+              variant="addevent-modal"
               onClick={handleAddEvent}
-              style={{
-                fontSize: "15px",
-                fontWeight: "bold",
-                width: "230px",
-                height: "30px",
-                backgroundColor: "rgba(175, 205, 245, 0.7)",
-                color: "000000",
-                border: "0px",
-                borderRadius: "10px",
-                marginLeft: "40px",
-              }}
             >
               지출 등록하기
             </Button>
