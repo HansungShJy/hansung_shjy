@@ -99,7 +99,7 @@
   margin-left: 20px;
   margin-top: 20px;
   background-color: rgba(175, 205, 245, 0.4);
-  color: grey;
+  color: black;
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -188,13 +188,41 @@
 }
 
 .plusplan-btn {
-  width: 400px;
-  height: 35px;
+  width: 500px;
+  height: 28px;
   font-weight: bold;
-  margin-left: 500px;
-  margin-top: 70px;
-  background-color: rgba(175, 205, 245, 0.6);
+  margin-left: 420px;
+  background-color: rgba(175, 205, 245, 0.7);
   border: none;
   outline: none;
   border-radius: 5px;
+}
+
+.plansave-btn {
+  width: 120px;
+  height: 30px;
+  font-weight: bold;
+  margin-left: 550px;
+  margin-top: 15px;
+  background-color: rgba(175, 205, 245, 0.4);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.plancancle-btn {
+  width: 120px;
+  height: 30px;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-top: 5px;
+  background-color: rgba(175, 205, 245, 0.4);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.plan_date_loop {
+  margin-top: -6px;
+  margin-bottom: -20px;
 }

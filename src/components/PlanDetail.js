@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "./Header";
 import "./PlanDetail.css";
 import Post from "./Post";
+import { useNavigate } from "react-router-dom";
 
 function PlanDetail() {
   const [planTitle, setPlanTitle] = useState("");
@@ -14,17 +15,22 @@ function PlanDetail() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [checkedbox, setCheckedBox] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const navigate = useNavigate();
+  const [locations, setLocations] = useState([]);
   const [enroll_company, setEnroll_company] = useState({
     address: "",
   });
-
-  const [popup, setPopup] = useState(false);
 
   const onPlanHome = (e) => {
     setEnroll_company({
       ...enroll_company,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleLocation = (e) => {
+    setLocations([...locations, { location: e.target.value }]);
   };
 
   const handleComplete = (data) => {
@@ -69,6 +75,16 @@ function PlanDetail() {
 
   const onCheckBox = (e) => {
     setCheckedBox(e.target.value);
+  };
+
+  const handleCancel = () => {
+    if (
+      window.confirm(
+        "여행 계획을 취소하시겠습니까? 현재 작성된 정보가 사라집니다."
+      )
+    ) {
+      navigate("/plan");
+    }
   };
 
   return (
@@ -161,61 +177,73 @@ function PlanDetail() {
         <label className="time-lb">시간</label>
         <label className="reservation-lb">예약</label>
         <br />
-        <label className="day1-1-lb">#1.</label>
-        <input
-          type="text"
-          className="location-ip"
-          userName="PlanLocation"
-          value={location}
-          onChange={onLocation}
-        />
-        <input
-          type="text"
-          userName="planPrice"
-          className="price-ip"
-          value={planPrice}
-          onChange={onPlanPrice}
-        />
-        <label
-          style={{
-            fontSize: "13px",
-            fontWeight: "bold",
-            marginLeft: "5px",
-          }}
-        >
-          원
-        </label>
-        <input
-          type="time"
-          className="timestart-ip"
-          userName="planTime_start"
-          value={startTime}
-          onChange={onStartTime}
-        />
-        <label
-          style={{
-            fontSize: "17px",
-            marginLeft: "16px",
-          }}
-        >
-          ~
-        </label>
-        <input
-          type="time"
-          className="timeend-ip"
-          userName="planTime_end"
-          value={endTime}
-          onChange={onEndTime}
-        />
-        <input
-          type="checkbox"
-          value={checkedbox}
-          style={{ marginLeft: "45px" }}
-          onChange={onCheckBox}
-        />
+        {locations.map((location, index) => (
+          <div className="plan_date_loop" key={index}>
+            <label className="day1-1-lb">#{index + 1}.</label>
+            <input
+              type="text"
+              className="location-ip"
+              userName="PlanLocation"
+              value={location.location}
+              onChange={onLocation}
+            />
+            <input
+              type="text"
+              userName="planPrice"
+              className="price-ip"
+              value={location.planPrice}
+              onChange={onPlanPrice}
+            />
+            <label
+              style={{
+                fontSize: "13px",
+                fontWeight: "bold",
+                marginLeft: "5px",
+              }}
+            >
+              원
+            </label>
+            <input
+              type="time"
+              className="timestart-ip"
+              userName="planTime_start"
+              value={location.startTime}
+              onChange={onStartTime}
+            />
+            <label
+              style={{
+                fontSize: "17px",
+                marginLeft: "16px",
+              }}
+            >
+              ~
+            </label>
+            <input
+              type="time"
+              className="timeend-ip"
+              userName="planTime_end"
+              value={location.endTime}
+              onChange={onEndTime}
+            />
+            <input
+              type="checkbox"
+              value={location.checkedbox}
+              style={{ marginLeft: "45px" }}
+              onChange={onCheckBox}
+            />
+          </div>
+        ))}
+
         <br />
-        <button className="plusplan-btn" type="button">
+        <button className="plusplan-btn" type="button" onClick={handleLocation}>
           일정추가
+        </button>
+        <br />
+        <button className="plansave-btn" type="button">
+          여행계획 등록
+        </button>
+        <button className="plancancle-btn" type="button" onClick={handleCancel}>
+          취소
         </button>
       </div>
     </div>
