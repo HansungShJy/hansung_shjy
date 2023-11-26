@@ -27,13 +27,13 @@
 .trans-lb {
   font-size: 17px;
   font-weight: bold;
-  margin-left: 300px;
+  margin-left: 270px;
 }
 
 .home-lb {
   font-size: 17px;
   font-weight: bold;
-  margin-left: 195px;
+  margin-left: 155px;
 }
 
 .plan-start-ip {
@@ -56,7 +56,7 @@
 
 .transfer_box {
   font-weight: bold;
-  margin-left: 75px;
+  margin-left: 45px;
   width: 140px;
   height: 26px;
   outline: none;
@@ -65,13 +65,27 @@
 }
 
 .home-ip {
-  width: 300px;
+  width: 280px;
   height: 35px;
-  font-size: 18px;
+  font-size: 15px;
   background-color: rgba(202, 225, 245, 0.5);
   border-radius: 25px;
   border: none;
-  margin-left: 80px;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  outline: none;
+  padding-left: 15px;
+}
+
+.homedetail-ip {
+  width: 280px;
+  height: 35px;
+  font-size: 15px;
+  background-color: rgba(202, 225, 245, 0.5);
+  border-radius: 25px;
+  border: none;
+  margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 40px;
   outline: none;

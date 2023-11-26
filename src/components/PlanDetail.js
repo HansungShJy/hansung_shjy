@@ -1,18 +1,35 @@
 import { useState } from "react";
 import Header from "./Header";
 import "./PlanDetail.css";
+import Post from "./Post";
 
 function PlanDetail() {
   const [planTitle, setPlanTitle] = useState("");
   const [startDate, setStartDate] = useState(Date);
   const [endDate, setEndDate] = useState(Date);
   const [traffic, setTraffic] = useState("");
-  const [planHome, setPlanHome] = useState("");
+  const [planDHome, setPlanDHome] = useState("");
   const [location, setLocation] = useState("");
   const [planPrice, setPlanPrice] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [checkedbox, setCheckedBox] = useState(false);
+  const [enroll_company, setEnroll_company] = useState({
+    address: "",
+  });
+
+  const [popup, setPopup] = useState(false);
+
+  const onPlanHome = (e) => {
+    setEnroll_company({
+      ...enroll_company,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleComplete = (data) => {
+    setPopup(!popup);
+  };
 
   const onPlanTitle = (e) => {
     setPlanTitle(e.target.value);
@@ -30,8 +47,8 @@ function PlanDetail() {
     setTraffic(e.target.value);
   };
 
-  const onPlanHome = (e) => {
-    setPlanHome(e.target.value);
+  const onPlanDHome = (e) => {
+    setPlanDHome(e.target.value);
   };
 
   const onLocation = (e) => {
@@ -109,16 +126,33 @@ function PlanDetail() {
           <option value="3">KTX</option>
           <option value="4">비행기</option>
         </select>
+
         <input
           type="text"
+          placeholder="도로명 주소"
           className="home-ip"
           userName="PlanHome"
-          value={planHome}
+          required={true}
+          value={enroll_company.address}
           onChange={onPlanHome}
         />
-        <button className="location-btn" type="button">
+
+        <input
+          type="text"
+          placeholder="상세 주소"
+          className="homedetail-ip"
+          userName="PlanHome"
+          value={planDHome}
+          onChange={onPlanDHome}
+        />
+
+        <button className="location-btn" type="button" onClick={handleComplete}>
           주소찾기
         </button>
+        {popup && (
+          <Post company={enroll_company} setcompany={setEnroll_company}></Post>
+        )}
+
         <br />
         <label className="day1_plan">1일차</label>
         <br />
