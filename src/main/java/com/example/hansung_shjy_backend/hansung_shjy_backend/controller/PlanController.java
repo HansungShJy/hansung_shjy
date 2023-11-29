@@ -22,9 +22,9 @@ public class PlanController {
 
     // 우리의 여행 계획 첫 화면 ===========================================================================
     @GetMapping("/plan")
-    public ResponseEntity<Object> firstPlan(@RequestBody Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("planFirst userID:: " + user_id);
-        List<Plan> planList = planService.listPlan(user_id);
+    public ResponseEntity<Object> firstPlan(@RequestBody Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("planFirst userID:: " + userid);
+        List<Plan> planList = planService.listPlan(userid);
         System.out.println("planList:: " + planList);
         return ResponseEntity.ok().body(planList);
     }

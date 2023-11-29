@@ -32,9 +32,9 @@ public class DiaryController {
     }
 
     // 일기 저장 ===========================================================================
-    @PostMapping("/diary/save/{user_id}")
-    public ResponseEntity<Object> createDiary(@PathVariable Integer user_id, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
-        System.out.println("create Diary User:: " + user_id);
+    @PostMapping("/diary/save/{userid}")
+    public ResponseEntity<Object> createDiary(@PathVariable Integer userid, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+        System.out.println("create Diary User:: " + userid);
         System.out.println("create Diary:: " + diaryDTO);
         DiaryDTO diary = diaryService.createDiary(diaryDTO);
 
@@ -55,10 +55,10 @@ public class DiaryController {
     }
 
     // 일기 전체 보기 리스트 =================================================================
-    @GetMapping("/diary/list/{user_id}")
-    public ResponseEntity<Object> listAllDiary(@PathVariable Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("<diary> user_id::" + user_id);
-        List<Diary> diaryDTO = diaryService.listDiary(user_id);
+    @GetMapping("/diary/list/{userid}")
+    public ResponseEntity<Object> listAllDiary(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("<diary> user_id::" + userid);
+        List<Diary> diaryDTO = diaryService.listDiary(userid);
         System.out.println("diary listAll:: " + diaryDTO);
         if (diaryDTO.isEmpty()) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(diaryDTO);
