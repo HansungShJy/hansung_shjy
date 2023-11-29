@@ -42,9 +42,9 @@ public class BankController {
 
     // 우리의 지출 모달창 ====================================================================
     @GetMapping("/pay/detail/{bankDate}")
-    public ResponseEntity<Object> modalBank(@PathVariable Date bankDate, @RequestBody Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("bankDate:: " + bankDate + ", " + user_id);
-        List<Bank> bankList = bankService.modalBank(user_id, bankDate);
+    public ResponseEntity<Object> modalBank(@PathVariable Date bankDate, @RequestBody Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("bankDate:: " + bankDate + ", " + userid);
+        List<Bank> bankList = bankService.modalBank(userid, bankDate);
         System.out.println("bankList_modal:: " + bankList);
         return ResponseEntity.ok().body(bankList);
     }
