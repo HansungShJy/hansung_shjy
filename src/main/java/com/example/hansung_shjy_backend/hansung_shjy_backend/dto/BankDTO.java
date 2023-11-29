@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.dto;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 public class BankDTO {
 
     private Integer bankID;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bankDate;
     private Boolean payMethod;
     private String bankTitle;

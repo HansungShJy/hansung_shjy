@@ -39,11 +39,11 @@ public class BankServiceImpl implements BankService {
 
     // 우리의 지출 모달창
     @Override
-    public List<Bank> modalBank(Integer user_id, LocalDate bank_date) throws ExecutionException, InterruptedException {
-        System.out.println("modalBank:: " + user_id + ", " + bank_date);
-        if (user_id == null || bank_date == null) return null;
+    public List<Bank> modalBank(Integer userid, LocalDate bankDate) throws ExecutionException, InterruptedException {
+        System.out.println("modalBank:: " + userid + ", " + bankDate);
+        if (userid == null || bankDate == null) return null;
 
-        List<Bank> bankList = bankRepository.findAllByUserIDAndBankDate(user_id, bank_date);
+        List<Bank> bankList = bankRepository.findAllByUserIDAndBankDate(userid, bankDate);
         System.out.println("bankList:: " + bankList);
         if (bankList == null) return null;
         else return bankList;
