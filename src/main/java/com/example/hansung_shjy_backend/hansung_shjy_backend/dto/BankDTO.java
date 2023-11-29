@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.sql.Date;
 public class BankDTO {
 
     private Integer bankID;
-    private Date bankDate;
+    private LocalDate bankDate;
     private Boolean payMethod;
     private String bankTitle;
     private Integer money;

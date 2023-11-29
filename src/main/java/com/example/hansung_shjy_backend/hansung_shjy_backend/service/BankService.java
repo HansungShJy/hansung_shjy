@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -13,7 +14,7 @@ public interface BankService {
     List<Bank> listBank(Integer user_id) throws ExecutionException, InterruptedException;
 
     // 우리의 지출 모달창 (목록) ====================================================
-    List<Bank> modalBank(Integer user_id, Date bank_date) throws ExecutionException, InterruptedException;
+    List<Bank> modalBank(Integer user_id, LocalDate bank_date) throws ExecutionException, InterruptedException;
 
     // 우리의 지출 등록 ============================================================
     BankDTO createBank(BankDTO bankDTO) throws ExecutionException, InterruptedException;

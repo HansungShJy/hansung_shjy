@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -38,7 +39,7 @@ public class BankServiceImpl implements BankService {
 
     // 우리의 지출 모달창
     @Override
-    public List<Bank> modalBank(Integer user_id, Date bank_date) throws ExecutionException, InterruptedException {
+    public List<Bank> modalBank(Integer user_id, LocalDate bank_date) throws ExecutionException, InterruptedException {
         System.out.println("modalBank:: " + user_id + ", " + bank_date);
         if (user_id == null || bank_date == null) return null;
 
