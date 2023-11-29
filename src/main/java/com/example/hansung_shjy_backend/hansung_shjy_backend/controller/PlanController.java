@@ -5,6 +5,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.PlanService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,10 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class PlanController {
 
+    @Autowired
     private PlanService planService;
 
+    @Autowired
     private UserService userService;
 
     // 우리의 여행 계획 첫 화면 ===========================================================================

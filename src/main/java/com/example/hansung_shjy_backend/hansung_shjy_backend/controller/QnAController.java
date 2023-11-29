@@ -5,6 +5,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.QnAService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,10 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class QnAController {
 
+    @Autowired
     private QnAService qnAService;
 
+    @Autowired
     private UserService userService;
 
 

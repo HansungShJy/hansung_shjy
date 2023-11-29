@@ -18,12 +18,11 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
-
-    private UserDTO userDTO;
 
     @Autowired
     public UserController(UserService userService) {
@@ -90,8 +89,6 @@ public class UserController {
 
         String other_nickname = userService.findNicknameByEmail(email);
         System.out.println("connect nickname:: " + other_nickname);
-        // 상대방도 otherID, Dday 서로의 값으로 들어가야함
-
 
         if (other_nickname == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
 
@@ -140,7 +137,6 @@ public class UserController {
     }
 
     // 로그아웃 =================================================================================================
-    // @GetMapping("/logout") -> 405 error
     @RequestMapping(value ="/logout", produces = "application/json",  method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<String> logout(@RequestBody Integer id) throws ExecutionException, InterruptedException {
         System.out.println("logout id" + id);
