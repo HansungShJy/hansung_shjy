@@ -5,14 +5,12 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.BankService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -44,7 +42,7 @@ public class BankController {
 
     // 우리의 지출 모달창 ====================================================================
     @GetMapping("/pay/detail/{bankDate}")
-    public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date bankDate, @RequestBody Integer userid) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date bankDate, @RequestBody Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("bankDate:: " + bankDate + ", " + userid);
         List<Bank> bankList = bankService.modalBank(userid, bankDate);
         System.out.println("bankList_modal:: " + bankList);
