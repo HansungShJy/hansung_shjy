@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -27,6 +28,7 @@ public class Bank implements Serializable {
     private Integer bankID;
 
     @Column(name = "bankDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate bankDate;
 

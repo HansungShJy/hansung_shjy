@@ -18,14 +18,14 @@ public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecifi
     List<Bank> findBankByUserID(@Param("userID") Integer userID);
 
     // Bank Modal
-    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :user_id AND b.bankDate = :bank_date", nativeQuery = true)
-    List<Bank> findAllByUserIDAndBankDate(@Param("user_id") Integer user_id, @Param("bank_date") LocalDate bank_date);
+    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :userID AND b.bankDate = :bankDate", nativeQuery = true)
+    List<Bank> findAllByUserIDAndBankDate(@Param("userID") Integer userID, @Param("bankDate") LocalDate bankDate);
 
     // Bank Modify
-    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :user_id AND b.bankID = :bank_id", nativeQuery = true)
-    Bank findAllByUserIDAndBankID(@Param("user_id") Integer user_id, @Param("bank_id") Integer bank_id);
+    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :userID AND b.bankID = :bankID", nativeQuery = true)
+    Bank findAllByUserIDAndBankID(@Param("userID") Integer userID, @Param("bankID") Integer bankID);
 
     // Bank Delete
-    @Query(value = "DELETE * FROM Bank b WHERE b.bankID = :bank_id", nativeQuery = true)
-    Bank findByBankID(@Param("bank_id") Integer bank_id);
+    @Query(value = "DELETE * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
+    Bank findByBankID(@Param("bankID") Integer bankID);
 }
