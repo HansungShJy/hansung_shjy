@@ -1,6 +1,5 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.PlanService;

@@ -1,11 +1,8 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

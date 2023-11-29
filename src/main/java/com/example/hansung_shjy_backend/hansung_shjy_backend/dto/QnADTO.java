@@ -1,7 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.dto;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import lombok.*;
 
 import java.sql.Date;

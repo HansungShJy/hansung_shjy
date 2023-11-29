@@ -2,7 +2,6 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,13 +1,11 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDetailDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 
 @NoArgsConstructor
 @AllArgsConstructor

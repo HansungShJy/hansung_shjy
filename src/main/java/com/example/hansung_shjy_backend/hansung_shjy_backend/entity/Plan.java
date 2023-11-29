@@ -1,6 +1,5 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import jakarta.persistence.*;
 import lombok.*;

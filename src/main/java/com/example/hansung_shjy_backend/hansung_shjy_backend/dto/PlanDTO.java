@@ -1,6 +1,5 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.dto;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import lombok.*;
 
