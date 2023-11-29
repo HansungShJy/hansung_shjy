@@ -43,7 +43,7 @@ public class BankController {
 
     // 우리의 지출 모달창 ====================================================================
     @GetMapping("/pay/detail/{bankDate}")
-    public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate bankDate, @RequestBody Integer userid) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate bankDate, @RequestParam Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("bankDate:: " + bankDate + ", " + userid);
         List<Bank> bankList = bankService.modalBank(userid, bankDate);
         System.out.println("bankList_modal:: " + bankList);
