@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "./Header";
 import "./PlanDetail.css";
 import Post from "./Post";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-function PlanDetail() {
+export function PlanDetail() {
   const [planTitle, setPlanTitle] = useState("");
   const [startDate, setStartDate] = useState(Date);
   const [endDate, setEndDate] = useState(Date);
@@ -16,7 +18,10 @@ function PlanDetail() {
   const [endTime, setEndTime] = useState("");
   const [checkedbox, setCheckedBox] = useState(false);
   const [popup, setPopup] = useState(false);
+  const [cookies] = useCookies(["user_id"]);
+  const userid = cookies.user_id;
   const navigate = useNavigate();
+  const calendarRef = useRef(null);
   const [locations, setLocations] = useState([]);
   const [enroll_company, setEnroll_company] = useState({
     address: "",
@@ -86,6 +91,60 @@ function PlanDetail() {
       navigate("/plan");
     }
   };
+
+  const handleAddPlan = () => {
+    if (
+      planTitle === "" ||
+      startDate === "" ||
+      endDate === "" ||
+      traffic === "" ||
+      planDHome === "" ||
+      enroll_company.address === ""
+      // ||
+      // planPrice === "" ||
+      // location === "" ||
+      // startTime === "" ||
+      // endTime === ""
+    ) {
+      alert("빈칸을 모두 입력하세요.");
+    } else {
+      const newEvent = {
+        title: planTitle,
+        start: startDate,
+        end: endDate,
+        extendedProps: {
+          traffic: traffic,
+          planHome: enroll_company.address + planDHome,
+          // location: location,
+          // planPrice: planPrice,
+          // starttime: startTime,
+          // endtime: endTime,
+          // checkbox: checkedbox,
+        },
+      };
+      console.log(newEvent + "::newevent");
+
+      axios
+        .post(`http://localhost:3000/plan/save`, {
+          planTitle: planTitle,
+          planStartDate: startDate,
+          planEndDate: endDate,
+          planTraffic: traffic,
+          planHome: enroll_company.address + planDHome,
+          userID: userid,
+        })
+        .then((res) => {
+          console.log(JSON.stringify(res.data) + "::res");
+          //console.log(res.data + "res");
+
+          navigate("/plan");
+        })
+        .catch((err) => {
+          console.log(err + "::err2");
+        });
+    }
+  };
+  //console.log(calendarRef.data + "::ref");
 
   return (
     <div>
@@ -239,7 +298,7 @@ function PlanDetail() {
           일정추가
         </button>
         <br />
-        <button className="plansave-btn" type="button">
+        <button className="plansave-btn" type="button" onClick={handleAddPlan}>
           여행계획 등록
         </button>
         <button className="plancancle-btn" type="button" onClick={handleCancel}>

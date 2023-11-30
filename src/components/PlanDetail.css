@@ -37,7 +37,7 @@
 }
 
 .plan-start-ip {
-  width: 100px;
+  width: 120px;
   height: 25px;
   font-size: 12px;
   border-radius: 5px;
@@ -46,7 +46,7 @@
 }
 
 .plan-end-ip {
-  width: 100px;
+  width: 120px;
   height: 25px;
   font-size: 12px;
   border-radius: 5px;
