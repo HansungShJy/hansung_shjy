@@ -36,10 +36,10 @@ public class PlanDetail implements Serializable {
     private Integer planPrice;
 
     @Column(name = "planStartTime")
-    private Time planStartTime;
+    private String planStartTime;
 
     @Column(name = "planEndTime")
-    private Time planEndTime;
+    private String planEndTime;
 
     @Column(name = "planCheck")
     private Boolean planCheck = Boolean.FALSE;  //default : false

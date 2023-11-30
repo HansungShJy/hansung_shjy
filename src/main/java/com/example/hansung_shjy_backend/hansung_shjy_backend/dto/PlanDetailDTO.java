@@ -17,8 +17,8 @@ public class PlanDetailDTO {
     private Integer planNumber;
     private String planLocation;
     private Integer planPrice;
-    private Time planStartTime;
-    private Time planEndTime;
+    private String planStartTime;
+    private String planEndTime;
     private Boolean planCheck;
     private Integer planID;
 
