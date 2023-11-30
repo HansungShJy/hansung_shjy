@@ -1,11 +1,9 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.dto;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.PlanDetail;
 import lombok.*;
 
-import java.sql.Date;
+import java.sql.Time;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,8 +17,8 @@ public class PlanDetailDTO {
     private Integer planNumber;
     private String planLocation;
     private Integer planPrice;
-    private Date planStartTime;
-    private Date planEndTime;
+    private Time planStartTime;
+    private Time planEndTime;
     private Boolean planCheck;
     private Integer planID;
 

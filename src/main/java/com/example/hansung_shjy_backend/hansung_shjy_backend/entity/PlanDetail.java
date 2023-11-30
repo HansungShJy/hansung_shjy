@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,10 +36,10 @@ public class PlanDetail implements Serializable {
     private Integer planPrice;
 
     @Column(name = "planStartTime")
-    private Date planStartTime;
+    private Time planStartTime;
 
     @Column(name = "planEndTime")
-    private Date planEndTime;
+    private Time planEndTime;
 
     @Column(name = "planCheck")
     private Boolean planCheck = Boolean.FALSE;  //default : false
