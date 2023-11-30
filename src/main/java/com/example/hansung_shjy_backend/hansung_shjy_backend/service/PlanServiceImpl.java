@@ -42,6 +42,7 @@ public class PlanServiceImpl implements PlanService {
         plan.setPlanHome(planDTO.getPlanHome());
         plan.setPlanStartDate(planDTO.getPlanStartDate());
         plan.setPlanEndDate(planDTO.getPlanEndDate());
+        System.out.println("planDTO userID:: " +  planDTO.getUserID());
         plan.setUserID(userRepository.findUserByUserID(planDTO.getUserID()));
         planRepository.save(Plan.toEntity(planDTO));
         return planDTO;
