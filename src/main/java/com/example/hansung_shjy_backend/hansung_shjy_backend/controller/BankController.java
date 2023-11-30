@@ -46,8 +46,12 @@ public class BankController {
     public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate bankDate, @RequestParam Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("bankDate:: " + bankDate + ", " + userid);
         List<Bank> bankList = bankService.modalBank(userid, bankDate);
-        System.out.println("bankList_modal:: " + bankList);
-        return ResponseEntity.ok().body(bankList);
+
+        List<BankDTO> bankDTOList = bankList.stream()
+                .map(bank -> new BankDTO(bank.getBankID(), bank.getBankDate(), bank.getPayMethod(), bank.getBankTitle(), bank.getMoney(), bank.getUserID().getUserID()))
+                .collect(Collectors.toList());
+        System.out.println("bankList_modal:: " + bankDTOList);
+        return ResponseEntity.ok().body(bankDTOList);
     }
 
     // 우리의 지출 등록 =====================================================================
