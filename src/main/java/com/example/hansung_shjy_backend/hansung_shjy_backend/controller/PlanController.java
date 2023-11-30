@@ -41,7 +41,7 @@ public class PlanController {
     // 우리의 여행 계획 등록
     @PostMapping("/plan/save")
     public ResponseEntity<Object> createPlan(@RequestBody PlanDTO planDTO, @RequestBody PlanDetailDTO planDetailDTO) throws ExecutionException, InterruptedException {
-        System.out.println("createPlan planDTO:: " + planDTO);
+        System.out.println("createPlan planDTO:: " + planDTO + "planDetailDTO:: " + planDetailDTO);
         String plan = planService.createPlan(planDTO, planDetailDTO);
         System.out.println("createPlan plan:: " + plan);
         if (plan == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
