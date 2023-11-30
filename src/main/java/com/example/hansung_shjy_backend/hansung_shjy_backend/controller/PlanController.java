@@ -3,6 +3,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDetailDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.PlanService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
@@ -40,9 +41,9 @@ public class PlanController {
 
     // 우리의 여행 계획 등록
     @PostMapping("/plan/save")
-    public ResponseEntity<Object> createPlan(@RequestBody PlanDTO planDTO, @RequestBody PlanDetailDTO planDetailDTO) throws ExecutionException, InterruptedException {
-        System.out.println("createPlan planDTO:: " + planDTO + "planDetailDTO:: " + planDetailDTO);
-        String plan = planService.createPlan(planDTO, planDetailDTO);
+    public ResponseEntity<Object> createPlan(@RequestBody PlanRequest planRequest) throws ExecutionException, InterruptedException {
+        System.out.println("createPlan planRequest:: " + planRequest);
+        String plan = planService.createPlan(planRequest);
         System.out.println("createPlan plan:: " + plan);
         if (plan == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(plan, HttpStatus.CREATED);

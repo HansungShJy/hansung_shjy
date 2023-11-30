@@ -41,7 +41,7 @@ public class PlanDetail implements Serializable {
     private Date planEndTime;
 
     @Column(name = "planCheck")
-    private Boolean planCheck;
+    private Boolean planCheck = Boolean.FALSE;  //default : false
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: Plan, One: PlanDetail
