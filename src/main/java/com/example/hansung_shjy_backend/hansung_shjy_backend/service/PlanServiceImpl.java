@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +43,10 @@ public class PlanServiceImpl implements PlanService {
         plan.setPlanHome(planDTO.getPlanHome());
         plan.setPlanStartDate(planDTO.getPlanStartDate());
         plan.setPlanEndDate(planDTO.getPlanEndDate());
-        System.out.println("planDTO userID:: " +  planDTO.getUserID());
-        plan.setUserID(userRepository.findUserByUserID(planDTO.getUserID()));
-        planRepository.save(Plan.toEntity(planDTO));
-        return planDTO;
+        User user  = userRepository.findUserByUserID(planDTO.getUserID());
+        plan.setUserID(user);
+        Plan savedPlan = planRepository.save(plan);
+        return PlanDTO.toDTO(savedPlan);
     }
 
     // 우리의 여행 계획 수정
