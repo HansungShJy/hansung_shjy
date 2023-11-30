@@ -5,6 +5,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,10 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService {
 
+    @Autowired
     private PlanRepository planRepository;
 
+    @Autowired
     private UserRepository userRepository;
 
 
