@@ -26,9 +26,9 @@ public class PlanDetailDTO {
 
     public static PlanDetailDTO toDTO(PlanDetail entity) {
 
-        Integer planid = null;
+        Integer planID = null;
 
-        if(entity.getPlanid() != null) planid = entity.getPlanid().getPlanID();
+        if(entity.getPlanID() != null) planID = entity.getPlanID().getPlanID();
 
         try {
             return PlanDetailDTO.builder()
@@ -40,7 +40,7 @@ public class PlanDetailDTO {
                     .planStartTime(entity.getPlanStartTime())
                     .planEndTime(entity.getPlanEndTime())
                     .planCheck(entity.getPlanCheck())
-                    .planID(planid)
+                    .planID(planID)
                     .build();
         } catch (Error e) {
             return null;

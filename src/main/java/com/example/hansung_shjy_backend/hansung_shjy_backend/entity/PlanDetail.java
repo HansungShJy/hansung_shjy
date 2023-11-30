@@ -46,7 +46,7 @@ public class PlanDetail implements Serializable {
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: Plan, One: PlanDetail
     @JoinColumn(name = "planID", referencedColumnName = "planID", foreignKey = @ForeignKey(name = "planID"))
-    private Plan planid;
+    private Plan planID;
 
 
     public static PlanDetail toEntity(PlanDetailDTO dto) {

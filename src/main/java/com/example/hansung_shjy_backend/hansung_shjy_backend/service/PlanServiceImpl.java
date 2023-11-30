@@ -1,8 +1,11 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDetailDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.PlanDetail;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanDetailRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,9 @@ public class PlanServiceImpl implements PlanService {
     private PlanRepository planRepository;
 
     @Autowired
+    private PlanDetailRepository planDetailRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
 
@@ -34,19 +40,30 @@ public class PlanServiceImpl implements PlanService {
         else return plan;
     }
 
-    // 우리의 여행 계획 등록
+    // 우리의 여행 계획 등록 --> plan, planDetail
     @Override
-    public PlanDTO createPlan(PlanDTO planDTO) throws ExecutionException, InterruptedException {
+    public String createPlan(PlanDTO planDTO, PlanDetailDTO planDetailDTO) throws ExecutionException, InterruptedException {
         Plan plan = new Plan();
+        PlanDetail planDetail = new PlanDetail();
         plan.setPlanTitle(planDTO.getPlanTitle());
         plan.setPlanTraffic(planDTO.getPlanTraffic());
         plan.setPlanHome(planDTO.getPlanHome());
         plan.setPlanStartDate(planDTO.getPlanStartDate());
         plan.setPlanEndDate(planDTO.getPlanEndDate());
         User user  = userRepository.findUserByUserID(planDTO.getUserID());
-        plan.setUserID(user);
+        plan.setUserID(user);  // userID만 꺼내야함
         Plan savedPlan = planRepository.save(plan);
-        return PlanDTO.toDTO(savedPlan);
+
+        planDetail.setPlanID(savedPlan); // planID만 꺼내야함
+        planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
+        planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
+        planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
+        planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
+        planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
+        planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
+        planDetailRepository.save(planDetail);
+
+        return "plan save success";
     }
 
     // 우리의 여행 계획 수정
