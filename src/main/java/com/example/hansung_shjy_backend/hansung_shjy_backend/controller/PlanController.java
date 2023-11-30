@@ -1,5 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.PlanService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @RestController
 public class PlanController {
@@ -24,11 +26,15 @@ public class PlanController {
 
     // 우리의 여행 계획 첫 화면 ===========================================================================
     @GetMapping("/plan")
-    public ResponseEntity<Object> firstPlan(@RequestBody Integer userid) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> firstPlan(@RequestParam Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("planFirst userID:: " + userid);
         List<Plan> planList = planService.listPlan(userid);
         System.out.println("planList:: " + planList);
-        return ResponseEntity.ok().body(planList);
+
+        List<PlanDTO> planDTOList = planList.stream()
+                .map(plan -> new PlanDTO(plan.getPlanID(), plan.getPlanStartDate(), plan.getPlanEndDate(), plan.getPlanHome(), plan.getPlanTraffic(), plan.getPlanTitle(), plan.getUserID().getUserID()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(planDTOList);
     }
 
     // 우리의 여행 계획 등록

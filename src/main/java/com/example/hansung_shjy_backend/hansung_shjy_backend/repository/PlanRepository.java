@@ -12,8 +12,8 @@ import java.util.List;
 public interface PlanRepository extends JpaRepository<Plan, Integer>, JpaSpecificationExecutor<Plan> {
 
     // Plan All
-    @Query(value = "SELECT * FROM Plan p WHERE p.userID = :user_id", nativeQuery = true)
-    List<Plan> findByUserID(@Param("user_id") Integer user_id);
+    @Query(value = "SELECT * FROM Plan p WHERE p.userID = :userID", nativeQuery = true)
+    List<Plan> findByUserID(@Param("userID") Integer userID);
 
     // Plan Modify
     @Query(value = "SELECT * FROM Plan p WHERE p.userID = :user_id AND p.planID = :plan_id", nativeQuery = true)

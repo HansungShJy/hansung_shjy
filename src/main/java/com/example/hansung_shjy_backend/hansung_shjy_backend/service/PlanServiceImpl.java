@@ -21,11 +21,11 @@ public class PlanServiceImpl implements PlanService {
 
     // 우리의 여행 계획 첫 화면
     @Override
-    public List<Plan> listPlan(Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("listPlan user_id:: " + user_id);
-        if (user_id == null) return null;
+    public List<Plan> listPlan(Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("listPlan userid:: " + userid);
+        if (userid == null) return null;
 
-        List<Plan> plan = planRepository.findByUserID(user_id);
+        List<Plan> plan = planRepository.findByUserID(userid);
         if (plan == null) return null;
         else return plan;
     }
