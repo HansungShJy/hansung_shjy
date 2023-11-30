@@ -29,14 +29,21 @@ public class MyPageServiceImpl implements MyPageService {
         else return user;
     }
 
-    // 마이페이지 화면 탈퇴 ==========================================================
+    // 마이페이지 회원 탈퇴 ==========================================================
     @Override
     public String userDelete(Integer userid) throws ExecutionException, InterruptedException {
-        User user = userRepository.findUserByUserID(userid);
+        user = userRepository.findUserByUserID(userid);
         if (user == null) return null;
         else return "delete";
     }
 
-
+    // 마이페이지 회원 정보 수정 =======================================================
+    @Override
+    public User userModify(Integer userid) throws ExecutionException, InterruptedException {
+        user = userRepository.findUserByUserID(userid);
+//        User updateUser = userRepository.(user);
+        if (user == null) return null;
+        else return user;
+    }
 
 }

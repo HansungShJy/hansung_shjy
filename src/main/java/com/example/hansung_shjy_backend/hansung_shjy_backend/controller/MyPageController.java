@@ -34,12 +34,33 @@ public class MyPageController {
         else return ResponseEntity.ok().body(userDTO);
     }
 
-    // 마이페이지 화면 탈퇴 ==============================================
+    // 마이페이지 회원 탈퇴 ==============================================
     @DeleteMapping("/mypage/accountdelete")
     public ResponseEntity<Object> deleteUser(@RequestBody Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("delete userid:: " + userid);
         String delete = myPageService.userDelete(userid);
         if (delete == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body("delete");
+    }
+
+    // 마이페이지 회원 정보 수정 =========================================
+    @PatchMapping("/mypage/edit")
+    public ResponseEntity<Object> modifyUser(@RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
+        System.out.println("modify UserDTO:: " + userDTO);
+        User user = myPageService.userModify(userDTO.getUserID());  // 유저 찾기
+
+        if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+
+        if (userDTO.getNickname() == null) { // Birth만 수정
+            User updateBirth = userRepository.updateUserByBirth(userDTO.getBirth(), userDTO.getUserID());
+            return ResponseEntity.ok().body(updateBirth);
+        } if (userDTO.getBirth() == null) {  // Nickname만 수정
+            User updateNickname = userRepository.updateUserByNickname(userDTO.getNickname(), userDTO.getUserID());
+            return ResponseEntity.ok().body(updateNickname);
+        } else {    // 둘 다 수정
+            User updateBirthAndNickname = userRepository.updateUserByNicknameAndBirth(userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
+            return ResponseEntity.ok().body(updateBirthAndNickname);
+        }
+
     }
 }

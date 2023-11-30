@@ -9,6 +9,9 @@ public interface MyPageService {
     // 마이페이지 첫 화면 ===========================================================
     User user(Integer userid) throws ExecutionException, InterruptedException;
 
-    // 마이페이지 화면 탈퇴 =========================================================
+    // 마이페이지 회원 탈퇴 =========================================================
     String userDelete(Integer userid) throws ExecutionException, InterruptedException;
+
+    // 마이페이지 회원 정보 수정 =========================================================
+    User userModify(Integer userid) throws ExecutionException, InterruptedException;
 }
