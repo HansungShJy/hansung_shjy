@@ -51,18 +51,24 @@ public class MyPageController {
 
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
-        if (userDTO.getNickname() != null || userDTO.getBirth() != null) {
-            Integer updateResult = userRepository.updateUserByNicknameAndBirth(
-                    userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
+        user.setNickname(userDTO.getNickname());
+        user.setBirth(userDTO.getBirth());
 
-            if (updateResult != null && updateResult > 0) {
-                return ResponseEntity.ok().body("User updated successfully");
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("No valid update data provided");
-        }
+        userRepository.save(user);
+
+        return ResponseEntity.ok().body(user);
+//        if (userDTO.getNickname() != null || userDTO.getBirth() != null) {
+//            Integer updateResult = userRepository.updateUserByNicknameAndBirth(
+//                    userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
+//
+//            if (updateResult != null && updateResult > 0) {
+//                return ResponseEntity.ok().body("User updated successfully");
+//            } else {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user");
+//            }
+//        } else {
+//            return ResponseEntity.badRequest().body("No valid update data provided");
+//        }
 
     }
 }
