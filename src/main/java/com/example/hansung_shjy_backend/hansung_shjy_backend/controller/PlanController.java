@@ -34,7 +34,7 @@ public class PlanController {
         System.out.println("planList:: " + planList);
 
         List<PlanDTO> planDTOList = planList.stream()
-                .map(plan -> new PlanDTO(plan.getPlanID(), plan.getPlanStartDate(), plan.getPlanEndDate(), plan.getPlanHome(), plan.getPlanTraffic(), plan.getPlanTitle(), plan.getUserID().getUserID()))
+                .map(plan -> new PlanDTO(plan.getPlanID(), plan.getPlanStartDate(), plan.getPlanEndDate(), plan.getPlanTitle(), plan.getPlanTraffic(), plan.getPlanHome(), plan.getUserID().getUserID()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(planDTOList);
     }
