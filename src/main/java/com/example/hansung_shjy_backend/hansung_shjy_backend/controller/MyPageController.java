@@ -50,20 +50,19 @@ public class MyPageController {
         System.out.println("nickname:: " + userDTO.getNickname() + "birth:: " + userDTO.getBirth());
 
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        try {
-            if (userDTO.getNickname() == null) {
-                Integer updateBirth = userRepository.updateUserByBirth(userDTO.getBirth(), userDTO.getUserID());
-                return ResponseEntity.ok().body("Birth만 수정: " + updateBirth);
-            } else if (userDTO.getBirth() == null) {
-                Integer updateNickname = userRepository.updateUserByNickname(userDTO.getNickname(), userDTO.getUserID());
-                return ResponseEntity.ok().body("Nickname만 수정: " + updateNickname);
+
+        if (userDTO.getNickname() != null || userDTO.getBirth() != null) {
+            Integer updateResult = userRepository.updateUserByNicknameAndBirth(
+                    userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
+
+            if (updateResult != null && updateResult > 0) {
+                return ResponseEntity.ok().body("User updated successfully");
             } else {
-                Integer updateBirthAndNickname = userRepository.updateUserByNicknameAndBirth(userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
-                return ResponseEntity.ok().body("둘 다 수정: " + updateBirthAndNickname);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user");
             }
-        } catch (Exception e) {
-            // Handle any unexpected exceptions
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during user update");
+        } else {
+            return ResponseEntity.badRequest().body("No valid update data provided");
         }
+
     }
 }
