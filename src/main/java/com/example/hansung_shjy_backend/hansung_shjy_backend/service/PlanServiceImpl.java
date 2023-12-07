@@ -53,7 +53,6 @@ public class PlanServiceImpl implements PlanService {
             List<PlanDetailDTO> planDetailDTOList = planRequest.getPlanDetailDTO();
 
             Plan plan = new Plan();
-            PlanDetail planDetail = new PlanDetail();
 
             plan.setPlanTitle(planDTO.getPlanTitle());
             plan.setPlanTraffic(planDTO.getPlanTraffic());
@@ -67,6 +66,8 @@ public class PlanServiceImpl implements PlanService {
             planRepository.save(plan);
 
             for (PlanDetailDTO planDetailDTO : planDetailDTOList) {
+                PlanDetail planDetail = new PlanDetail();
+
                 planDetail.setPlanID(plan);
                 planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
                 planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
@@ -82,19 +83,6 @@ public class PlanServiceImpl implements PlanService {
             return "Plan save success";
         }
     }
-    //@Transactional
-    //    public String createPlan(PlanDTO planDTO, PlanDetailDTO planDetailDTO) throws ExecutionException, InterruptedException {
-    //        // Create and save Plan entity
-    //        Plan plan = Plan.toEntity(planDTO);
-    //        Plan savedPlan = planRepository.save(plan);
-    //
-    //        // Create and save PlanDetail entity with the reference to the saved Plan
-    //        PlanDetail planDetail = PlanDetail.toEntity(planDetailDTO);
-    //        planDetail.setPlanID(savedPlan);
-    //        planDetailRepository.save(planDetail);
-    //
-    //        return "Plan and PlanDetail saved successfully";
-    //    }
 
     // 우리의 여행 계획 수정
     @Override
