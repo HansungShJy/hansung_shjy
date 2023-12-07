@@ -36,8 +36,10 @@ public class MyPageController {
     @DeleteMapping("/mypage/accountdelete/{userid}")
     public ResponseEntity<Object> deleteUser(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("delete userid:: " + userid);
-        String delete = myPageService.userDelete(userid);
-        if (delete == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        User userDTO = userRepository.findUserByUserID(userid);
+//        String delete = myPageService.userDelete(userid);
+        userRepository.delete(userDTO);
+        if (userid == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body("delete");
     }
 
@@ -57,18 +59,6 @@ public class MyPageController {
         userRepository.save(user);
 
         return ResponseEntity.ok().body(user);
-//        if (userDTO.getNickname() != null || userDTO.getBirth() != null) {
-//            Integer updateResult = userRepository.updateUserByNicknameAndBirth(
-//                    userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
-//
-//            if (updateResult != null && updateResult > 0) {
-//                return ResponseEntity.ok().body("User updated successfully");
-//            } else {
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user");
-//            }
-//        } else {
-//            return ResponseEntity.badRequest().body("No valid update data provided");
-//        }
 
     }
 }
