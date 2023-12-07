@@ -70,6 +70,7 @@ public class PlanServiceImpl implements PlanService {
                 planDetail.setPlanID(plan);
                 planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
                 planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
+                planDetail.setPlanPrice(planDetailDTO.getPlanPrice());
                 planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
                 planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
                 planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
