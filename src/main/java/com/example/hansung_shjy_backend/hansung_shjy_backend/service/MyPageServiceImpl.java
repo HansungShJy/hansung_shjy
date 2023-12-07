@@ -34,7 +34,7 @@ public class MyPageServiceImpl implements MyPageService {
     @Override
     @Transactional
     public String userDelete(Integer userid) throws ExecutionException, InterruptedException {
-        User deleteUser = userRepository.findByUserID(userid);
+        Integer deleteUser = userRepository.findByUserID(userid);
         if (deleteUser == null) return null;
         else return "delete";
     }

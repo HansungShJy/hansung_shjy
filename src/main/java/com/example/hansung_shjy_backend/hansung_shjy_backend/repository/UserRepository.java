@@ -43,5 +43,5 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM User u WHERE u.userID = :userID", nativeQuery = true)
-    User findByUserID(@Param("userID") Integer userID);
+    Integer findByUserID(@Param("userID") Integer userID);
 }

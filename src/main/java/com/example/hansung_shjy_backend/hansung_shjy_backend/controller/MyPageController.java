@@ -42,10 +42,10 @@ public class MyPageController {
     }
 
     // 마이페이지 회원 정보 수정 =========================================
-    @PatchMapping("/mypage/edit")
-    public ResponseEntity<Object> modifyUser(@RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
-        System.out.println("modify Userid:: " + userDTO.getUserID());
-        User user = myPageService.userModify(userDTO.getUserID());  // 유저 찾기  // user 확인 필요
+    @PatchMapping("/mypage/edit/{userid}")
+    public ResponseEntity<Object> modifyUser(@PathVariable Integer userid, @RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
+        System.out.println("modify Userid:: " + userid);
+        User user = myPageService.userModify(userid);  // 유저 찾기  // user 확인 필요
 
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
