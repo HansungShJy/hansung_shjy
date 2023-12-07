@@ -35,7 +35,7 @@ public class MyPageController {
     }
 
     // 마이페이지 회원 탈퇴 ==============================================
-    @DeleteMapping("/mypage/accountdelete/{userid}")  // request body is missing
+    @DeleteMapping("/mypage/accountdelete/{userid}")
     public ResponseEntity<Object> deleteUser(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("delete userid:: " + userid);
         String delete = myPageService.userDelete(userid);

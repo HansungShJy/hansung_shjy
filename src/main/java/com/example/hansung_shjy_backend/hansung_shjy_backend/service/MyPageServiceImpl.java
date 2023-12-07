@@ -32,8 +32,8 @@ public class MyPageServiceImpl implements MyPageService {
     // 마이페이지 회원 탈퇴 ==========================================================
     @Override
     public String userDelete(Integer userid) throws ExecutionException, InterruptedException {
-        user = userRepository.findUserByUserID(userid);
-        if (user == null) return null;
+        User deleteUser = userRepository.findByUserID(userid);
+        if (deleteUser == null) return null;
         else return "delete";
     }
 
