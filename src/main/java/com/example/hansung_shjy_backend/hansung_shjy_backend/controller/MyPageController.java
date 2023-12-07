@@ -45,20 +45,23 @@ public class MyPageController {
     @PatchMapping("/mypage/edit/{userid}")
     public ResponseEntity<Object> modifyUser(@PathVariable Integer userid, @RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
         System.out.println("modify Userid:: " + userid);
-        User user = myPageService.userModify(userid);  // 유저 찾기  // user 확인 필요
+        User user = myPageService.userModify(userid);  // 유저 찾기
 
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-
-        if (userDTO.getNickname() == null) { // Birth만 수정
-            Integer updateBirth = userRepository.updateUserByBirth(userDTO.getBirth(), userDTO.getUserID());
-            return ResponseEntity.ok().body("birth만 수정:: " + updateBirth);
-        } if (userDTO.getBirth() == null) {  // Nickname만 수정
-            Integer updateNickname = userRepository.updateUserByNickname(userDTO.getNickname(), userDTO.getUserID());
-            return ResponseEntity.ok().body("nickname만 수정:: " + updateNickname);
-        } else {    // 둘 다 수정
-            Integer updateBirthAndNickname = userRepository.updateUserByNicknameAndBirth(userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
-            return ResponseEntity.ok().body("둘 다 수정" + updateBirthAndNickname);
+        try {
+            if (userDTO.getNickname() == null) {
+                Integer updateBirth = userRepository.updateUserByBirth(userDTO.getBirth(), userDTO.getUserID());
+                return ResponseEntity.ok().body("Birth만 수정: " + updateBirth);
+            } else if (userDTO.getBirth() == null) {
+                Integer updateNickname = userRepository.updateUserByNickname(userDTO.getNickname(), userDTO.getUserID());
+                return ResponseEntity.ok().body("Nickname만 수정: " + updateNickname);
+            } else {
+                Integer updateBirthAndNickname = userRepository.updateUserByNicknameAndBirth(userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
+                return ResponseEntity.ok().body("둘 다 수정: " + updateBirthAndNickname);
+            }
+        } catch (Exception e) {
+            // Handle any unexpected exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during user update");
         }
-
     }
 }
