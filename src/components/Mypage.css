@@ -1,4 +1,4 @@
-input {
+.mypage-ip {
   width: 280px;
   height: 40px;
   font-size: 15px;
@@ -33,5 +33,18 @@ input {
   border: 0px;
   border-radius: 4px;
   margin-top: 40px;
-  margin-left: 980px;
+  margin-left: 700px;
+}
+
+.btn-delete {
+  font-size: 15px;
+  font-weight: bold;
+  width: 180px;
+  height: 30px;
+  background-color: rgba(175, 205, 245, 0.4);
+  color: #d32f2f;
+  border: 0px;
+  border-radius: 4px;
+  margin-top: 40px;
+  margin-left: 100px;
 }
