@@ -23,7 +23,7 @@ public interface BankService {
     BankDTO modifyBank(BankDTO bankDTO) throws ExecutionException, InterruptedException;
 
     // 우리의 지출 삭제 ============================================================
-    void deleteBank(Integer bank_id) throws ExecutionException, InterruptedException;
+    String deleteBank(Integer bank_id) throws ExecutionException, InterruptedException;
 
 
 }

@@ -4,8 +4,10 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -26,6 +28,8 @@ public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecifi
     Bank findAllByUserIDAndBankID(@Param("userID") Integer userID, @Param("bankID") Integer bankID);
 
     // Bank Delete
-    @Query(value = "DELETE * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
-    Bank findByBankID(@Param("bankID") Integer bankID);
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = "DELETE FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
+    Integer findByBankID(@Param("bankID") Integer bankID);
 }

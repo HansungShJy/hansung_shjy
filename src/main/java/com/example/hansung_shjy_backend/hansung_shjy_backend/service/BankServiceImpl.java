@@ -80,10 +80,12 @@ public class BankServiceImpl implements BankService {
     }
 
     // 우리의 지출 삭제
+
     @Override
     @Transactional
-    public void deleteBank(Integer bank_id) throws ExecutionException, InterruptedException {
-        Bank bank = bankRepository.findByBankID(bank_id);
-        if (bank != null) bankRepository.delete(bank);
+    public String deleteBank(Integer bank_id) throws ExecutionException, InterruptedException {
+        Integer deleteBank = bankRepository.findByBankID(bank_id);
+        if (deleteBank == null) return null;
+        else return "bank delete";
     }
 }
