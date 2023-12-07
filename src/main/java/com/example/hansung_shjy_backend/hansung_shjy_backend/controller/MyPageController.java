@@ -35,8 +35,8 @@ public class MyPageController {
     }
 
     // 마이페이지 회원 탈퇴 ==============================================
-    @DeleteMapping("/mypage/accountdelete")  // request body is missing
-    public ResponseEntity<Object> deleteUser(@RequestBody Integer userid) throws ExecutionException, InterruptedException {
+    @DeleteMapping("/mypage/accountdelete/{userid}")  // request body is missing
+    public ResponseEntity<Object> deleteUser(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("delete userid:: " + userid);
         String delete = myPageService.userDelete(userid);
         if (delete == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
@@ -46,7 +46,7 @@ public class MyPageController {
     // 마이페이지 회원 정보 수정 =========================================
     @PatchMapping("/mypage/edit")
     public ResponseEntity<Object> modifyUser(@RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
-        System.out.println("modify UserDTO:: " + userDTO);
+        System.out.println("modify Userid:: " + userDTO.getUserID());
         User user = myPageService.userModify(userDTO.getUserID());  // 유저 찾기  // user 확인 필요
 
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
