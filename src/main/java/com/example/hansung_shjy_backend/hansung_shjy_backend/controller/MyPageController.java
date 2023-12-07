@@ -40,10 +40,9 @@ public class MyPageController {
     @DeleteMapping("/mypage/accountdelete/{userid}")
     public ResponseEntity<Object> deleteUser(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("delete userid:: " + userid);
-        User userDTO = userRepository.findUserByUserID(userid);
+
         userService.deleteUserAndAssociatedObjects(userid);
-//        String delete = myPageService.userDelete(userid);
-        userRepository.delete(userDTO);
+
         if (userid == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body("delete");
     }

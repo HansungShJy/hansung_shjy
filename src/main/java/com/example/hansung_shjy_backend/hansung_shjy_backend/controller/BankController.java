@@ -81,8 +81,9 @@ public class BankController {
     @DeleteMapping("/pay/delete/{bank_id}")
     public ResponseEntity<Object> deleteBank(@PathVariable Integer bank_id) throws ExecutionException, InterruptedException {
         System.out.println("deleteBankID:: " + bank_id);
-        String delete = bankService.deleteBank(bank_id);
-        if (Objects.equals(delete, "delete")) return ResponseEntity.ok().body("delete");
-        else return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        bankService.deleteBank(bank_id);
+
+        if (bank_id == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        else return ResponseEntity.ok().body("bank delete");
     }
 }

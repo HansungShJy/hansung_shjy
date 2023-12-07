@@ -8,6 +8,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -80,9 +81,9 @@ public class BankServiceImpl implements BankService {
 
     // 우리의 지출 삭제
     @Override
-    public String deleteBank(Integer bank_id) throws ExecutionException, InterruptedException {
+    @Transactional
+    public void deleteBank(Integer bank_id) throws ExecutionException, InterruptedException {
         Bank bank = bankRepository.findByBankID(bank_id);
-        if (bank == null) return null;
-        else return "delete";
+        if (bank != null) bankRepository.delete(bank);
     }
 }
