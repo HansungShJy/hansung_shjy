@@ -26,18 +26,21 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 
     // nickname & birth 둘 다 수정
     @Modifying(clearAutomatically = true)
+    @Transactional
     @Query(value = "UPDATE User u SET u.nickname = :nickname AND u.birth = :birth WHERE u.userID = :userID", nativeQuery = true)
-    User updateUserByNicknameAndBirth(@Param("nickname") String nickname, @Param("birth") Date birth, @Param("userID") Integer userID);
+    Integer updateUserByNicknameAndBirth(@Param("nickname") String nickname, @Param("birth") Date birth, @Param("userID") Integer userID);
 
     // nickname만 수정
     @Modifying(clearAutomatically = true)
+    @Transactional
     @Query(value = "UPDATE User u SET u.nickname = :nickname WHERE u.userID = :userID", nativeQuery = true)
-    User updateUserByNickname(@Param("nickname") String nickname, @Param("userID") Integer userID);
+    Integer updateUserByNickname(@Param("nickname") String nickname, @Param("userID") Integer userID);
 
     // birth만 수정
     @Modifying(clearAutomatically = true)
+    @Transactional
     @Query(value = "UPDATE User u SET u.birth = :birth WHERE u.userID = :userID", nativeQuery = true)
-    User updateUserByBirth(@Param("birth") Date birth, @Param("userID") Integer userID);
+    Integer updateUserByBirth(@Param("birth") Date birth, @Param("userID") Integer userID);
 
     // 회원 탈퇴
     @Modifying(clearAutomatically = true)

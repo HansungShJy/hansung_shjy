@@ -50,14 +50,14 @@ public class MyPageController {
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
         if (userDTO.getNickname() == null) { // Birth만 수정
-            User updateBirth = userRepository.updateUserByBirth(userDTO.getBirth(), userDTO.getUserID());
-            return ResponseEntity.ok().body(updateBirth);
+            Integer updateBirth = userRepository.updateUserByBirth(userDTO.getBirth(), userDTO.getUserID());
+            return ResponseEntity.ok().body("birth만 수정:: " + updateBirth);
         } if (userDTO.getBirth() == null) {  // Nickname만 수정
-            User updateNickname = userRepository.updateUserByNickname(userDTO.getNickname(), userDTO.getUserID());
-            return ResponseEntity.ok().body(updateNickname);
+            Integer updateNickname = userRepository.updateUserByNickname(userDTO.getNickname(), userDTO.getUserID());
+            return ResponseEntity.ok().body("nickname만 수정:: " + updateNickname);
         } else {    // 둘 다 수정
-            User updateBirthAndNickname = userRepository.updateUserByNicknameAndBirth(userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
-            return ResponseEntity.ok().body(updateBirthAndNickname);
+            Integer updateBirthAndNickname = userRepository.updateUserByNicknameAndBirth(userDTO.getNickname(), userDTO.getBirth(), userDTO.getUserID());
+            return ResponseEntity.ok().body("둘 다 수정" + updateBirthAndNickname);
         }
 
     }
