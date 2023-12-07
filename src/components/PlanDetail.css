@@ -1,7 +1,7 @@
 .title-lb {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
-  margin-left: 140px;
+  margin-left: 150px;
 }
 
 .title-ip {
@@ -11,7 +11,7 @@
   background-color: rgba(202, 225, 245, 0.5);
   border-radius: 25px;
   border: none;
-  margin-left: 132px;
+  margin-left: 32px;
   margin-top: 10px;
   margin-bottom: 30px;
   outline: none;
@@ -21,13 +21,13 @@
 .date-lb {
   font-size: 17px;
   font-weight: bold;
-  margin-left: 140px;
+  margin-left: 150px;
 }
 
 .trans-lb {
   font-size: 17px;
   font-weight: bold;
-  margin-left: 270px;
+  margin-left: 310px;
 }
 
 .home-lb {
@@ -41,7 +41,7 @@
   height: 25px;
   font-size: 12px;
   border-radius: 5px;
-  margin-left: 140px;
+  margin-left: 150px;
   margin-top: 13px;
 }
 
@@ -76,6 +76,7 @@
   margin-bottom: 40px;
   outline: none;
   padding-left: 15px;
+  padding-right: 15px;
 }
 
 .homedetail-ip {
@@ -90,6 +91,7 @@
   margin-bottom: 40px;
   outline: none;
   padding-left: 15px;
+  padding-right: 15px;
 }
 
 .location-btn {
@@ -108,19 +110,19 @@
 .day1_plan {
   font-size: 17px;
   font-weight: bold;
-  margin-left: 140px;
+  margin-left: 180px;
 }
 
 .location-lb {
   font-size: 13px;
   font-weight: bold;
-  margin-left: 200px;
+  margin-left: 310px;
 }
 
 .price-lb {
   font-size: 13px;
   font-weight: bold;
-  margin-left: 260px;
+  margin-left: 270px;
 }
 
 .time-lb {
@@ -132,13 +134,13 @@
 .reservation-lb {
   font-size: 13px;
   font-weight: bold;
-  margin-left: 270px;
+  margin-left: 260px;
 }
 
 .day1-1-lb {
   font-size: 17px;
   font-weight: bold;
-  margin-left: 140px;
+  margin-left: 250px;
 }
 
 .location-ip {
@@ -191,7 +193,7 @@
   width: 500px;
   height: 28px;
   font-weight: bold;
-  margin-left: 420px;
+  margin-left: 450px;
   background-color: rgba(175, 205, 245, 0.7);
   border: none;
   outline: none;
@@ -202,7 +204,7 @@
   width: 120px;
   height: 30px;
   font-weight: bold;
-  margin-left: 550px;
+  margin-left: 570px;
   margin-top: 15px;
   background-color: rgba(175, 205, 245, 0.4);
   border: none;

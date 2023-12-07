@@ -13,10 +13,11 @@ export function PlanDetail() {
   const [traffic, setTraffic] = useState("");
   const [planDHome, setPlanDHome] = useState("");
   const [location, setLocation] = useState("");
-  const [planPrice, setPlanPrice] = useState("");
+  const [planPrice, setPlanPrice] = useState(0);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [checkedbox, setCheckedBox] = useState(false);
+
   const [popup, setPopup] = useState(false);
   const [cookies] = useCookies(["user_id"]);
   const userid = cookies.user_id;
@@ -34,8 +35,17 @@ export function PlanDetail() {
     });
   };
 
-  const handleLocation = (e) => {
-    setLocations([...locations, { location: e.target.value }]);
+  const handleLocation = () => {
+    setLocations([
+      ...locations,
+      {
+        location: "",
+        planPrice: "",
+        startTime: "",
+        endTime: "",
+        checkedbox: false,
+      },
+    ]);
   };
 
   const handleComplete = (data) => {
@@ -61,25 +71,34 @@ export function PlanDetail() {
   const onPlanDHome = (e) => {
     setPlanDHome(e.target.value);
   };
-
-  const onLocation = (e) => {
-    setLocation(e.target.value);
+  const onLocation = (index, e) => {
+    const newLocations = [...locations];
+    newLocations[index].location = e.target.value;
+    setLocations(newLocations);
   };
 
-  const onPlanPrice = (e) => {
-    setPlanPrice(e.target.value);
+  const onPlanPrice = (index, e) => {
+    const newLocations = [...locations];
+    newLocations[index].planPrice = e.target.value;
+    setLocations(newLocations);
   };
 
-  const onStartTime = (e) => {
-    setStartTime(e.target.value);
+  const onStartTime = (index, e) => {
+    const newLocations = [...locations];
+    newLocations[index].startTime = e.target.value;
+    setLocations(newLocations);
   };
 
-  const onEndTime = (e) => {
-    setEndTime(e.target.value);
+  const onEndTime = (index, e) => {
+    const newLocations = [...locations];
+    newLocations[index].endTime = e.target.value;
+    setLocations(newLocations);
   };
 
-  const onCheckBox = (e) => {
-    setCheckedBox(e.target.value);
+  const onCheckBox = (index, e) => {
+    const newLocations = [...locations];
+    newLocations[index].checkedbox = e.target.checked ? 1 : 0;
+    setLocations(newLocations);
   };
 
   const handleCancel = () => {
@@ -93,20 +112,36 @@ export function PlanDetail() {
   };
 
   const handleAddPlan = () => {
+    console.log(
+      "빈칸 확인:",
+      planTitle,
+      startDate,
+      endDate,
+      traffic,
+      planDHome,
+      enroll_company.address,
+      planPrice,
+      location,
+      startTime,
+      endTime,
+      locations
+    );
+
     if (
       planTitle === "" ||
       startDate === "" ||
       endDate === "" ||
       traffic === "" ||
       planDHome === "" ||
-      enroll_company.address === ""
-      // ||
-      // planPrice === "" ||
-      // location === "" ||
-      // startTime === "" ||
-      // endTime === ""
+      enroll_company.address === "" ||
+      locations.some(
+        (loc) =>
+          loc.location === "" ||
+          loc.planPrice === "" ||
+          loc.startTime === "" ||
+          loc.endTime === ""
+      )
     ) {
-      alert("빈칸을 모두 입력하세요.");
     } else {
       const newEvent = {
         title: planTitle,
@@ -115,23 +150,33 @@ export function PlanDetail() {
         extendedProps: {
           traffic: traffic,
           planHome: enroll_company.address + planDHome,
-          // location: location,
-          // planPrice: planPrice,
-          // starttime: startTime,
-          // endtime: endTime,
-          // checkbox: checkedbox,
+          location: location,
+          planPrice: planPrice,
+          starttime: startTime,
+          endtime: endTime,
+          checkbox: checkedbox ? 1 : 0,
         },
       };
       console.log(newEvent + "::newevent");
-
+      console.log(typeof planDTO + "gksrrgfijrg");
       axios
         .post(`http://localhost:3000/plan/save`, {
-          planTitle: planTitle,
-          planStartDate: startDate,
-          planEndDate: endDate,
-          planTraffic: traffic,
-          planHome: enroll_company.address + planDHome,
-          userID: userid,
+          planDTO: {
+            planTitle: planTitle,
+            planStartDate: startDate,
+            planEndDate: endDate,
+            planTraffic: traffic,
+            planHome: enroll_company.address + planDHome,
+            userID: userid,
+          },
+          planDetailDTO: locations.map((loc) => ({
+            planLocation: loc.location,
+            planPrice: loc.planPrice,
+            planDayNumber: 1,
+            planStartTime: loc.startTime,
+            planEndTime: loc.endTime,
+            planCheck: loc.checkedbox,
+          })),
         })
         .then((res) => {
           console.log(JSON.stringify(res.data) + "::res");
@@ -151,7 +196,7 @@ export function PlanDetail() {
       <Header />
       <div className="plan_Detail_main">
         <label className="title-lb">이번 여행 제목</label>
-        <br />
+
         <input
           className="title-ip"
           type="text"
@@ -244,14 +289,14 @@ export function PlanDetail() {
               className="location-ip"
               userName="PlanLocation"
               value={location.location}
-              onChange={onLocation}
+              onChange={(e) => onLocation(index, e)}
             />
             <input
               type="text"
               userName="planPrice"
               className="price-ip"
               value={location.planPrice}
-              onChange={onPlanPrice}
+              onChange={(e) => onPlanPrice(index, e)}
             />
             <label
               style={{
@@ -267,7 +312,7 @@ export function PlanDetail() {
               className="timestart-ip"
               userName="planTime_start"
               value={location.startTime}
-              onChange={onStartTime}
+              onChange={(e) => onStartTime(index, e)}
             />
             <label
               style={{
@@ -282,13 +327,13 @@ export function PlanDetail() {
               className="timeend-ip"
               userName="planTime_end"
               value={location.endTime}
-              onChange={onEndTime}
+              onChange={(e) => onEndTime(index, e)}
             />
             <input
               type="checkbox"
               value={location.checkedbox}
               style={{ marginLeft: "45px" }}
-              onChange={onCheckBox}
+              onChange={(e) => onCheckBox(index, e)}
             />
           </div>
         ))}
