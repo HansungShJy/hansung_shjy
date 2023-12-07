@@ -44,8 +44,12 @@ public class PlanServiceImpl implements PlanService {
     // 우리의 여행 계획 등록 --> plan, planDetail
     @Override
     public String createPlan(PlanRequest planRequest) throws ExecutionException, InterruptedException {
+        System.out.println("planServiceImpl:: " + planRequest.getPlanDTO().getUserID() + ", " + planRequest.getPlanDetailDTO().getPlanID());
+
         PlanDTO planDTO = planRequest.getPlanDTO();
-        PlanDetailDTO planDetailDTO = planRequest.getPlanDetailDTO();
+        PlanDetailDTO planDetailDTO = planRequest.getPlanDetailDTO(); /// 3. plan 등록시 500 error -> 얘가 null ...
+
+
 
         Plan plan = new Plan();
         PlanDetail planDetail = new PlanDetail();
@@ -59,9 +63,9 @@ public class PlanServiceImpl implements PlanService {
         User user = userRepository.findUserByUserID(planDTO.getUserID());
         plan.setUserID(user);
 
-        Plan savedPlan = planRepository.save(plan);
+        planRepository.save(plan);
 
-        planDetail.setPlanID(savedPlan);
+        planDetail.setPlanID(plan);
         planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
         planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
         planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
