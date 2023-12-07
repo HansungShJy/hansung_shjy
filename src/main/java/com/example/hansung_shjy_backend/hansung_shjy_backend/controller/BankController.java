@@ -78,12 +78,12 @@ public class BankController {
     }
 
     // 우리의 지출 삭제
-    @DeleteMapping("/pay/delete/{bank_id}")
-    public ResponseEntity<Object> deleteBank(@PathVariable Integer bank_id) throws ExecutionException, InterruptedException {
-        System.out.println("deleteBankID:: " + bank_id);
-        bankService.deleteBank(bank_id);
+    @DeleteMapping("/pay/delete/{bankid}")
+    public ResponseEntity<Object> deleteBank(@PathVariable Integer bankid) throws ExecutionException, InterruptedException {
+        System.out.println("deleteBankID:: " + bankid);
+        bankService.deleteBank(bankid);
 
-        if (bank_id == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        if (bankid == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body("bank delete");
     }
 }
