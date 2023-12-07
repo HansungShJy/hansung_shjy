@@ -1,12 +1,14 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,6 +47,10 @@ public class Plan implements Serializable {
     @JsonManagedReference
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Plan"))
     private User userID;
+
+    @OneToMany(mappedBy = "planID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<PlanDetail> planDetails;
 
 
     public static Plan toEntity(PlanDTO dto) {
