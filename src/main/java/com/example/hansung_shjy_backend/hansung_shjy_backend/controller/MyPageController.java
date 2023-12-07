@@ -47,6 +47,8 @@ public class MyPageController {
         System.out.println("modify Userid:: " + userid);
         User user = myPageService.userModify(userid);  // 유저 찾기
 
+        System.out.println("nickname:: " + userDTO.getNickname() + "birth:: " + userDTO.getBirth());
+
         if (user == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         try {
             if (userDTO.getNickname() == null) {
