@@ -7,6 +7,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.ExecutionException;
 
@@ -31,6 +32,7 @@ public class MyPageServiceImpl implements MyPageService {
 
     // 마이페이지 회원 탈퇴 ==========================================================
     @Override
+    @Transactional
     public String userDelete(Integer userid) throws ExecutionException, InterruptedException {
         User deleteUser = userRepository.findByUserID(userid);
         if (deleteUser == null) return null;

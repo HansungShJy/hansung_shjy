@@ -1,11 +1,9 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.MyPageService;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
