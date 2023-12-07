@@ -37,6 +37,7 @@ public class PlanServiceImpl implements PlanService {
         if (userid == null) return null;
 
         List<Plan> plan = planRepository.findByUserID(userid);
+        System.out.println("plan first list :: "+ plan);
         if (plan == null) return null;
         else return plan;
     }
