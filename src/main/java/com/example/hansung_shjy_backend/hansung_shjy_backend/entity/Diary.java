@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,6 +35,7 @@ public class Diary implements Serializable {
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: Diary, One: User
+    @JsonManagedReference
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Diary"))
     private User userID;
 

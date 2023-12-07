@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -50,15 +51,19 @@ public class User implements Serializable {
     private String Dday;   //0000-00-00 형식
 
     @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Plan> plans;
 
     @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Bank> banks;
 
     @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Diary> diaries;
 
     @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<QnA> qnas;
 
     public static User toEntity(UserDTO dto) {

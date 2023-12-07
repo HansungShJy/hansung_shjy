@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDetailDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,6 +47,7 @@ public class PlanDetail implements Serializable {
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: Plan, One: PlanDetail
+    @JsonManagedReference
     @JoinColumn(name = "planID", referencedColumnName = "planID", foreignKey = @ForeignKey(name = "planID"))
     private Plan planID;
 

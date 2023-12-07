@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +44,7 @@ public class Bank implements Serializable {
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: Bank, One: User
+    @JsonManagedReference
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Bank"))
     private User userID;
 
