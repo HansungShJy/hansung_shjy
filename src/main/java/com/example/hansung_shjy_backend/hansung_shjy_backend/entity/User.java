@@ -49,16 +49,16 @@ public class User implements Serializable {
     @Column(name = "Dday")
     private String Dday;   //0000-00-00 형식
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userPlan", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Plan> plans;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userBank", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bank> banks;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userDiary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diary> diaries;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userQnA", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QnA> qnas;
 
 
