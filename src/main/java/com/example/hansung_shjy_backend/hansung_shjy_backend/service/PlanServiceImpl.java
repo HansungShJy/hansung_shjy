@@ -46,36 +46,37 @@ public class PlanServiceImpl implements PlanService {
     public String createPlan(PlanRequest planRequest) throws ExecutionException, InterruptedException {
         System.out.println("planServiceImpl:: " + planRequest.getPlanDTO().getUserID() + ", " + planRequest.getPlanDetailDTO().getPlanID());
 
-        PlanDTO planDTO = planRequest.getPlanDTO();
-        PlanDetailDTO planDetailDTO = planRequest.getPlanDetailDTO(); /// 3. plan 등록시 500 error -> 얘가 null ...
+        if (planRequest.getPlanDTO() == null || planRequest.getPlanDetailDTO() == null) return null;
+        else  {
+            PlanDTO planDTO = planRequest.getPlanDTO();
+            PlanDetailDTO planDetailDTO = planRequest.getPlanDetailDTO();
 
+            Plan plan = new Plan();
+            PlanDetail planDetail = new PlanDetail();
 
+            plan.setPlanTitle(planDTO.getPlanTitle());
+            plan.setPlanTraffic(planDTO.getPlanTraffic());
+            plan.setPlanHome(planDTO.getPlanHome());
+            plan.setPlanStartDate(planDTO.getPlanStartDate());
+            plan.setPlanEndDate(planDTO.getPlanEndDate());
 
-        Plan plan = new Plan();
-        PlanDetail planDetail = new PlanDetail();
+            User user = userRepository.findUserByUserID(planDTO.getUserID());
+            plan.setUserID(user);
 
-        plan.setPlanTitle(planDTO.getPlanTitle());
-        plan.setPlanTraffic(planDTO.getPlanTraffic());
-        plan.setPlanHome(planDTO.getPlanHome());
-        plan.setPlanStartDate(planDTO.getPlanStartDate());
-        plan.setPlanEndDate(planDTO.getPlanEndDate());
+            planRepository.save(plan);
 
-        User user = userRepository.findUserByUserID(planDTO.getUserID());
-        plan.setUserID(user);
+            planDetail.setPlanID(plan);
+            planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
+            planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
+            planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
+            planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
+            planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
+            planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
 
-        planRepository.save(plan);
+            planDetailRepository.save(planDetail);
 
-        planDetail.setPlanID(plan);
-        planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
-        planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
-        planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
-        planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
-        planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
-        planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
-
-        planDetailRepository.save(planDetail);
-
-        return "Plan save success";
+            return "Plan save success";
+        }
     }
     //@Transactional
     //    public String createPlan(PlanDTO planDTO, PlanDetailDTO planDetailDTO) throws ExecutionException, InterruptedException {

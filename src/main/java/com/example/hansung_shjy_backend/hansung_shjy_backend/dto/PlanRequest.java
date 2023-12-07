@@ -14,6 +14,4 @@ public class PlanRequest {
 
     @JsonProperty("planDetailDTO")
     private PlanDetailDTO planDetailDTO;
-
-
 }
