@@ -37,4 +37,6 @@ public interface UserService {
     Integer findUserByUserid(Integer user_id) throws ExecutionException, InterruptedException;
 
     Integer findUseridByEmail(String user_email) throws ExecutionException, InterruptedException;
+
+    void deleteUserAndAssociatedObjects(Integer userid) throws ExecutionException, InterruptedException;
 }

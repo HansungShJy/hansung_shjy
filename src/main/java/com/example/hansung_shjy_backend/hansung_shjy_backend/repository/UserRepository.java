@@ -23,13 +23,6 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     @Query(value = "SELECT nickname FROM user u WHERE u.email = :email", nativeQuery = true)
     String findAllByEmail(@Param("email") String email);
 
-
-    // nickname & birth 둘 다 수정
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query(value = "UPDATE User u SET u.nickname = :nickname, u.birth = :birth WHERE u.userID = :userID", nativeQuery = true)
-    Integer updateUserByNicknameAndBirth(@Param("nickname") String nickname, @Param("birth") Date birth, @Param("userID") Integer userID);
-
     // 회원 탈퇴
     @Modifying(clearAutomatically = true)
     @Transactional

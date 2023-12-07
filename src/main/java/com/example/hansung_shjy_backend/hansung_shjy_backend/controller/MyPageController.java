@@ -4,6 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.MyPageService;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,9 @@ public class MyPageController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
 
     // 마이페이지 첫 화면 ================================================
     @GetMapping("/mypage")
@@ -37,6 +41,7 @@ public class MyPageController {
     public ResponseEntity<Object> deleteUser(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("delete userid:: " + userid);
         User userDTO = userRepository.findUserByUserID(userid);
+        userService.deleteUserAndAssociatedObjects(userid);
 //        String delete = myPageService.userDelete(userid);
         userRepository.delete(userDTO);
         if (userid == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);

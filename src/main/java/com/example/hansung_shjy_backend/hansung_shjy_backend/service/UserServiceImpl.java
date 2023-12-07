@@ -3,6 +3,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.internet.InternetAddress;
 
 import org.springframework.mail.MailException;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Random;
@@ -22,7 +24,11 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PlanRepository planRepository;
 
     @Autowired
     JavaMailSender emailSender;
@@ -211,5 +217,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer findUseridByEmail(String user_email) throws ExecutionException, InterruptedException {
         return userRepository.findUserByEmail(user_email).getUserID();
+    }
+
+    @Transactional
+    @Override
+    public void deleteUserAndAssociatedObjects(Integer userid) {
+        User user = userRepository.findUserByUserID(userid);
+        if (user != null) {
+            userRepository.delete(user);
+        }
     }
 }
