@@ -48,32 +48,34 @@ public class PlanServiceImpl implements PlanService {
 
         if (planRequest.getPlanDTO() == null || planRequest.getPlanDetailDTO() == null) return null;
         else  {
-            List<PlanDTO> planDTO = planRequest.getPlanDTO();
-            List<PlanDetailDTO> planDetailDTO = planRequest.getPlanDetailDTO();
+            PlanDTO planDTO = planRequest.getPlanDTO();
+            List<PlanDetailDTO> planDetailDTOList = planRequest.getPlanDetailDTO();
 
             Plan plan = new Plan();
             PlanDetail planDetail = new PlanDetail();
 
-//            plan.setPlanTitle(planDTO.getPlanTitle());
-//            plan.setPlanTraffic(planDTO.getPlanTraffic());
-//            plan.setPlanHome(planDTO.getPlanHome());
-//            plan.setPlanStartDate(planDTO.getPlanStartDate());
-//            plan.setPlanEndDate(planDTO.getPlanEndDate());
-//
-//            User user = userRepository.findUserByUserID(planDTO.getUserID());
-//            plan.setUserID(user);
-//
-//            planRepository.save(plan);
-//
-//            planDetail.setPlanID(plan);
-//            planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
-//            planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
-//            planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
-//            planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
-//            planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
-//            planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
-//
-//            planDetailRepository.save(planDetail);
+            plan.setPlanTitle(planDTO.getPlanTitle());
+            plan.setPlanTraffic(planDTO.getPlanTraffic());
+            plan.setPlanHome(planDTO.getPlanHome());
+            plan.setPlanStartDate(planDTO.getPlanStartDate());
+            plan.setPlanEndDate(planDTO.getPlanEndDate());
+
+            User user = userRepository.findUserByUserID(planDTO.getUserID());
+            plan.setUserID(user);
+
+            planRepository.save(plan);
+
+            for (PlanDetailDTO planDetailDTO : planDetailDTOList) {
+                planDetail.setPlanID(plan);
+                planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
+                planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
+                planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
+                planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
+                planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
+                planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
+                planDetailRepository.save(planDetail);
+            }
+
 
             return "Plan save success";
         }

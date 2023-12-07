@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PlanRequest {
     @JsonProperty("planDTO")
-    private List<PlanDTO> planDTO;
+    private PlanDTO planDTO;
 
     @JsonProperty("planDetailDTO")
     private List<PlanDetailDTO> planDetailDTO;
