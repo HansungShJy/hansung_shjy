@@ -1,6 +1,7 @@
 import Header from "./Header";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -15,11 +16,11 @@ function Pay() {
   const [paymethod, setPayMethod] = useState("");
   const [banktitle, setBankTitle] = useState("");
   const [money, setMoney] = useState("");
-  const [clickedEvent, setClickedEvent] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
   const [cookies] = useCookies(["user_id"]);
   const userid = cookies.user_id;
+  const [bank_id, setBankID] = useState(null);
   const calendarRef = useRef(null);
+  const navigate = useNavigate();
   const handleShowModal = () => setShowModal(true);
   const handleShowModal2 = () => setShowModal2(true);
 
@@ -106,7 +107,7 @@ function Pay() {
           money: money,
           userID: userid,
         })
-        .then((response) => {
+        .then((res) => {
           //console.log(JSON.stringify(response.data) + "::res");
           const calendarApi = calendarRef.current.getApi();
           calendarApi.addEvent(newEvent);
@@ -156,10 +157,43 @@ function Pay() {
           color: event.payMethod === false ? "#FAD9D9" : "rgba(255,233,37,0.5)",
         }));
         setViewDataList(formattedEvents);
+        setBankID(formattedEvents[0].extendedProps.bankid);
         handleShowModal2();
       })
       .catch((err) => {
         console.log(err + "::err-detail");
+      });
+  };
+
+  const handleEditEvent = (info) => {
+    const bankDate = info.date.toISOString().substring(0, 10);
+
+    axios
+      .patch(`http://localhost:3000/pay/edit/${bank_id}`, {
+        bankDate: bankDate,
+        payMethod: paymethod,
+        bankTitle: banktitle,
+        money: money,
+      })
+      .then((res) => {
+        console.log(res + "수정완");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const payDeleteEvent = () => {
+    if (window.confirm("입/출금 내역을 삭제하시겠습니까?")) {
+      navigate("/pay");
+    }
+    axios
+      .delete(`http://localhost:3000//pay/delete/${bank_id}`)
+      .then((res) => {
+        console.log(res + "입출금 삭제 완");
+      })
+      .catch((error) => {
+        console.error(error + "입출금 삭제 실패");
       });
   };
 
@@ -168,8 +202,10 @@ function Pay() {
       <Header />
       <div id="calendarBox">
         <FullCalendar
+          className="pay-calendar"
           ref={calendarRef}
           //eventDisplay="block"
+          eventClick={payDeleteEvent}
           timeZone="UTC"
           initialView="dayGridMonth"
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -310,7 +346,7 @@ function Pay() {
               <Button
                 className="edit-modal"
                 variant="edit-event"
-                //onClick={handleAddEvent}
+                onClick={handleEditEvent}
               >
                 수정하기
               </Button>
