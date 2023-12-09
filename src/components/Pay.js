@@ -18,7 +18,7 @@ function Pay() {
   const [money, setMoney] = useState("");
   const [cookies] = useCookies(["user_id"]);
   const userid = cookies.user_id;
-  const [bank_id, setBankID] = useState(null);
+  const [bank_id, setBank_ID] = useState(null);
   const calendarRef = useRef(null);
   const navigate = useNavigate();
   const handleShowModal = () => setShowModal(true);
@@ -132,7 +132,7 @@ function Pay() {
   const handlelistEvent = (info) => {
     //alert("클릭했습니다.");
     const bankDate = info.date.toISOString().substring(0, 10);
-    console.log(typeof info.date.toISOString().substring(0, 10));
+    //console.log(typeof info.date.toISOString().substring(0, 10));
 
     setClickedDate(bankDate);
 
@@ -157,7 +157,8 @@ function Pay() {
           color: event.payMethod === false ? "#FAD9D9" : "rgba(255,233,37,0.5)",
         }));
         setViewDataList(formattedEvents);
-        setBankID(formattedEvents[0].extendedProps.bankid);
+        setBank_ID(formattedEvents[0].extendedProps.bankid);
+
         handleShowModal2();
       })
       .catch((err) => {
@@ -183,18 +184,28 @@ function Pay() {
       });
   };
 
-  const payDeleteEvent = () => {
+  const payDeleteEvent = (event) => {
     if (window.confirm("입/출금 내역을 삭제하시겠습니까?")) {
-      navigate("/pay");
+      axios
+        .delete(
+          `http://localhost:3000/pay/delete/${event.extendedProps.bankid}`
+        )
+        .then((res) => {
+          console.log(res + "입출금 삭제 완");
+
+          setViewDataList((prevData) =>
+            prevData.filter(
+              (item) => item.extendedProps.bankid !== event.extendedProps.bankid
+            )
+          );
+          document.location.href = "./pay";
+        })
+        .catch((error) => {
+          console.error(error + "입출금 삭제 실패");
+        });
+    } else {
+      return;
     }
-    axios
-      .delete(`http://localhost:3000//pay/delete/${bank_id}`)
-      .then((res) => {
-        console.log(res + "입출금 삭제 완");
-      })
-      .catch((error) => {
-        console.error(error + "입출금 삭제 실패");
-      });
   };
 
   return (
@@ -205,7 +216,7 @@ function Pay() {
           className="pay-calendar"
           ref={calendarRef}
           //eventDisplay="block"
-          eventClick={payDeleteEvent}
+
           timeZone="UTC"
           initialView="dayGridMonth"
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -313,7 +324,7 @@ function Pay() {
             </Modal.Header>
             <Modal.Body>
               {ViewDataList.map((event) => (
-                <div key={event.bankid}>
+                <div key={event.bankid} onClick={() => payDeleteEvent(event)}>
                   <span
                     className="event-back"
                     style={{ backgroundColor: event.color }} //color or backgroundColor밖에 안됨
