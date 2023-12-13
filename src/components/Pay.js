@@ -8,6 +8,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Modal, Button } from "react-bootstrap";
 import "./Pay.css";
+import edit_icon from "../assets/edit_icon.png";
+import delete_icon from "../assets/delete_icon.png";
 
 function Pay() {
   const [showModal, setShowModal] = useState(false);
@@ -167,7 +169,11 @@ function Pay() {
   };
 
   const handleEditEvent = (info) => {
-    const bankDate = info.date.toISOString().substring(0, 10);
+    const bankDate = info.date
+      ? info.date.toISOString().substring(0, 10)
+      : null;
+
+    console.log(bankDate + "뱅크데이트");
 
     axios
       .patch(`http://localhost:3000/pay/edit/${bank_id}`, {
@@ -324,21 +330,38 @@ function Pay() {
             </Modal.Header>
             <Modal.Body>
               {ViewDataList.map((event) => (
-                <div key={event.bankid} onClick={() => payDeleteEvent(event)}>
-                  <span
-                    className="event-back"
-                    style={{ backgroundColor: event.color }} //color or backgroundColor밖에 안됨
-                  >
+                <div key={event.bankid}>
+                  <span>
                     <span className="event-list">
-                      {/* {event.extendedProps && event.extendedProps.method
-                        ? "입금"
-                        : "출금"}{" "} */}
-                      {event.title}{" "}
-                      {/* {event.extendedProps ? event.extendedProps.paymoney : ""} */}
-                      {/* <input
+                      <p
+                        className="event-color"
+                        style={{ backgroundColor: event.color }}
+                      >
+                        {event.extendedProps && event.extendedProps.method
+                          ? "입금"
+                          : "출금"}{" "}
+                      </p>
+                      <input
+                        className="editTitle_ip"
                         type="text"
-                        placeholder={event.extendedProps.paymoney}
-                      ></input> */}
+                        placeholder={event.title}
+                      />
+                      <input
+                        className="editMoney_ip"
+                        type="text"
+                        placeholder={
+                          event.extendedProps
+                            ? event.extendedProps.paymoney
+                            : "N/A"
+                        }
+                      />
+                      <img
+                        className="delete_icon"
+                        src={delete_icon}
+                        alt="delete_icon.png"
+                        width="20"
+                        onClick={() => payDeleteEvent(event)}
+                      />
                     </span>
 
                     <hr color="#d9d9d9" />
