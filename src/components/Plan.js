@@ -168,10 +168,11 @@ function Plan() {
           </Modal.Header>
           <Modal.Body>
             {events.map((event) => (
-              <div key={event.extendedProps.planID}>
-                {event.title}
-                {event.start}
-                {event.end}
+              <div key={event.extendedProps.planID} className="planD">
+                <label className="planD_title_lb"> {event.title} </label>
+                <label className="planD_start_lb">{event.start}</label>
+                <label> ~ </label>
+                <label className="planD_end_lb">{event.end}</label>
                 <img
                   className="delete_icon"
                   src={delete_icon}
