@@ -24,8 +24,8 @@ public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecifi
     List<Bank> findAllByUserIDAndBankDate(@Param("userID") Integer userID, @Param("bank_date") LocalDate bank_date);
 
     // Bank Modify
-    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :userID AND b.bankID = :bankID", nativeQuery = true)
-    Bank findAllByUserIDAndBankID(@Param("userID") Integer userID, @Param("bankID") Integer bankID);
+    @Query(value = "SELECT * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
+    Bank findAllByBankID(@Param("bankID") Integer bankID);
 
     // Bank Delete
     @Modifying(clearAutomatically = true)

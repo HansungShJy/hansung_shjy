@@ -25,6 +25,8 @@ public class BankServiceImpl implements BankService {
     @Autowired
     private UserRepository userRepository;
 
+    Bank bank;
+
 
     // 우리의 지출 첫 화면
     @Override
@@ -66,17 +68,12 @@ public class BankServiceImpl implements BankService {
 
     // 우리의 지출 수정
     @Override
-    public BankDTO modifyBank(BankDTO bankDTO) throws ExecutionException, InterruptedException {
-        Bank bank = bankRepository.findAllByUserIDAndBankID (bankDTO.getUserID(), bankDTO.getBankID());
+    public Bank modifyBank(Integer bank_id) throws ExecutionException, InterruptedException {
+        bank = bankRepository.findAllByBankID(bank_id);
         System.out.println("modifyBank:: " + bank);
         if (bank == null) return null;
 
-        bank.setBankDate(bankDTO.getBankDate());
-        bank.setBankTitle(bankDTO.getBankTitle());
-        bank.setPayMethod(bankDTO.getPayMethod());
-        bank.setMoney(bankDTO.getMoney());
-        bankRepository.save(Bank.toEntity(bankDTO));
-        return bankDTO;
+        return bank;
     }
 
     // 우리의 지출 삭제

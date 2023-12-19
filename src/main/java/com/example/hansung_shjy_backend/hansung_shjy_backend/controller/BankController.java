@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.BankRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.BankService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -24,7 +23,7 @@ public class BankController {
     private BankService bankService;
 
     @Autowired
-    private UserService userService;
+    private BankRepository bankRepository;
 
 
     // 우리의 지출 첫 화면 ===================================================================
@@ -67,14 +66,18 @@ public class BankController {
     @PatchMapping("/pay/edit/{bank_id}")
     public ResponseEntity<Object> modifyBank(@PathVariable Integer bank_id, @RequestBody BankDTO bankDTO) throws ExecutionException, InterruptedException {
         System.out.println("bankmodifyId:: " + bank_id + ", " + bankDTO);
-        bankDTO.setBankDate(bankDTO.getBankDate());
-        bankDTO.setBankTitle(bankDTO.getBankTitle());
-        bankDTO.setPayMethod(bankDTO.getPayMethod());
-        bankDTO.setMoney(bankDTO.getMoney());
-        bankDTO.setUserID(userService.findUserByUserid(bankDTO.getUserID()));
-        BankDTO bank = bankService.modifyBank(bankDTO);
+        Bank bank = bankService.modifyBank(bank_id);
+
         if (bank == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(bank);
+
+        bank.setBankDate(bankDTO.getBankDate());
+        bank.setBankTitle(bankDTO.getBankTitle());
+        bank.setPayMethod(bankDTO.getPayMethod());
+        bank.setMoney(bankDTO.getMoney());
+
+        bankRepository.save(bank);
+
+        return ResponseEntity.ok().body(bank);
     }
 
     // 우리의 지출 삭제
