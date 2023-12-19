@@ -86,25 +86,30 @@ public class PlanServiceImpl implements PlanService {
 
     // 우리의 여행 계획 수정
     @Override
-    public PlanDTO modifyPlan(PlanDTO planDTO) throws ExecutionException, InterruptedException {
-        Plan plan = planRepository.findAllByUserIDAndPlanID(planDTO.getUserID(), planDTO.getPlanID());
+    public Plan modifyPlan(Integer plan_id) throws ExecutionException, InterruptedException {
+        Plan plan = planRepository.findAllByPlanID(plan_id);
         System.out.println("modifyPlan:: " + plan);
         if (plan == null) return null;
 
-        plan.setPlanTitle(planDTO.getPlanTitle());
-        plan.setPlanTraffic(planDTO.getPlanTraffic());
-        plan.setPlanHome(planDTO.getPlanHome());
-        plan.setPlanStartDate(planDTO.getPlanStartDate());
-        plan.setPlanEndDate(planDTO.getPlanEndDate());
-        planRepository.save(Plan.toEntity(planDTO));
-        return planDTO;
+        return plan;
+    }
+
+    @Override
+    public PlanDetail modifyPlanDetail(Integer plan_id) throws ExecutionException, InterruptedException {
+        PlanDetail planDetail = planDetailRepository.findAllByPlanID(plan_id);
+        System.out.println("modifyPlanDetail:: " + planDetail);
+        if (planDetail == null) return null;
+
+        return planDetail;
     }
 
     // 우리의 여행 계획 삭제
     @Override
     public String deletePlan(Integer plan_id) throws ExecutionException, InterruptedException {
+        PlanDetail planDetail = planDetailRepository.findPlanDetailByPlanID(plan_id);
         Plan plan = planRepository.findByPlanID(plan_id);
-        if (plan == null) return null;
-        else return "delete";
+
+        if (plan == null || planDetail == null) return null;
+        else return "plan & planDetail delete";
     }
 }

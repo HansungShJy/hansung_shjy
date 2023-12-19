@@ -16,8 +16,8 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>, JpaSpecifi
     List<Plan> findByUserID(@Param("userID") Integer userID);
 
     // Plan Modify
-    @Query(value = "SELECT * FROM Plan p WHERE p.userID = :userID AND p.planID = :planID", nativeQuery = true)
-    Plan findAllByUserIDAndPlanID(@Param("userID") Integer userID, @Param("planID") Integer planID);
+    @Query(value = "SELECT * FROM Plan p WHERE p.planID = :planID", nativeQuery = true)
+    Plan findAllByPlanID(@Param("planID") Integer planID);
 
     // Plan Delete
     @Query(value = "DELETE * FROM Plan p WHERE p.planID = :planID", nativeQuery = true)
