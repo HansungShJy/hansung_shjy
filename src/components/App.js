@@ -12,6 +12,8 @@ import Qna from "./Qna";
 import Pay from "./Pay";
 import Plan from "./Plan";
 import Calendar from "./Calendar";
+import PlanDetail from "./PlanDetail";
+import QnaDetail from "./QnaDetail";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/pay" element={<Pay />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/plandetail" element={<PlanDetail />} />
+        <Route path="/qnadetail/:qna_id" element={<QnaDetail />} />
       </Routes>
     </BrowserRouter>
   );

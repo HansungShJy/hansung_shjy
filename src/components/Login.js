@@ -28,7 +28,7 @@ function Login() {
         alert("반갑습니다 회원님");
         cookie.remove("userId");
         cookie.set("id", userId);
-        cookie.set("INT_ID", response.data.userID);
+        cookie.set("user_id", response.data.userID);
         cookie.set("nickname", encodeURIComponent(response.data.nickname));
         //sessionStorage.setItem("id", userId);
         //localStorage.setItem("id", userId);

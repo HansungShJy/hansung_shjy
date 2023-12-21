@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Cookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 import homelogoset from "../assets/homelogoset.png";
 import axios from "axios";
 
@@ -8,8 +8,8 @@ function InviteCouple() {
   const [confirmcode, setConfirmCode] = useState("");
   const [userDday, setuserDday] = useState(Date);
   const [emailConfirmResponse, setEmailConfirmResponse] = useState(null);
-  const cookie = new Cookies();
-  const userId = cookie.get("userId");
+  const [cookies] = useCookies(["id"]);
+  const userid = cookies.id;
 
   const InviteCoupleHandler = (e) => {
     setCoupleEmail(e.target.value);
@@ -49,7 +49,7 @@ function InviteCouple() {
     console.log(emailConfirmResponse);
     if (inputCode === emailConfirmResponse) {
       alert("상대방의 이메일이 인증되었습니다.");
-      console.log(userId);
+      console.log(userid);
     } else {
       alert("상대방의 이메일이 인증되지 않았습니다. 다시 시도해주세요.");
     }
@@ -61,14 +61,14 @@ function InviteCouple() {
     } else {
       axios
         .post("http://localhost:3000/connect", {
-          id: userId,
+          id: userid,
           otherid: CoupleEmail,
           dday: userDday,
         })
         .then((response) => {
           console.log(response);
           alert("상대방과 연결되었습니다.");
-          // document.location.href = "./";
+          document.location.href = "./";
         })
         .catch((error) => {
           console.log(error);
