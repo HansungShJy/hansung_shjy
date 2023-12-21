@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnADTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class QnA implements Serializable {
     @Column(name = "myAnswer")
     private String myAnswer;
 
-    @Column(name = "otherAnswer")
+    @Column(name = "otherAnswer", nullable = true)
     private String otherAnswer;
 
 
