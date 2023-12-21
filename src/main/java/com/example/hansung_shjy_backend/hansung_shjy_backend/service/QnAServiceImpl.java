@@ -49,7 +49,6 @@ public class QnAServiceImpl implements QnAService {
     @Override
     public QnADTO saveQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException {
         QnA qnA = new QnA();
-        qnA.setQnaTitle(qnADTO.getQnaTitle());
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setMyAnswer(qnADTO.getMyAnswer());
         qnA.setUserID(userRepository.findUserByUserID(qnADTO.getUserID()));
@@ -66,7 +65,6 @@ public class QnAServiceImpl implements QnAService {
         System.out.println("modifyQnA:: " + qnA);
         if (qnA == null) return null;
 
-        qnA.setQnaTitle(qnADTO.getQnaTitle());
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setMyAnswer(qnA.getMyAnswer());
         qnA.setUserID(qnA.getUserID());
