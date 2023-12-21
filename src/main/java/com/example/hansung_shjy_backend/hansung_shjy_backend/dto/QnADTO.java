@@ -18,12 +18,15 @@ public class QnADTO {
     private String myAnswer;
     private String otherAnswer;
     private Integer userID;
+    private String otherID;
 
     public static QnADTO toDTO(QnA entity) {
 
         Integer userid = null;
+        String otherid = null;
 
         if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
+        if(entity.getOtherID() != null) otherid = entity.getOtherID().getOtherID();
 
         try {
             return QnADTO.builder()
@@ -32,6 +35,7 @@ public class QnADTO {
                     .myAnswer(entity.getMyAnswer())
                     .otherAnswer(entity.getOtherAnswer())
                     .userID(userid)
+                    .otherID(otherid)
                     .build();
         } catch (Error e) {
             return null;

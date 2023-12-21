@@ -7,6 +7,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.QnARepos
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,23 +51,30 @@ public class QnAServiceImpl implements QnAService {
     // 오늘의 질문 저장
     @Override
     public QnADTO saveQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException {
+        // db -> qna_id, qna_date, my_answer, other_answer, userid(Integer), otherid(String)
         QnA qnA = new QnA();
         qnA.setQnaDate(qnADTO.getQnaDate());
-        qnA.setMyAnswer(qnADTO.getMyAnswer());
         qnA.setUserID(userRepository.findUserByUserID(qnADTO.getUserID()));
+        qnA.setOtherID(userRepository.findUserByNickname(qnADTO.getOtherID()));
 
         User me = userRepository.findUserByUserID(qnADTO.getUserID());  // 나의 user 객체
         Integer myUserid = qnADTO.getUserID(); // 나의 userID
         String myNickname = me.getNickname();  // 나의 nickname
+        String qnAOtherid = qnADTO.getOtherID(); // qnA otherID (Nickname)
 
         String otherNickname = me.getOtherID(); // 상대방 nickname
         User other = userRepository.findUserByNickname(otherNickname); // 상대방의 user 객체
         Integer otherUserid = other.getUserID(); // 상대방의 userID
 
+
         // 짝꿍과 서로 cross
         if (me.getOtherID().equals(other.getNickname()) && other.getOtherID().equals(me.getNickname())) {  // 내 user 객체에 otherid(nickname)이 상대방 user 객체의 nickname과 같으면
-            Integer qnaId = qnARepository.findByUserID(qnADTO.getUserID()).getQnaID(); // qnaRepo에 넣어야됨
-            qnA.setOtherAnswer(qnADTO.getOtherAnswer());
+            // userid가 나랑 같냐 상대방과 같냐로 구분
+            if (me.getUserID().equals(myUserid)) {  //내 userid와 qnaDTO에 있는 userid와 같으면 -> 내가 my_answer에 저장, 상대방이 other_answer에 저장
+                qnA.setMyAnswer(qnADTO.getMyAnswer());
+            } else if (myNickname.equals(qnAOtherid)) { //내 nickname과 qnaDTO에 있는 otherid와 같으면 --> 내가 other_answer에 저장, 상대방이 my_answer에 저장
+                qnA.setOtherAnswer(qnADTO.getMyAnswer());
+            }
         }
 
         QnA savedQnA = qnARepository.save(qnA);

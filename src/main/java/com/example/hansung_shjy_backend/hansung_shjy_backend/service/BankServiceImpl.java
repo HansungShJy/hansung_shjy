@@ -56,6 +56,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public BankDTO createBank(BankDTO bankDTO) throws ExecutionException, InterruptedException {
         Bank bank = new Bank();
+        bank.setBankTitle(bankDTO.getBankTitle());
         bank.setBankDate(bankDTO.getBankDate());
         bank.setPayMethod(bankDTO.getPayMethod());
         bank.setMoney(bankDTO.getMoney());
