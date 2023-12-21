@@ -44,11 +44,10 @@ public class QnAController {
 
     // 오늘의 질문 세부화면 =========================================================
     @GetMapping("/qna/detail/{qna_id}")
-    public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id, @RequestParam Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("qnaDetail qnaID:: " + qna_id);
         QnA qnA = qnAService.detailQnA(qna_id);  // qna detail info
-        QnA myUserId = qnARepository.findByQnaID(qna_id);  // userid(integer)
-        User me = userRepository.findUserByUserID(myUserId.getUserID().getUserID());
+        User me = userRepository.findUserByUserID(userid);
         String myNickname = me.getNickname();
         String otherNickname = me.getOtherID();
 
