@@ -35,9 +35,9 @@ public class QnAController {
 
     // 오늘의 질문 첫 화면 ==========================================================
     @GetMapping("/qna")
-    public ResponseEntity<Object> firstQnA(@RequestBody Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("qna userID:: " + user_id);
-        List<QnA> qnAList = qnAService.listQnA(user_id);
+    public ResponseEntity<Object> firstQnA(@RequestParam Integer userid) throws ExecutionException, InterruptedException {
+        System.out.println("qna userID:: " + userid);
+        List<QnA> qnAList = qnAService.listQnA(userid);
         System.out.println("qnAList:: " + qnAList);
         return ResponseEntity.ok().body(qnAList);
     }
