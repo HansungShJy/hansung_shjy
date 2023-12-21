@@ -46,6 +46,7 @@ public class QnAController {
     @GetMapping("/qna/detail/{qna_id}")
     public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id, @RequestParam Integer userid) throws ExecutionException, InterruptedException {
         System.out.println("qnaDetail qnaID:: " + qna_id);
+        System.out.println("qnaDetail userid:: " + userid);
         QnA qnA = qnAService.detailQnA(qna_id);  // qna detail info
         User me = userRepository.findUserByUserID(userid);
         String myNickname = me.getNickname();
@@ -62,7 +63,7 @@ public class QnAController {
     // 오늘의 질문 저장 ============================================================
     @PostMapping("/qna/save")
     public ResponseEntity<Object> saveQnA(@RequestBody QnADTO qnADTO) throws ExecutionException, InterruptedException {
-        System.out.println("save QnA:: " + qnADTO);
+        System.out.println("save QnA:: " + qnADTO.getMyAnswer());
         QnADTO qna = qnAService.saveQnA(qnADTO);
         if (qna == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(qna, HttpStatus.CREATED);
