@@ -63,7 +63,7 @@ public class QnAController {
     // 오늘의 질문 저장 ============================================================
     @PostMapping("/qna/save")
     public ResponseEntity<Object> saveQnA(@RequestBody QnADTO qnADTO) throws ExecutionException, InterruptedException {
-        System.out.println("save QnA:: " + qnADTO.getMyAnswer());
+        System.out.println("save QnA:: " + qnADTO.getUserID());
         QnADTO qna = qnAService.saveQnA(qnADTO);
         if (qna == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(qna, HttpStatus.CREATED);

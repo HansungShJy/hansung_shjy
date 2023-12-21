@@ -53,6 +53,8 @@ public class QnAServiceImpl implements QnAService {
         qnA.setMyAnswer(qnADTO.getMyAnswer());
         qnA.setUserID(userRepository.findUserByUserID(qnADTO.getUserID()));
 
+        System.out.println("qnaImpl:: " + qnADTO.getUserID());
+
         QnA savedQnA = qnARepository.save(qnA);
 
         return qnADTO.toDTO(savedQnA);
