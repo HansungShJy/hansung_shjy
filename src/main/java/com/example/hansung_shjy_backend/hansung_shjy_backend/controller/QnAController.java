@@ -47,8 +47,8 @@ public class QnAController {
     public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id) throws ExecutionException, InterruptedException {
         System.out.println("qnaDetail qnaID:: " + qna_id);
         QnA qnA = qnAService.detailQnA(qna_id);  // qna detail info
-        Integer myUserId = qnARepository.findByQnaID(qna_id);  // userid(integer)
-        User me = userRepository.findUserByUserID(myUserId);
+        QnA myUserId = qnARepository.findByQnaID(qna_id);  // userid(integer)
+        User me = userRepository.findUserByUserID(myUserId.getUserID().getUserID());
         String myNickname = me.getNickname();
         String otherNickname = me.getOtherID();
 
