@@ -61,10 +61,14 @@ public class QnAController {
     }
 
     // 오늘의 질문 저장 ============================================================
-    @PostMapping("/qna/save")
+    @PostMapping("/qna/save") // qna_date, my_answer, userid(my_answer을 단 사람의 userid)
     public ResponseEntity<Object> saveQnA(@RequestBody QnADTO qnADTO) throws ExecutionException, InterruptedException {
-        System.out.println("save QnA:: " + qnADTO.getUserID());
+        System.out.println("save QnA:: " + qnADTO);
+
         QnADTO qna = qnAService.saveQnA(qnADTO);
+        System.out.println("myAnswer:: " + qna.getMyAnswer());
+        System.out.println("otherAnswer:: " + qna.getOtherAnswer());
+
         if (qna == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(qna, HttpStatus.CREATED);
     }
@@ -75,9 +79,9 @@ public class QnAController {
     public ResponseEntity<Object> editQnA(@PathVariable Integer qna_id, @RequestBody QnADTO qnADTO) throws ExecutionException, InterruptedException {
         System.out.println("qnaEdit qna_id:: " + qna_id);
         System.out.println("qnaEdit qnaDTO:: " + qnADTO);
-        qnADTO.setQnaID(qna_id);
-        qnADTO.setUserID(userService.findUserByUserid(qnADTO.getUserID()));
+
         QnADTO qna = qnAService.modifyQnA(qnADTO);
+
         if (qna == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(qna);
     }
