@@ -23,9 +23,6 @@ public class QnA implements Serializable {
     @Column(name = "qnaID")
     private Integer qnaID;
 
-    @Column(name = "qnaTitle")
-    private String qnaTitle;
-
     @Column(name = "qnaDate")
     private Date qnaDate;
 
@@ -46,7 +43,6 @@ public class QnA implements Serializable {
     public static QnA toEntity(QnADTO dto) {
         return QnA.builder()
                 .qnaID(dto.getQnaID())
-                .qnaTitle(dto.getQnaTitle())
                 .qnaDate(dto.getQnaDate())
                 .myAnswer(dto.getMyAnswer())
                 .otherAnswer(dto.getOtherAnswer())

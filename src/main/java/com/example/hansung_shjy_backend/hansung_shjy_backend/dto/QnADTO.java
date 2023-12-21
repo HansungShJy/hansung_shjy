@@ -14,7 +14,6 @@ import java.sql.Date;
 public class QnADTO {
 
     private Integer qnaID;
-    private String qnaTitle;
     private Date qnaDate;
     private String myAnswer;
     private String otherAnswer;
@@ -29,7 +28,6 @@ public class QnADTO {
         try {
             return QnADTO.builder()
                     .qnaID(entity.getQnaID())
-                    .qnaTitle(entity.getQnaTitle())
                     .qnaDate(entity.getQnaDate())
                     .myAnswer(entity.getMyAnswer())
                     .otherAnswer(entity.getOtherAnswer())

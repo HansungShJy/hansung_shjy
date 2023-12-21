@@ -57,7 +57,6 @@ public class BankServiceImpl implements BankService {
     public BankDTO createBank(BankDTO bankDTO) throws ExecutionException, InterruptedException {
         Bank bank = new Bank();
         bank.setBankDate(bankDTO.getBankDate());
-        bank.setBankTitle(bankDTO.getBankTitle());
         bank.setPayMethod(bankDTO.getPayMethod());
         bank.setMoney(bankDTO.getMoney());
         User user = userRepository.findUserByUserID((bankDTO.getUserID()));
