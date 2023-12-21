@@ -26,7 +26,7 @@ public class QnADTO {
         String otherid = null;
 
         if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
-        if(entity.getOtherID() != null) otherid = entity.getOtherID().getOtherID();
+        if(entity.getOtherID() != null) otherid = entity.getOtherID();
 
         try {
             return QnADTO.builder()

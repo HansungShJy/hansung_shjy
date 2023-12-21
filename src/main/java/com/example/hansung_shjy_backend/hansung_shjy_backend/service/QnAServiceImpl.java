@@ -55,7 +55,7 @@ public class QnAServiceImpl implements QnAService {
         QnA qnA = new QnA();
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setUserID(userRepository.findUserByUserID(qnADTO.getUserID()));
-        qnA.setOtherID(userRepository.findUserByNickname(qnADTO.getOtherID()));
+        qnA.setOtherID((qnADTO.getOtherID()));
 
         User me = userRepository.findUserByUserID(qnADTO.getUserID());  // 나의 user 객체
         Integer myUserid = qnADTO.getUserID(); // 나의 userID

@@ -40,11 +40,8 @@ public class QnA implements Serializable {
     @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID"))
     private User userID;
 
-    //foreign key
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: User(otherID) (String)
-    @JsonManagedReference
-    @JoinColumn(name = "otherID", referencedColumnName = "otherID", foreignKey = @ForeignKey(name = "otherID"))
-    private User otherID;
+    @Column(name = "otherID")
+    private String otherID;
 
 
     public static QnA toEntity(QnADTO dto) {
