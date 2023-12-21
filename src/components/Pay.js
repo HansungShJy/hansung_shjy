@@ -8,7 +8,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Modal, Button } from "react-bootstrap";
 import "./Pay.css";
-import edit_icon from "../assets/edit_icon.png";
 import delete_icon from "../assets/delete_icon.png";
 
 function Pay() {
@@ -98,8 +97,7 @@ function Pay() {
         },
       };
 
-      console.log(newEvent + "::newevent");
-      console.log(userid);
+      console.log(banktitle + "::title");
 
       axios
         .post(`http://localhost:3000/pay/save`, {
@@ -111,6 +109,7 @@ function Pay() {
         })
         .then((res) => {
           //console.log(JSON.stringify(response.data) + "::res");
+          console.log(res + "save res");
           const calendarApi = calendarRef.current.getApi();
           calendarApi.addEvent(newEvent);
           calendarApi.refetchEvents();
@@ -160,30 +159,33 @@ function Pay() {
         }));
         setViewDataList(formattedEvents);
         setBank_ID(formattedEvents[0].extendedProps.bankid);
-
-        handleShowModal2();
       })
       .catch((err) => {
         console.log(err + "::err-detail");
+      })
+      .finally(() => {
+        handleShowModal2();
       });
   };
 
-  const handleEditEvent = (info) => {
-    const bankDate = info.date
-      ? info.date.toISOString().substring(0, 10)
-      : null;
+  const handleEditEvent = (event) => {
+    // const bankDate = info.date
+    //   ? info.date.toISOString().substring(0, 10)
+    //   : null;
 
-    console.log(bankDate + "뱅크데이트");
+    // console.log(bankDate + "뱅크데이트");
+    // console.log("Debug:", bankDate, paymethod, banktitle, money);
 
     axios
       .patch(`http://localhost:3000/pay/edit/${bank_id}`, {
-        bankDate: bankDate,
-        payMethod: paymethod,
-        bankTitle: banktitle,
-        money: money,
+        bankDate: event.bankDate,
+        payMethod: event.paymethod,
+        bankTitle: event.banktitle,
+        money: event.money,
       })
       .then((res) => {
         console.log(res + "수정완");
+        handleCloseModal2();
       })
       .catch((err) => {
         console.error(err);
