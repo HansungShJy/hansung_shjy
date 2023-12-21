@@ -45,7 +45,7 @@ public class PlanServiceImpl implements PlanService {
     // 우리의 여행 계획 등록 --> plan, planDetail
     @Override
     public String createPlan(PlanRequest planRequest) throws ExecutionException, InterruptedException {
-        System.out.println("planServiceImpl:: " + planRequest.getPlanDTO() + ", " + planRequest.getPlanDetailDTO());
+        System.out.println("planServiceImpl:: " + planRequest.getPlanDTO().getPlanStartDate() + ", " + planRequest.getPlanDetailDTO());
 
         if (planRequest.getPlanDTO() == null || planRequest.getPlanDetailDTO() == null) return null;
         else  {
