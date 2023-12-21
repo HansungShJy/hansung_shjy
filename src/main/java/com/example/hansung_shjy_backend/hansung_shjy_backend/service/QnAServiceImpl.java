@@ -5,6 +5,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.QnARepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,10 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class QnAServiceImpl implements QnAService {
 
+    @Autowired
     private QnARepository qnARepository;
 
+    @Autowired
     private UserRepository userRepository;
 
 
@@ -49,10 +52,11 @@ public class QnAServiceImpl implements QnAService {
         qnA.setQnaTitle(qnADTO.getQnaTitle());
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setMyAnswer(qnADTO.getMyAnswer());
-        qnA.setOtherAnswer(qnADTO.getOtherAnswer());
         qnA.setUserID(userRepository.findUserByUserID(qnADTO.getUserID()));
-        qnARepository.save(QnA.toEntity(qnADTO));
-        return qnADTO;
+
+        QnA savedQnA = qnARepository.save(qnA);
+
+        return qnADTO.toDTO(savedQnA);
     }
 
     // 오늘의 질문 수정
@@ -65,7 +69,6 @@ public class QnAServiceImpl implements QnAService {
         qnA.setQnaTitle(qnADTO.getQnaTitle());
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setMyAnswer(qnA.getMyAnswer());
-        qnA.setOtherAnswer(qnA.getOtherAnswer());
         qnA.setUserID(qnA.getUserID());
         qnARepository.save(QnA.toEntity(qnADTO));
         return qnADTO;

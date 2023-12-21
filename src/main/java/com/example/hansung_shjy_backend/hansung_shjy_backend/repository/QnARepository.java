@@ -11,15 +11,18 @@ import java.util.List;
 public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecificationExecutor<QnA> {
 
     // QnA all
-    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :user_id", nativeQuery = true)
-        List<QnA> findAllByUserID(@Param("user_id") Integer user_id);
+    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :userID", nativeQuery = true)
+        List<QnA> findAllByUserID(@Param("userID") Integer userID);
 
     // QnA modify
-    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :user_id AND q.qnaID = :qna_id", nativeQuery = true)
-        QnA findAllByUserIDAndQnaID(@Param("user_id") Integer user_id, @Param("qna_id") Integer qna_id);
+    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :userID AND q.qnaID = :qnaID", nativeQuery = true)
+        QnA findAllByUserIDAndQnaID(@Param("userID") Integer userID, @Param("qnaID") Integer qna_id);
 
     // QnA Detail
-    @Query(value = "SELECT * FROM QnA q WHERE q.qnaID = :qna_id", nativeQuery = true)
-        QnA findQnAByQnaID(@Param("qna_id") Integer qna_id);
+    @Query(value = "SELECT * FROM QnA q WHERE q.qnaID = :qnaID", nativeQuery = true)
+        QnA findQnAByQnaID(@Param("qnaID") Integer qnaID);
 
+    // QnA User Find
+    @Query(value = "SELECT userid FROM QnA q WHERE q.qnaID = : qnaID", nativeQuery = true)
+        Integer findByQnaID(@Param("qnaID") Integer qnaID);
 }
