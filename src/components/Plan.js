@@ -22,6 +22,7 @@ function Plan() {
   const handleShowModal = (event) => {
     setShowModal(true);
     setSelectedEvent(event);
+    console.log(event);
   };
 
   const handleCloseModal = () => {
@@ -42,11 +43,12 @@ function Plan() {
   ]);
 
   const handleDeletePlan = () => {
+    //planid가 첫번째로 지정되어있음.
     if (window.confirm("여행 계획을 삭제하시겠습니까?")) {
+      setPlanID(selectedEvent.extendedProps.planID);
+      console.log(selectedEvent.extendedProps.planID);
       axios
-        .delete(
-          `http://localhost:3000//plan/delete/${selectedEvent.extendedProps.planID}`
-        )
+        .delete(`http://localhost:3000/plan/delete/${plan_id}`)
         .then((res) => {
           console.log(res + "여행계획 삭제 완");
 
@@ -80,8 +82,8 @@ function Plan() {
       },
     }));
 
-    setPlanID(convertedEvents[0].extendedProps.planID);
     setPlanData(convertedEvents);
+    setSelectedEvent(convertedEvents.extendedProps.planID);
     return convertedEvents;
   };
   function getRandomColor() {
@@ -107,7 +109,6 @@ function Plan() {
         console.log(JSON.stringify(res.data) + "::res");
         const events = convertResponseToEvents(res.data);
         setEvents(events);
-        setSelectedEvent(events[0]);
       })
       .catch((err) => {
         console.log(err);

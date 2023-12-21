@@ -24,6 +24,7 @@ export function PlanDetail() {
   const navigate = useNavigate();
   const calendarRef = useRef(null);
   const [locations, setLocations] = useState([]);
+
   const [enroll_company, setEnroll_company] = useState({
     address: "",
   });
@@ -147,6 +148,7 @@ export function PlanDetail() {
         title: planTitle,
         start: startDate,
         end: endDate,
+
         extendedProps: {
           traffic: traffic,
           planHome: enroll_company.address + planDHome,
@@ -204,6 +206,7 @@ export function PlanDetail() {
           value={planTitle}
           onChange={onPlanTitle}
         />
+
         <br />
         <label className="date-lb">날짜</label>
         <label className="trans-lb">교통</label>
