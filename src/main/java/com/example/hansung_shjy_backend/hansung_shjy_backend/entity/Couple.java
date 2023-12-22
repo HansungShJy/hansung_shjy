@@ -21,6 +21,7 @@ import java.util.List;
 
 // Couple 테이블
 public class Couple implements Serializable {
+
     @Id
     @GeneratedValue   //auto_increment
     @Column(name = "coupleID")

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -100,22 +101,16 @@ public class UserServiceImpl implements UserService {
 
     // 커플 연결 -> 코드 생성 & 부여
     public static String createKey() {
-        StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
+        StringBuilder key = new StringBuilder();
+        ThreadLocalRandom rnd = ThreadLocalRandom.current();
 
-        for (int i = 0; i < 8; i++) { // 인증코드 8자리
-            int index = rnd.nextInt(3); // 0~2 까지 랜덤
+        for (int i = 0; i < 8; i++) {
+            int index = rnd.nextInt(3);
 
             switch (index) {
-                case 0 -> key.append((char) ((int) (rnd.nextInt(26)) + 97));
-
-                //  a~z  (ex. 1+97=98 => (char)98 = 'b')
-                case 1 -> key.append((char) ((int) (rnd.nextInt(26)) + 65));
-
-                //  A~Z
-                case 2 -> key.append((rnd.nextInt(10)));
-
-                // 0~9
+                case 0 -> key.append((char) (rnd.nextInt(26) + 97));
+                case 1 -> key.append((char) (rnd.nextInt(26) + 65));
+                case 2 -> key.append(rnd.nextInt(10));
             }
         }
         return key.toString();
