@@ -4,7 +4,6 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @NoArgsConstructor

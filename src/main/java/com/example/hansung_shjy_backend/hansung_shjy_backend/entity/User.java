@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -65,6 +66,11 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<QnA> qnas;
+
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
+    @JsonManagedReference
+    @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID"))
+    private Couple couple;
 
     public static User toEntity(UserDTO dto) {
         return User.builder()
