@@ -17,13 +17,13 @@ public class DiaryDTO {
     private Date diaryDate;
     private String myDiary;
     private String otherDiary;
-    private Integer userID;
+    private Integer coupleID;
 
     public static DiaryDTO toDTO(Diary entity) {
 
-        Integer userid = null;
+        Integer coupleid = null;
 
-        if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
+        if(entity.getCouple() != null) coupleid = entity.getCouple().getCoupleID();
 
         try {
             return DiaryDTO.builder()
@@ -31,7 +31,7 @@ public class DiaryDTO {
                     .diaryDate(entity.getDiaryDate())
                     .myDiary(entity.getMyDiary())
                     .otherDiary(entity.getOtherDiary())
-                    .userID(userid)
+                    .coupleID(coupleid)
                     .build();
         } catch (Error e) {
             return null;

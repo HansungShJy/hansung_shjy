@@ -51,22 +51,6 @@ public class User implements Serializable {
     @Column(name = "Dday")
     private String Dday;   //0000-00-00 형식
 
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<Plan> plans;
-
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<Bank> banks;
-
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<Diary> diaries;
-
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<QnA> qnas;
-
     @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
     @JsonManagedReference
     @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID"))

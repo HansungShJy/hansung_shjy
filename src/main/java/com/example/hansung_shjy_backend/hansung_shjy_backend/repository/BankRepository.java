@@ -16,12 +16,12 @@ import java.util.List;
 public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecificationExecutor<Bank> {
 
     // Bank All
-    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :userID", nativeQuery = true)
-    List<Bank> findBankByUserID(@Param("userID") Integer userID);
+    @Query(value = "SELECT * FROM Bank b WHERE b.coupleID = :coupleID", nativeQuery = true)
+    List<Bank> findBankByCouple(@Param("coupleID") Integer coupleID);
 
     // Bank Modal
-    @Query(value = "SELECT * FROM Bank b WHERE b.userID = :userID AND b.bank_date = :bank_date", nativeQuery = true)
-    List<Bank> findAllByUserIDAndBankDate(@Param("userID") Integer userID, @Param("bank_date") LocalDate bank_date);
+    @Query(value = "SELECT * FROM Bank b WHERE b.coupleID = :coupleID AND b.bank_date = :bank_date", nativeQuery = true)
+    List<Bank> findAllByCoupleDAndBankDate(@Param("coupleID") Integer coupleID, @Param("bank_date") LocalDate bank_date);
 
     // Bank Modify
     @Query(value = "SELECT * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)

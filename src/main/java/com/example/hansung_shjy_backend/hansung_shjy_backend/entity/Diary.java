@@ -34,10 +34,10 @@ public class Diary implements Serializable {
     private String otherDiary;
 
     //foreign key
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: Diary, One: User
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
     @JsonManagedReference
-    @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Diary"))
-    private User userID;
+    @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID_diary"))
+    private Couple couple;
 
     public static Diary toEntity(DiaryDTO dto) {
         return Diary.builder()

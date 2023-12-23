@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +20,22 @@ public class DiaryController {
     private DiaryService diaryService;
 
     @Autowired
-    private UserService userService;
+    private CoupleRepository coupleRepository;
 
 
     // 홈 화면 ============================================================================
     @GetMapping("/diary")
-    public ResponseEntity<Object> diaryFirst(@RequestParam(value = "userid", required = false) Integer userid) throws ExecutionException, InterruptedException {
-        System.out.println("diary userID:: " + userid);
-        List<Diary> diaryDTO = diaryService.listDiary(userid);
+    public ResponseEntity<Object> diaryFirst(@RequestParam(value = "couple_id", required = false) Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("diary couple_id:: " + couple_id);
+        List<Diary> diaryDTO = diaryService.listDiary(couple_id);
         System.out.println("diaryDTO:: " + diaryDTO);
         return ResponseEntity.ok().body(diaryDTO);
     }
 
     // 일기 저장 ===========================================================================
-    @PostMapping("/diary/save/{userid}")
-    public ResponseEntity<Object> createDiary(@PathVariable Integer userid, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
-        System.out.println("create Diary User:: " + userid);
+    @PostMapping("/diary/save/{couple_id}")
+    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+        System.out.println("create Diary couple_id:: " + couple_id);
         System.out.println("create Diary:: " + diaryDTO);
         DiaryDTO diary = diaryService.createDiary(diaryDTO);
 
@@ -48,17 +49,17 @@ public class DiaryController {
         System.out.println("diary_id:: " + diary_id);
         System.out.println("diayDTO:: " + diaryDTO);
         diaryDTO.setDiaryID(diary_id);
-        diaryDTO.setUserID(userService.findUserByUserid(diaryDTO.getUserID()));
+        diaryDTO.setCoupleID(coupleRepository.findByCoupleID(diaryDTO.getCoupleID()).getCoupleID());
         DiaryDTO diary = diaryService.modifyDiary(diaryDTO);
         if (diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(diary);
     }
 
     // 일기 전체 보기 리스트 =================================================================
-    @GetMapping("/diary/list/{userid}")
-    public ResponseEntity<Object> listAllDiary(@PathVariable Integer userid) throws ExecutionException, InterruptedException {
-        System.out.println("<diary> user_id::" + userid);
-        List<Diary> diaryDTO = diaryService.listDiary(userid);
+    @GetMapping("/diary/list/{couple_id}")
+    public ResponseEntity<Object> listAllDiary(@PathVariable Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("<diary> couple_id::" + couple_id);
+        List<Diary> diaryDTO = diaryService.listDiary(couple_id);
         System.out.println("diary listAll:: " + diaryDTO);
         if (diaryDTO.isEmpty()) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(diaryDTO);

@@ -11,10 +11,10 @@ import java.util.concurrent.ExecutionException;
 public interface BankService {
 
     // 우리의 지출 첫 화면 =========================================================
-    List<Bank> listBank(Integer user_id) throws ExecutionException, InterruptedException;
+    List<Bank> listBank(Integer couple_id) throws ExecutionException, InterruptedException;
 
     // 우리의 지출 모달창 (목록) ====================================================
-    List<Bank> modalBank(Integer user_id, LocalDate bank_date) throws ExecutionException, InterruptedException;
+    List<Bank> modalBank(Integer couple_id, LocalDate bank_date) throws ExecutionException, InterruptedException;
 
     // 우리의 지출 등록 ============================================================
     BankDTO createBank(BankDTO bankDTO) throws ExecutionException, InterruptedException;

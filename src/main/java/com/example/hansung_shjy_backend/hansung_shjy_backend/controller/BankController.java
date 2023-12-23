@@ -28,13 +28,13 @@ public class BankController {
 
     // 우리의 지출 첫 화면 ===================================================================
     @GetMapping("/pay")
-    public ResponseEntity<Object> firstBank(@RequestParam Integer userid) throws ExecutionException, InterruptedException {
-        System.out.println("bank userID:: " + userid);
-        List<Bank> bankList = bankService.listBank(userid);
+    public ResponseEntity<Object> firstBank(@RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("bank couple_id:: " + couple_id);
+        List<Bank> bankList = bankService.listBank(couple_id);
         System.out.println("bankList:: " + bankList);
 
         List<BankDTO> bankDTOList = bankList.stream()
-                .map(bank -> new BankDTO(bank.getBankID(), bank.getBankDate(), bank.getPayMethod(), bank.getBankTitle(), bank.getMoney(), bank.getUserID().getUserID()))
+                .map(bank -> new BankDTO(bank.getBankID(), bank.getBankDate(), bank.getPayMethod(), bank.getBankTitle(), bank.getMoney(), bank.getCouple().getCoupleID()))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok().body(bankDTOList);
@@ -42,12 +42,12 @@ public class BankController {
 
     // 우리의 지출 모달창 ====================================================================
     @GetMapping("/pay/detail/{bankDate}")
-    public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate bankDate, @RequestParam Integer userid) throws ExecutionException, InterruptedException {
-        System.out.println("bankDate:: " + bankDate + ", " + userid);
-        List<Bank> bankList = bankService.modalBank(userid, bankDate);
+    public ResponseEntity<Object> modalBank(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate bankDate, @RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("bankDate:: " + bankDate + ", " + couple_id);
+        List<Bank> bankList = bankService.modalBank(couple_id, bankDate);
 
         List<BankDTO> bankDTOList = bankList.stream()
-                .map(bank -> new BankDTO(bank.getBankID(), bank.getBankDate(), bank.getPayMethod(), bank.getBankTitle(), bank.getMoney(), bank.getUserID().getUserID()))
+                .map(bank -> new BankDTO(bank.getBankID(), bank.getBankDate(), bank.getPayMethod(), bank.getBankTitle(), bank.getMoney(), bank.getCouple().getCoupleID()))
                 .collect(Collectors.toList());
         System.out.println("bankList_modal:: " + bankDTOList);
         return ResponseEntity.ok().body(bankDTOList);
@@ -81,12 +81,12 @@ public class BankController {
     }
 
     // 우리의 지출 삭제
-    @DeleteMapping("/pay/delete/{bankid}")
-    public ResponseEntity<Object> deleteBank(@PathVariable Integer bankid) throws ExecutionException, InterruptedException {
-        System.out.println("deleteBankID:: " + bankid);
-        bankService.deleteBank(bankid);
+    @DeleteMapping("/pay/delete/{bank_id}")
+    public ResponseEntity<Object> deleteBank(@PathVariable Integer bank_id) throws ExecutionException, InterruptedException {
+        System.out.println("deleteBankID:: " + bank_id);
+        bankService.deleteBank(bank_id);
 
-        if (bankid == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        if (bank_id == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body("bank delete");
     }
 }

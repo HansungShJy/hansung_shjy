@@ -2,8 +2,10 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.BankDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.BankRepository;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,19 @@ public class BankServiceImpl implements BankService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CoupleRepository coupleRepository;
+
     Bank bank;
 
 
     // 우리의 지출 첫 화면
     @Override
-    public List<Bank> listBank(Integer user_id) throws ExecutionException, InterruptedException {
-        System.out.println("listBank user_id:: " + user_id);
-        if (user_id == null) return null;
+    public List<Bank> listBank(Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("listBank couple_id:: " + couple_id);
+        if (couple_id == null) return null;
 
-        List<Bank> bank = bankRepository.findBankByUserID(user_id);
+        List<Bank> bank = bankRepository.findBankByCouple(couple_id);
         System.out.println("bank list:: " + bank);
         if (bank == null) return null;
         else return bank;
@@ -42,11 +47,11 @@ public class BankServiceImpl implements BankService {
 
     // 우리의 지출 모달창
     @Override
-    public List<Bank> modalBank(Integer userid, LocalDate bankDate) throws ExecutionException, InterruptedException {
-        System.out.println("modalBank:: " + userid + ", " + bankDate);
-        if (userid == null || bankDate == null) return null;
+    public List<Bank> modalBank(Integer couple_id, LocalDate bankDate) throws ExecutionException, InterruptedException {
+        System.out.println("modalBank:: " + couple_id + ", " + bankDate);
+        if (couple_id == null || bankDate == null) return null;
 
-        List<Bank> bankList = bankRepository.findAllByUserIDAndBankDate(userid, bankDate);
+        List<Bank> bankList = bankRepository.findAllByCoupleDAndBankDate(couple_id, bankDate);
         System.out.println("bankList:: " + bankList);
         if (bankList == null) return null;
         else return bankList;
@@ -60,8 +65,8 @@ public class BankServiceImpl implements BankService {
         bank.setBankDate(bankDTO.getBankDate());
         bank.setPayMethod(bankDTO.getPayMethod());
         bank.setMoney(bankDTO.getMoney());
-        User user = userRepository.findUserByUserID((bankDTO.getUserID()));
-        bank.setUserID(user);
+        Couple couple  = coupleRepository.findByCoupleID((bankDTO.getCoupleID()));
+        bank.setCouple(couple);
         Bank savedBank = bankRepository.save(bank);
         return BankDTO.toDTO(savedBank);
     }

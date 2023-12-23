@@ -20,11 +20,11 @@ public class BankDTO {
     private Boolean payMethod;
     private String bankTitle;
     private Integer money;
-    private Integer userID;
+    private Integer coupleID;
 
     public static BankDTO toDTO(Bank entity) {
 
-        Integer userid = (entity.getUserID() != null) ? entity.getUserID().getUserID() : null;
+        Integer coupleid = (entity.getCouple() != null) ? entity.getCouple().getCoupleID() : null;
 
         try {
             return BankDTO.builder()
@@ -33,7 +33,7 @@ public class BankDTO {
                     .payMethod(entity.getPayMethod())
                     .bankTitle(entity.getBankTitle())
                     .money(entity.getMoney())
-                    .userID(userid)
+                    .coupleID(coupleid)
                     .build();
         } catch (Error e) {
             return null;

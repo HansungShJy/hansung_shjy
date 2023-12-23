@@ -37,7 +37,7 @@ public class QnA implements Serializable {
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: CoupleID
     @JsonManagedReference
-    @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID"))
+    @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID_qna"))
     private Couple coupleID;
 
 

@@ -42,15 +42,10 @@ public class Bank implements Serializable {
     @Column(name = "money")
     private Integer money;
 
-    //foreign key
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: Bank, One: User
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
     @JsonManagedReference
-    @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Bank"))
-    private User userID;
-
-    public void setUserID(User user) {
-        this.userID = user;
-    }
+    @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID_bank"))
+    private Couple couple;
 
     public static Bank toEntity(BankDTO dto) {
         Bank bank =  Bank.builder()
@@ -61,11 +56,6 @@ public class Bank implements Serializable {
                 .money(dto.getMoney())
                 .build();
 
-        if (dto.getUserID() != null) {
-            User user = new User();
-            user.setUserID(dto.getUserID());
-            bank.setUserID(user);
-        }
 
         return bank;
     }
