@@ -42,11 +42,11 @@ public class Plan implements Serializable {
     @Column(name = "planHome")
     private String planHome;
 
-    //foreign key
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: Plan, One: User
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
     @JsonManagedReference
-    @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_Plan"))
-    private User userID;
+    @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID_plan"))
+    private Couple couple;
+
 
     @OneToMany(mappedBy = "planID", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference

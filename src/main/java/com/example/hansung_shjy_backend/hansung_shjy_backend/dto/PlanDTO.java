@@ -31,14 +31,14 @@ public class PlanDTO {
     @JsonProperty("planHome")
     private String planHome;
 
-    @JsonProperty("userID")
-    private Integer userID;
+    @JsonProperty("coupleID")
+    private Integer coupleID;
 
     public static PlanDTO toDTO(Plan entity) {
 
-        Integer userid = null;
+        Integer coupleid = null;
 
-        if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
+        if(entity.getCouple() != null) coupleid = entity.getCouple().getCoupleID();
 
         try {
             return PlanDTO.builder()
@@ -48,7 +48,7 @@ public class PlanDTO {
                     .planTitle(entity.getPlanTitle())
                     .planTraffic(entity.getPlanTraffic())
                     .planHome(entity.getPlanHome())
-                    .userID(userid)
+                    .coupleID(coupleid)
                     .build();
         } catch (Error e) {
             return null;

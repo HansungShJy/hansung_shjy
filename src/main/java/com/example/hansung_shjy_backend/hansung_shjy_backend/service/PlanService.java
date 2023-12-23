@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 public interface PlanService {
 
     // 우리의 여행 계획 첫 화면 =========================================================
-    List<Plan> listPlan(Integer user_id) throws ExecutionException, InterruptedException;
+    List<Plan> listPlan(Integer couple_id) throws ExecutionException, InterruptedException;
 
     // 우리의 여행 계획 등록 ============================================================
     String createPlan(PlanRequest planRequest) throws ExecutionException, InterruptedException;

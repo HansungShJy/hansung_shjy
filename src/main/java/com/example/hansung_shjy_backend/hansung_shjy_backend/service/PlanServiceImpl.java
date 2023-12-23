@@ -3,9 +3,11 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanDetailDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanRequest;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.PlanDetail;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanDetailRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
@@ -29,14 +31,17 @@ public class PlanServiceImpl implements PlanService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CoupleRepository coupleRepository;
+
 
     // 우리의 여행 계획 첫 화면
     @Override
-    public List<Plan> listPlan(Integer userid) throws ExecutionException, InterruptedException {
-        System.out.println("listPlan userid:: " + userid);
-        if (userid == null) return null;
+    public List<Plan> listPlan(Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("listPlan couple_id:: " + couple_id);
+        if (couple_id == null) return null;
 
-        List<Plan> plan = planRepository.findByUserID(userid);
+        List<Plan> plan = planRepository.findByCouple(couple_id);
         System.out.println("plan first list :: "+ plan);
         if (plan == null) return null;
         else return plan;
@@ -60,8 +65,8 @@ public class PlanServiceImpl implements PlanService {
             plan.setPlanStartDate(planDTO.getPlanStartDate());
             plan.setPlanEndDate(planDTO.getPlanEndDate());
 
-            User user = userRepository.findUserByUserID(planDTO.getUserID());
-            plan.setUserID(user);
+            Couple couple = coupleRepository.findByCoupleID(planDTO.getCoupleID());
+            plan.setCouple(couple);
 
             planRepository.save(plan);
 
