@@ -11,19 +11,15 @@ import java.util.List;
 public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecificationExecutor<QnA> {
 
     // QnA all
-    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :userID", nativeQuery = true)
-        List<QnA> findAllByUserID(@Param("userID") Integer userID);
+    @Query(value = "SELECT * FROM QnA q WHERE q.coupleID = :coupleID", nativeQuery = true)
+        List<QnA> findAllByCoupleID(@Param("coupleID") Integer coupleID);
 
     // QnA modify
-    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :userID AND q.qnaID = :qnaID", nativeQuery = true)
-        QnA findAllByUserIDAndQnaID(@Param("userID") Integer userID, @Param("qnaID") Integer qna_id);
+    @Query(value = "SELECT * FROM QnA q WHERE q.coupleID = :coupleID AND q.qnaID = :qnaID", nativeQuery = true)
+        QnA findAllByCoupleIDAndQnaID(@Param("coupleID") Integer coupleID, @Param("qnaID") Integer qna_id);
 
     // QnA Detail
     @Query(value = "SELECT * FROM QnA q WHERE q.qnaID = :qnaID", nativeQuery = true)
         QnA findQnAByQnaID(@Param("qnaID") Integer qnaID);
 
-
-    // QnA otherAnswer
-    @Query(value = "SELECT * FROM QnA q WHERE q.userID = :userID", nativeQuery = true)
-        QnA findByUserID(@Param("userID") Integer userID);
 }

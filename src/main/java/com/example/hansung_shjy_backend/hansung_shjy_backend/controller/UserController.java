@@ -4,7 +4,9 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.IdFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.LoginRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PwFindRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.UserDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CoupleRepository coupleRepository;
 
     @Autowired
     public UserController(UserService userService) {
@@ -86,7 +91,6 @@ public class UserController {
         String dday = (String) coupleInfo.get("dday");      // 디데이
         System.out.println("id:: " + ", " + userid + "email:: " + email + ", " + dday);
 
-
         String other_nickname = userService.findNicknameByEmail(email);
         System.out.println("connect nickname:: " + other_nickname);
 
@@ -95,6 +99,7 @@ public class UserController {
         else {
             User user = userService.findUserByUserid(userid);
             User otheruser = userService.findUserByNickname(other_nickname);
+            Couple couple = new Couple();
             System.out.println("user: " + user);
             System.out.println("otherUser: " + otheruser);
 
@@ -104,7 +109,11 @@ public class UserController {
             otheruser.setOtherID(user.getNickname());
             otheruser.setDday(dday);
 
+            couple.setMe(user);   // 이게 맞나
+            couple.setOther(otheruser);
+
             userRepository.save(user);
+            coupleRepository.save(couple);
             return ResponseEntity.ok().body(user);
         }
     }

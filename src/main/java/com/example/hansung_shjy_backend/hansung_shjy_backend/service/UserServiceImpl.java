@@ -16,8 +16,6 @@ import javax.mail.internet.InternetAddress;
 import org.springframework.mail.MailException;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -37,6 +35,7 @@ public class UserServiceImpl implements UserService {
     User user;
 
     public static final String ePw = createKey();
+
 
     // 회원가입 ====================================================================================
     // 아이디 중복확인
@@ -77,7 +76,7 @@ public class UserServiceImpl implements UserService {
         jakarta.mail.internet.MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(jakarta.mail.Message.RecipientType.TO, to);//보내는 대상
-        message.setSubject("이메일 인증"); //제목
+        message.setSubject("LoveMore 이메일 인증"); //제목
 
         String msgg="";
         msgg+= "<div style='margin:20px;'>";
@@ -94,7 +93,7 @@ public class UserServiceImpl implements UserService {
         msgg+= ePw+"</strong><div><br/> ";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(String.valueOf(new InternetAddress("sunho010416@gmail.com","LoveMore")));//보내는 사람
+        message.setFrom(String.valueOf(new InternetAddress("LoveMore00@gmail.com","LoveMore")));//보내는 사람
 
         return message;
     }
@@ -115,6 +114,7 @@ public class UserServiceImpl implements UserService {
         }
         return key.toString();
     }
+
     @Override
     public String sendAuthenticationMessage(String to) throws Exception {
         System.out.println("message to:: " + to);
@@ -222,4 +222,6 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(user);
         }
     }
+
+
 }
