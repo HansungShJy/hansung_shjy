@@ -67,6 +67,7 @@ public class BankServiceImpl implements BankService {
         bank.setMoney(bankDTO.getMoney());
         Couple couple  = coupleRepository.findByCoupleID((bankDTO.getCoupleID()));
         bank.setCouple(couple);
+        System.out.println("couple bank:: " + couple);
         Bank savedBank = bankRepository.save(bank);
         return BankDTO.toDTO(savedBank);
     }
