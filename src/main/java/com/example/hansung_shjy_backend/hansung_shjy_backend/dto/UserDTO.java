@@ -25,6 +25,7 @@ public class UserDTO {
     private Date birth;
     private String otherID;
     private String Dday;
+    private Integer coupleID;
 
     public UserDTO(Integer userid) {
         this.userID = userid;
@@ -42,6 +43,7 @@ public class UserDTO {
                     .birth(entity.getBirth())
                     .otherID(entity.getOtherID())
                     .Dday(entity.getDday())
+                    .coupleID(entity.getCouple().getCoupleID())
                     .build();
         } catch (Error e) {
             return null;

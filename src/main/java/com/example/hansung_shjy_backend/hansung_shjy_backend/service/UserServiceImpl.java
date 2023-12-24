@@ -154,11 +154,11 @@ public class UserServiceImpl implements UserService {
     // 로그인 ======================================================================================
     // FE: 로그인할 때 user 넘겨주면 거기서 userID 쿠키에 저장
     @Override
-    public UserDTO login(LoginRequest loginRequest) throws ExecutionException, InterruptedException {
+    public User login(LoginRequest loginRequest) throws ExecutionException, InterruptedException {
         User userEntity = userRepository.findUserById(loginRequest.getId());
         if (userEntity == null) return null;        //id에 맞는 entity가 없을 때
 
-        UserDTO user = UserDTO.toDTO(userEntity);
+        User user = userRepository.findUserById(loginRequest.getId());
         if (user == null) return null;              //userEntity에 맞는 user가 없을 때
 
         if (user.getPw().equals(loginRequest.getPw())) { //user db에 pw와 받아온 pw가 일치하면 user 리턴

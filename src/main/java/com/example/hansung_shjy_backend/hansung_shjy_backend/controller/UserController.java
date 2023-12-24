@@ -125,7 +125,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> loginRequest(@RequestBody LoginRequest loginRequest) throws ExecutionException, InterruptedException {
         System.out.println("login:: " + loginRequest);
-        UserDTO userLogin = userService.login(loginRequest);
+        User userLogin = userService.login(loginRequest);
         if (userLogin == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(userLogin);
     }

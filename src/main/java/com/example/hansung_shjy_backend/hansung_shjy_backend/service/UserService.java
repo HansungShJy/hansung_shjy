@@ -23,7 +23,7 @@ public interface UserService {
     User findUserByNickname(String nickname) throws ExecutionException, InterruptedException;
 
     // 로그인 ==================================================================
-    UserDTO login(LoginRequest loginRequest) throws ExecutionException, InterruptedException;
+    User login(LoginRequest loginRequest) throws ExecutionException, InterruptedException;
 
     // 비밀번호 찾기 ============================================================
     String findPwById(String userId) throws ExecutionException, InterruptedException;
