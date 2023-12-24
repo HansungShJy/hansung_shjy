@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "couple")
-@EqualsAndHashCode
 @Getter
 @Setter
 @Builder

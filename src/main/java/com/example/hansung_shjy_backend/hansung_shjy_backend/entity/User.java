@@ -11,7 +11,6 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-@EqualsAndHashCode
 @Getter
 @Setter
 @Builder
