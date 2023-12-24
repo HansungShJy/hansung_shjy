@@ -41,7 +41,7 @@ public class PlanServiceImpl implements PlanService {
         System.out.println("listPlan couple_id:: " + couple_id);
         if (couple_id == null) return null;
 
-        List<Plan> plan = planRepository.findAllByCouple(couple_id);
+        List<Plan> plan = planRepository.findByCouple(couple_id);
         System.out.println("plan first list :: "+ plan);
         if (plan == null) return null;
         else return plan;
@@ -67,6 +67,7 @@ public class PlanServiceImpl implements PlanService {
 
             Couple couple = coupleRepository.findByCoupleID(planDTO.getCoupleID());
             plan.setCouple(couple);
+            System.out.println("couple Plan...:: " + couple + ", "  + planDTO.getCoupleID());
 
             planRepository.save(plan);
 
