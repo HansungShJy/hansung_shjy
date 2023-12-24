@@ -115,8 +115,8 @@ public class UserController {
             user.setCouple(couple);
             otheruser.setCouple(couple);
 
-            userRepository.save(user);
             coupleRepository.save(couple);
+            userRepository.save(user);
             return ResponseEntity.ok().body(user);
         }
     }
