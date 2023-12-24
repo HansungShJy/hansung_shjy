@@ -33,7 +33,7 @@ public class PlanController {
 
     // 우리의 여행 계획 첫 화면 ===========================================================================
     @GetMapping("/plan")
-    public ResponseEntity<Object> firstPlan(@RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> firstPlan(@RequestParam("coupleID") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("planFirst couple_id:: " + couple_id);
         List<Plan> planList = planService.listPlan(couple_id);
         System.out.println("planList:: " + planList);
