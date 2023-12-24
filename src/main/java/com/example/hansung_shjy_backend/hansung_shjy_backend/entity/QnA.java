@@ -40,6 +40,12 @@ public class QnA implements Serializable {
     @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID_qna"))
     private Couple coupleID;
 
+    //foreign key
+    @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: CoupleID
+    @JsonManagedReference
+    @JoinColumn(name = "userID", referencedColumnName = "userID", foreignKey = @ForeignKey(name = "userID_qna"))
+    private User userID;
+
 
     public static QnA toEntity(QnADTO dto) {
         return QnA.builder()

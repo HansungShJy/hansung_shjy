@@ -33,6 +33,9 @@ public class QnAController {
     @Autowired
     private CoupleRepository coupleRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     // 오늘의 질문 첫 화면 ==========================================================
     @GetMapping("/qna")
@@ -65,18 +68,19 @@ public class QnAController {
     @PostMapping("/qna/save")
     public ResponseEntity<Object> saveQnA(@RequestBody QnADTO qnADTO) throws ExecutionException, InterruptedException {
         System.out.println("save QnA:: " + qnADTO);
+        // qnA -> Date, myAnswer, otherAnswer, userID, coupleID
 
-        User currentUser = getCurrentUser();
-
-        Couple couple = coupleRepository.findByMeOrOther(currentUser, currentUser);
+        Couple couple = coupleRepository.findByCoupleID(qnADTO.getCoupleID());
+        User me = userRepository.findUserByUserID(qnADTO.getUserID());
         QnA qna = qnAService.saveQnA(qnADTO, couple);
+        qna.setUserID(me);
 
         System.out.println("myAnswer:: " + qna.getMyAnswer());
         System.out.println("otherAnswer:: " + qna.getOtherAnswer());
 
-        if (currentUser.equals(couple.getMe())) {
+        if (me.getUserID().equals(couple.getMe().getUserID())) {
             qna.setMyAnswer(qnADTO.getMyAnswer());
-        } else if (currentUser.equals(couple.getOther())) {
+        } else if (me.getUserID().equals(couple.getOther().getUserID())) {
             qna.setOtherAnswer(qnADTO.getOtherAnswer());
         }
 
@@ -84,10 +88,6 @@ public class QnAController {
 
         if (qna == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(qna, HttpStatus.CREATED);
-    }
-
-    private User getCurrentUser() { // 이게 아닌 거 같은데 .. 일단 해봐
-        return getCurrentUser();
     }
 
 

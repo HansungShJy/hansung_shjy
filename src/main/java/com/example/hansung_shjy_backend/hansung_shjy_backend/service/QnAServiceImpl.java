@@ -52,7 +52,7 @@ public class QnAServiceImpl implements QnAService {
     // 오늘의 질문 저장
     @Override
     public QnA saveQnA(QnADTO qnADTO, Couple couple) throws ExecutionException, InterruptedException {
-        // db -> qna_id, qna_date, my_answer, other_answer, coupleID(Integer)
+        // db -> qna_id, qna_date, my_answer, other_answer, userID, coupleID(Integer)
         QnA qnA = new QnA();
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setCoupleID(couple);
