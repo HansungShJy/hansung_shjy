@@ -49,7 +49,7 @@ public class User implements Serializable {
     @Column(name = "Dday")
     private String Dday;   //0000-00-00 형식
 
-    @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
+    @ManyToOne   // Many: User, One: Couple
     @JsonManagedReference
     @JoinColumn(name = "coupleID", referencedColumnName = "coupleID", foreignKey = @ForeignKey(name = "coupleID"))
     private Couple couple;
