@@ -28,7 +28,7 @@ public class BankController {
 
     // 우리의 지출 첫 화면 ===================================================================
     @GetMapping("/pay")
-    public ResponseEntity<Object> firstBank(@RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> firstBank(@RequestParam("coupleID") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("bank couple_id:: " + couple_id);
         List<Bank> bankList = bankService.listBank(couple_id);
         System.out.println("bankList:: " + bankList);
