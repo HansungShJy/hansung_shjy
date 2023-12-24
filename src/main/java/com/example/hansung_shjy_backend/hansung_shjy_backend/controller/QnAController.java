@@ -28,9 +28,6 @@ public class QnAController {
     private QnAService qnAService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private QnARepository qnARepository;
 
     @Autowired
@@ -39,7 +36,7 @@ public class QnAController {
 
     // 오늘의 질문 첫 화면 ==========================================================
     @GetMapping("/qna")
-    public ResponseEntity<Object> firstQnA(@RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> firstQnA(@RequestParam("coupleID") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("qna coupleid:: " + couple_id);
         List<QnA> qnAList = qnAService.listQnA(couple_id);
         System.out.println("qnAList:: " + qnAList);
@@ -48,7 +45,7 @@ public class QnAController {
 
     // 오늘의 질문 세부화면 =========================================================
     @GetMapping("/qna/detail/{qna_id}")
-    public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id, @RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_id, @RequestParam("coupleID") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("qnaDetail qnaID:: " + qna_id);
         System.out.println("qnaDetail coupleid:: " + couple_id);
         QnA qnA = qnAService.detailQnA(qna_id);  // qna detail info
