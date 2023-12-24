@@ -68,7 +68,7 @@ public class UserController {
         System.out.println("signupup:: " + userSignup);
 
         if (userSignup == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
-        else return new ResponseEntity<>(user, HttpStatus.CREATED);
+        else return ResponseEntity.ok().body(user);
     }
 
     // 커플 이메일 인증
