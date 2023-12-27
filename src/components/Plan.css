@@ -48,6 +48,8 @@
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .planD_title_lb {

@@ -11,9 +11,9 @@ import "./Plan.css";
 import delete_icon from "../assets/delete_icon.png";
 
 function Plan() {
-  const [cookies] = useCookies(["user_id"]);
-  const userid = cookies.user_id;
-  const [events, setEvents] = useState([]);
+  const [cookies] = useCookies(["couple_id"]);
+  const couple_id = cookies.couple_id;
+
   const [plan_id, setPlanID] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -33,26 +33,18 @@ function Plan() {
     navigate("/planDetail");
   };
 
-  const [PlanData, setPlanData] = useState([
-    {
-      planid: "",
-      title: "",
-      start: "",
-      end: "",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
 
   const handleDeletePlan = () => {
-    //planid가 첫번째로 지정되어있음.
     if (window.confirm("여행 계획을 삭제하시겠습니까?")) {
       setPlanID(selectedEvent.extendedProps.planID);
-      console.log(selectedEvent.extendedProps.planID);
+
       axios
         .delete(`http://localhost:3000/plan/delete/${plan_id}`)
         .then((res) => {
           console.log(res + "여행계획 삭제 완");
 
-          setPlanData((prevData) =>
+          setEvents((prevData) =>
             prevData.filter(
               (item) =>
                 item.extendedProps.planid !== selectedEvent.extendedProps.planID
@@ -69,6 +61,9 @@ function Plan() {
   };
 
   const convertResponseToEvents = (res) => {
+    if (!res || res.length === 0) {
+      return [];
+    }
     const convertedEvents = res.map((data) => ({
       title: data.planTitle,
       start: data.planStartDate,
@@ -77,13 +72,14 @@ function Plan() {
       extendedProps: {
         traffic: data.planTraffic,
         planHome: data.planHome,
-        userID: data.userID,
+        coupleID: data.coupleID,
         planID: data.planID,
       },
     }));
+    convertedEvents.forEach((event) => {
+      console.log("planID:", event.extendedProps.planID);
+    });
 
-    setPlanData(convertedEvents);
-    setSelectedEvent(convertedEvents.extendedProps.planID);
     return convertedEvents;
   };
   function getRandomColor() {
@@ -102,18 +98,19 @@ function Plan() {
     axios
       .get(`http://localhost:3000/plan`, {
         params: {
-          userid: userid,
+          coupleID: couple_id,
         },
       })
       .then((res) => {
-        console.log(JSON.stringify(res.data) + "::res");
+        console.log(JSON.stringify(res.data) + "::first res");
         const events = convertResponseToEvents(res.data);
+
         setEvents(events);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [userid, showModal]);
+  }, [couple_id, showModal]);
 
   return (
     <div>
@@ -179,7 +176,7 @@ function Plan() {
                   src={delete_icon}
                   alt="delete_icon.png"
                   width="20"
-                  onClick={() => handleDeletePlan(event)}
+                  onClick={() => handleDeletePlan(selectedEvent)}
                 />
               </div>
             ))}

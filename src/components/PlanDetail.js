@@ -19,8 +19,8 @@ export function PlanDetail() {
   const [checkedbox, setCheckedBox] = useState(false);
 
   const [popup, setPopup] = useState(false);
-  const [cookies] = useCookies(["user_id"]);
-  const userid = cookies.user_id;
+  const [cookies] = useCookies(["couple_id"]);
+  const couple_id = cookies.couple_id;
   const navigate = useNavigate();
   const calendarRef = useRef(null);
   const [locations, setLocations] = useState([]);
@@ -160,7 +160,7 @@ export function PlanDetail() {
         },
       };
       console.log(newEvent + "::newevent");
-      console.log(typeof planDTO + "gksrrgfijrg");
+
       axios
         .post(`http://localhost:3000/plan/save`, {
           planDTO: {
@@ -169,7 +169,7 @@ export function PlanDetail() {
             planEndDate: endDate,
             planTraffic: traffic,
             planHome: enroll_company.address + planDHome,
-            userID: userid,
+            coupleID: couple_id,
           },
           planDetailDTO: locations.map((loc) => ({
             planLocation: loc.location,
