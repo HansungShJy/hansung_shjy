@@ -3,15 +3,15 @@ import { useCookies } from "react-cookie";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Qna.css";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Qna() {
-  const [cookies] = useCookies(["user_id"]);
-  const userid = cookies.user_id;
+  const [cookies] = useCookies(["couple_id"]);
+  const couple_id = cookies.couple_id;
 
-  const Questions = [
+  const navigate = useNavigate();
+  const [questions, setQuestions] = useState([
     {
-      //onclick 함수를 만듦.
       id: "1",
       text: "오늘 저녁, 그 사람과 손잡고 걷고 싶은 산책 코스는 어디인가요?",
     },
@@ -23,14 +23,19 @@ function Qna() {
       id: "3",
       text: "만 원으로 종일 데이트를 한다면 어떤 하루를 보낼 수 있을까요?",
     },
-  ];
-  const [questions, setQuestions] = useState(Questions);
+  ]);
+
+  const handleQuestionClick = (question) => {
+    navigate(`/qnadetail/${question.id}`, {
+      state: { questionText: question.text },
+    });
+  };
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/qna`, {
         params: {
-          userid: userid,
+          coupleID: couple_id,
         },
       })
       .then((res) => {
@@ -39,7 +44,7 @@ function Qna() {
       .catch((err) => {
         console.log(err + "::err");
       });
-  }, [userid]);
+  }, [couple_id]);
 
   return (
     <div>
@@ -48,12 +53,14 @@ function Qna() {
         {/* onclick을 만든 후 key를 question.id로 지정. 넘길때 title 보내주기 */}
         {questions.map((question, index) => (
           <div key={index}>
-            <Link to={`/qnadetail/${question.id}`}>
-              <div className="Qnaborder">
-                <label className="Qnaindex_lb">#{index + 1}. </label>
-                {question.text}
-              </div>
-            </Link>
+            <div
+              className="Qnaborder"
+              onClick={() => handleQuestionClick(question)}
+            >
+              <label className="Qnaindex_lb">#{index + 1}. </label>
+              {question.text}
+            </div>
+
             {index < questions.length - 1 && (
               <hr className="Qnahr" color="#d9d9d9" />
             )}

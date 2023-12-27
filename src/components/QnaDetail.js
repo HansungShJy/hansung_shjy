@@ -3,15 +3,26 @@ import { useCookies } from "react-cookie";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./QnaDetail.css";
+import editlogo from "../assets/edit_icon.png";
 
-const QnaDetail = ({ questions }) => {
+const QnaDetail = () => {
+  const location = useLocation();
+  const questionText = location.state?.questionText;
   const { qna_id } = useParams();
-  const [cookies] = useCookies(["user_id"]);
-  const userid = cookies.user_id;
+  const [cookies] = useCookies(["couple_id", "user_id"]);
+  const couple_id = cookies.couple_id;
+  const user_id = cookies.user_id;
   const [userAnswer, setUserAnswer] = useState("");
   const [otherAnswer, setOtherAnswer] = useState("");
   const maxChar = 150;
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleEditing = () => {
+    setIsEditing((prevEditing) => !prevEditing);
+  };
 
   const [nicknamelist, setNickNameList] = useState([
     {
@@ -24,7 +35,7 @@ const QnaDetail = ({ questions }) => {
     axios
       .get(`http://localhost:3000/qna/detail/${qna_id}`, {
         params: {
-          userid: userid,
+          coupleID: couple_id,
         },
       })
       .then((res) => {
@@ -40,29 +51,47 @@ const QnaDetail = ({ questions }) => {
       .catch((err) => {
         console.log(err + "::err");
       });
-  }, [qna_id]);
+  }, [qna_id, couple_id]);
 
   const handleUserChange = (event) => {
     const inputText = event.target.value;
-    setUserAnswer(inputText.slice(0, maxChar)); // 최대 글자 수까지만 허용
+    setUserAnswer(inputText.slice(0, maxChar));
   };
 
   const handleOtherChange = (event) => {
     const inputText = event.target.value;
-    setOtherAnswer(inputText.slice(0, maxChar)); // 최대 글자 수까지만 허용
+    setOtherAnswer(inputText.slice(0, maxChar));
   };
 
   const QnaAnswerSave = () => {
     axios
       .post(`http://localhost:3000/qna/save`, {
-        // qnaTitle: ,
+        qnaTitle: questionText,
         qnaDate: new Date(),
         myAnswer: userAnswer,
-        otherID: otherNickname,
-        userID: userid,
+        user_id: user_id,
+        coupleID: couple_id,
       })
       .then((res) => {
         console.log(JSON.stringify(res.data) + ":: save res");
+      })
+      .catch((err) => {
+        console.log(err + "save err");
+      });
+  };
+
+  const QnaAnswerEdit = () => {
+    axios
+      .patch(`http://localhost:3000/qna/edit/${qna_id}`, {
+        qnaTitle: questionText,
+        qnaDate: new Date(),
+        myAnswer: userAnswer,
+        user_id: user_id,
+        coupleID: couple_id,
+      })
+      .then((res) => {
+        console.log(JSON.stringify(res.data) + ":: save res");
+        toggleEditing();
       })
       .catch((err) => {
         console.log(err + "save err");
@@ -85,8 +114,18 @@ const QnaDetail = ({ questions }) => {
       <div className="QnaD">
         <label className="QnaD_date">{dateString}</label>
         <br />
+        <div>
+          <label className="Qnatext">{questionText}</label>
+          <img
+            className="edit_logo"
+            src={editlogo}
+            alt="edit_icon.png"
+            width="25"
+            onClick={toggleEditing}
+          />
+        </div>
+        <br />
         <label className="QnaD_lb"> {myNickname} 님의 답변</label>
-
         <br />
         <textarea
           className="QnaD_tx"
@@ -110,9 +149,15 @@ const QnaDetail = ({ questions }) => {
         <br />
         <label className="countChar">{`${charCount2}/${maxChar}`}</label>
         <br />
-        <button className="QnaD_btn" onClick={QnaAnswerSave}>
-          저장
-        </button>
+        {isEditing ? (
+          <button className="QnaD_btn" onClick={QnaAnswerEdit}>
+            수정
+          </button>
+        ) : (
+          <button className="QnaD_btn" onClick={QnaAnswerSave}>
+            저장
+          </button>
+        )}
       </div>
     </div>
   );
