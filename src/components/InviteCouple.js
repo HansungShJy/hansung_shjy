@@ -56,6 +56,7 @@ function InviteCouple() {
   };
 
   const onClickConnect = () => {
+    console.log(typeof userid);
     if (CoupleEmail === "" || userDday === "" || confirmcode === "") {
       alert("입력 하지 않은 칸이 있습니다.");
     } else {

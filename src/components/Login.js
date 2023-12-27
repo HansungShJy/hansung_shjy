@@ -24,14 +24,14 @@ function Login() {
         pw: userPW,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         alert("반갑습니다 회원님");
         cookie.remove("userId");
         cookie.set("id", userId);
         cookie.set("user_id", response.data.userID);
+        cookie.set("couple_id", response.data.couple.coupleID);
         cookie.set("nickname", encodeURIComponent(response.data.nickname));
-        //sessionStorage.setItem("id", userId);
-        //localStorage.setItem("id", userId);
+
         document.location.href = "/diary";
       })
       .catch((error) => {

@@ -1,9 +1,30 @@
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import axios from "axios";
 import Header from "./Header";
 import "./Diary.css";
+import { useCookies } from "react-cookie";
 
 function Diary() {
+  const [cookies] = useCookies(["user_id"]);
+  const [events, setEvents] = useState([]);
+  const couple_id = cookies.user_id;
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/diary`, {
+        params: {
+          couple_id: couple_id,
+        },
+      })
+      .then((res) => setEvents(res.data.event))
+      .catch((err) => {
+        console.log(typeof couple_id);
+
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <Header />
@@ -20,21 +41,6 @@ function Diary() {
             center: "title",
             end: "prev,next",
           }}
-          events={[
-            {
-              title: "태국 여행",
-              start: "2023-11-13",
-              end: "2023-11-14",
-              color: "#b1aee5",
-            },
-            {
-              title: "베트남 여행",
-              start: "2023-11-18",
-              end: "2023-11-23",
-              color: "#b1aee5",
-            },
-            { title: "판매건수 : 23건", date: "2023-11-06" },
-          ]}
         />
       </div>
     </div>

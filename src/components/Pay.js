@@ -17,9 +17,10 @@ function Pay() {
   const [paymethod, setPayMethod] = useState("");
   const [banktitle, setBankTitle] = useState("");
   const [money, setMoney] = useState("");
-  const [cookies] = useCookies(["user_id"]);
-  const userid = cookies.user_id;
+  const [cookies] = useCookies(["couple_id"]);
+  const couple_id = cookies.couple_id;
   const [bank_id, setBank_ID] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const calendarRef = useRef(null);
   const navigate = useNavigate();
   const handleShowModal = () => setShowModal(true);
@@ -57,16 +58,25 @@ function Pay() {
       paymoney: "",
     },
   ]);
+  const [payDataEdit, setPayDataEdit] = useState([
+    {
+      bankid: "",
+      title: "",
+      start: "",
+      method: "",
+      paymoney: "",
+    },
+  ]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/pay`, {
         params: {
-          userid: userid,
+          coupleID: couple_id,
         },
       })
       .then((res) => {
-        //console.log(JSON.stringify(res.data) + "33333");
+        console.log(JSON.stringify(res.data) + "33333");
         const formattedEvents = res.data.map((event) => ({
           title: event.bankTitle,
           start: new Date(event.bankDate),
@@ -82,7 +92,7 @@ function Pay() {
       .catch((err) => {
         console.log(err + "::err");
       });
-  }, [userid, paymethod]);
+  }, [couple_id, paymethod]);
 
   const handleAddEvent = () => {
     if (paymethod === "" || banktitle === "" || money === "") {
@@ -105,10 +115,10 @@ function Pay() {
           payMethod: paymethod,
           bankTitle: banktitle,
           money: money,
-          userID: userid,
+          coupleID: couple_id,
         })
         .then((res) => {
-          //console.log(JSON.stringify(response.data) + "::res");
+          console.log(JSON.stringify(res.data) + "::res");
           console.log(res + "save res");
           const calendarApi = calendarRef.current.getApi();
           calendarApi.addEvent(newEvent);
@@ -127,21 +137,16 @@ function Pay() {
   var month = ("0" + (today.getMonth() + 1)).slice(-2);
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "년 " + month + "월 " + day + "일";
-  //var bankDate = year + "-" + month + "-" + day;
 
-  //dateClick(info) 날짜클릭 -> 수정하기
   const handlelistEvent = (info) => {
-    //alert("클릭했습니다.");
     const bankDate = info.date.toISOString().substring(0, 10);
-    //console.log(typeof info.date.toISOString().substring(0, 10));
-
     setClickedDate(bankDate);
 
     axios
       .get(`http://localhost:3000/pay/detail/${bankDate}`, {
         headers: { "Content-Type": "application/json" },
         params: {
-          userid: userid,
+          couple_id: couple_id,
         },
       })
       .then((res) => {
@@ -158,7 +163,7 @@ function Pay() {
           color: event.payMethod === false ? "#FAD9D9" : "rgba(255,233,37,0.5)",
         }));
         setViewDataList(formattedEvents);
-        setBank_ID(formattedEvents[0].extendedProps.bankid);
+        setSelectedEvent(formattedEvents);
       })
       .catch((err) => {
         console.log(err + "::err-detail");
@@ -169,27 +174,39 @@ function Pay() {
   };
 
   const handleEditEvent = (event) => {
-    // const bankDate = info.date
-    //   ? info.date.toISOString().substring(0, 10)
-    //   : null;
+    if (!selectedEvent || !selectedEvent.extendedProps) {
+      console.error("찾을수없음.");
+      return;
+    }
+    if (payDataEdit.bankid === selectedEvent.extendedProps.bankid) {
+      const updatedPayData = {
+        bankid: selectedEvent.extendedProps.bankid,
+        title: selectedEvent.title,
+        start: selectedEvent.start,
+        method: selectedEvent.extendedProps.method,
+        paymoney: selectedEvent.extendedProps.paymoney,
+      };
 
-    // console.log(bankDate + "뱅크데이트");
-    // console.log("Debug:", bankDate, paymethod, banktitle, money);
+      setPayDataEdit(updatedPayData);
 
-    axios
-      .patch(`http://localhost:3000/pay/edit/${bank_id}`, {
-        bankDate: event.bankDate,
-        payMethod: event.paymethod,
-        bankTitle: event.banktitle,
-        money: event.money,
-      })
-      .then((res) => {
-        console.log(res + "수정완");
-        handleCloseModal2();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      axios
+        .patch(
+          `http://localhost:3000/pay/edit/${selectedEvent.extendedProps.bankid}`,
+          {
+            bankDate: event.bankDate,
+            payMethod: event.paymethod,
+            bankTitle: event.banktitle,
+            money: event.money,
+          }
+        )
+        .then((res) => {
+          console.log(res + "수정완");
+          handleCloseModal2();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
 
   const payDeleteEvent = (event) => {

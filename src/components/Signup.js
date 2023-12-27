@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Cookies } from "react-cookie";
 import axios from "axios";
 import "./Signup.css";
 import signuplogo from "../assets/signuplogo.png";
@@ -12,7 +12,7 @@ function Signup() {
   const [userNickName, setuserNickName] = useState("");
   const [userBirth, setuserBirth] = useState(Date);
   const [userEmail, setuserEmail] = useState("");
-
+  const cookie = new Cookies();
   const [usableId, setUsableId] = useState(false);
   const [confirmcode, setConfirmCode] = useState("");
   const [emailConfirmResponse, setEmailConfirmResponse] = useState(null);
@@ -133,7 +133,10 @@ function Signup() {
         .then((response) => {
           console.log(response);
           alert("회원가입 완료!");
-
+          cookie.remove("userId");
+          cookie.set("id", userId);
+          cookie.set("user_id", response.data.userID);
+          cookie.set("nickname", encodeURIComponent(response.data.nickname));
           document.location.href = "./invitecouple";
         })
         .catch((error) => {
