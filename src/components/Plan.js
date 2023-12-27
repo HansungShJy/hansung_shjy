@@ -32,24 +32,18 @@ function Plan() {
   const handleAddPlan = () => {
     navigate("/planDetail");
   };
-
+  const handleEventClick = (clickInfo) => {
+    console.log(clickInfo.event);
+    handleDeletePlan(clickInfo.event.extendedProps.planID);
+  };
   const [events, setEvents] = useState([]);
 
-  const handleDeletePlan = () => {
+  const handleDeletePlan = (planID) => {
     if (window.confirm("여행 계획을 삭제하시겠습니까?")) {
-      setPlanID(selectedEvent.extendedProps.planID);
-
       axios
-        .delete(`http://localhost:3000/plan/delete/${plan_id}`)
+        .delete(`http://localhost:3000/plan/delete/${planID}`)
         .then((res) => {
           console.log(res + "여행계획 삭제 완");
-
-          setEvents((prevData) =>
-            prevData.filter(
-              (item) =>
-                item.extendedProps.planid !== selectedEvent.extendedProps.planID
-            )
-          );
           document.location.href = "./plan";
         })
         .catch((error) => {
@@ -76,9 +70,6 @@ function Plan() {
         planID: data.planID,
       },
     }));
-    convertedEvents.forEach((event) => {
-      console.log("planID:", event.extendedProps.planID);
-    });
 
     return convertedEvents;
   };
@@ -123,8 +114,7 @@ function Plan() {
         plugins={[dayGridPlugin, interactionPlugin]} //interaction - dateClick 삭제하기.
         dayMaxEvents={2}
         events={events}
-        //eventClick={planEditEvent}
-        //dateClick={handleDeletePlan}
+        eventClick={handleEventClick}
         headerToolbar={{
           start: "addEventButton,deleteEventButton",
           center: "title",
