@@ -74,10 +74,10 @@ public class QnAController {
         Couple couple = coupleRepository.findByCoupleID(qnADTO.getCoupleID());
         User me = userRepository.findUserByUserID(qnADTO.getUserID());
         QnA qna = qnAService.saveQnA(qnADTO, couple);
-//        QnA qnA = qnARepository.findQnAByQnaNumber(qnADTO.getQnaNumber()); // 중복 있으면 안됨
-//        if (qnA.getQnaNumber().equals(qnADTO.getQnaNumber())) {
-//            return new ResponseEntity<Object>("qnaNumber 중복", HttpStatus.BAD_REQUEST);
-//        }
+        QnA qnA = qnARepository.findQnAByQnaNumber(qnADTO.getQnaNumber()); // 중복 있으면 안됨
+        if (qnA.getQnaNumber().equals(qnADTO.getQnaNumber())) {
+            return new ResponseEntity<Object>("qnaNumber 중복", HttpStatus.BAD_REQUEST);
+        }
 
         qna.setUserID(me);
 
