@@ -10,6 +10,4 @@ public interface CoupleRepository extends JpaRepository<Couple, Integer>, JpaSpe
     // 오늘의 질문 세부화면
     Couple findByCoupleID(Integer coupleid);
 
-    // 오늘의 질문 저장
-    Couple findByMeOrOther(User user1, User user2);
 }

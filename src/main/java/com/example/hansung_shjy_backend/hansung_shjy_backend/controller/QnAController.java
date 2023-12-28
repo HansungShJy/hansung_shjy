@@ -56,11 +56,14 @@ public class QnAController {
         User me = coupleRepository.findByCoupleID(couple_id).getMe();
         String myNickname = me.getNickname();
         String otherNickname = me.getOtherID();
+        Integer coupleID = me.getCouple().getCoupleID();
+        Couple couple = coupleRepository.findByCoupleID(coupleID);
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("qnaDetail", qnA);
         resultMap.put("nickname1", myNickname);
         resultMap.put("nickname2", otherNickname);
+        resultMap.put("couple", couple);
 
         return ResponseEntity.ok().body(resultMap);
     }
