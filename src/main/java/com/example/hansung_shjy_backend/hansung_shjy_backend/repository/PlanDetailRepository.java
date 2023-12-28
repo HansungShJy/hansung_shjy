@@ -14,11 +14,11 @@ import java.util.List;
 public interface PlanDetailRepository extends JpaRepository<PlanDetail, Integer>, JpaSpecificationExecutor<Plan> {
 
     // Plan All
-    @Query(value = "SELECT * FROM PlanDetail pd WHERE pd.planID = :planID", nativeQuery = true)
+    @Query(value = "SELECT * FROM planDetail pd WHERE pd.planID = :planID", nativeQuery = true)
     List<PlanDetail> findByPlanID(@Param("planID") Integer planID);
 
     // Plan Modify
-    @Query(value = "SELECT * FROM PlanDetail pd WHERE pd.planID = :planID", nativeQuery = true)
+    @Query(value = "SELECT * FROM planDetail pd WHERE pd.planID = :planID", nativeQuery = true)
     PlanDetail findAllByPlanID(@Param("planID") Integer planID);
 
     // Plan Delete
@@ -29,7 +29,7 @@ public interface PlanDetailRepository extends JpaRepository<PlanDetail, Integer>
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value = "DELETE FROM PlanDetail pd WHERE pd.planID = :planID", nativeQuery = true)
+    @Query(value = "DELETE FROM planDetail pd WHERE pd.planID = :planID", nativeQuery = true)
     Integer findPlanDetailByPlanID(@Param("planID") Integer planID);
 
 }
