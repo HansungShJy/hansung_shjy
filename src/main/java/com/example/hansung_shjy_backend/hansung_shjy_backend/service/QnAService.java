@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnADTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnARequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
 
@@ -16,7 +17,7 @@ public interface QnAService {
     QnA detailQnA(Integer qna_id) throws ExecutionException, InterruptedException;
 
     // 오늘의 질문 저장 ===============================================================
-    QnA saveQnA(QnADTO qnADTO, Couple couple) throws ExecutionException, InterruptedException;
+    QnA saveQnA(QnARequest qnARequest, Couple couple) throws ExecutionException, InterruptedException;
 
     // 오늘의 질문 수정 ===============================================================
     QnADTO modifyQnA(QnADTO qnADTO) throws ExecutionException, InterruptedException;

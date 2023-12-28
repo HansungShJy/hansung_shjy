@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnADTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.QnARequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
@@ -51,12 +52,12 @@ public class QnAServiceImpl implements QnAService {
 
     // 오늘의 질문 저장
     @Override
-    public QnA saveQnA(QnADTO qnADTO, Couple couple) throws ExecutionException, InterruptedException {
+    public QnA saveQnA(QnARequest qnARequest, Couple couple) throws ExecutionException, InterruptedException {
         // db -> qna_id, qna_date, my_answer, other_answer, userID, coupleID(Integer)
         QnA qnA = new QnA();
-        qnA.setQnaDate(qnADTO.getQnaDate());
+        qnA.setQnaDate(qnARequest.getQnaDate());
         qnA.setCoupleID(couple);
-        qnA.setQnaNumber(qnADTO.getQnaNumber());
+        qnA.setQnaNumber(qnARequest.getQnaNumber());
 
         return qnA;
     }

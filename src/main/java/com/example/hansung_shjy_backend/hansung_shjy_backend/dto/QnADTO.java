@@ -17,16 +17,13 @@ public class QnADTO {
     private Date qnaDate;
     private String myAnswer;
     private String otherAnswer;
-    private Integer userID;
     private Integer coupleID;
     private Integer qnaNumber;
 
     public static QnADTO toDTO(QnA entity) {
 
-        Integer userid = null;
         Integer coupleid = null;
 
-        if(entity.getUserID() != null) userid = entity.getUserID().getUserID();
         if(entity.getCoupleID() != null) coupleid = entity.getCoupleID().getCoupleID();
 
         try {
@@ -35,9 +32,8 @@ public class QnADTO {
                     .qnaDate(entity.getQnaDate())
                     .myAnswer(entity.getMyAnswer())
                     .otherAnswer(entity.getOtherAnswer())
-                    .userID(userid)
-                    .coupleID(coupleid)
                     .qnaNumber(entity.getQnaNumber())
+                    .coupleID(coupleid)
                     .build();
         } catch (Error e) {
             return null;
