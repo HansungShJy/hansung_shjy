@@ -86,6 +86,9 @@ public class UserController {
     public ResponseEntity<Object> connectCouple(@RequestBody HashMap<String, Object> coupleInfo) throws Exception {
         System.out.println("connectCouple:: " + coupleInfo);
 
+        // 초대하는 사람이 me
+        // 초대받는 사람이 other
+
         String userid = (String) coupleInfo.get("id");      // 내 아이디
         String email = (String) coupleInfo.get("otherid");  // 상대방 아이디
         String dday = (String) coupleInfo.get("dday");      // 디데이
@@ -99,7 +102,7 @@ public class UserController {
         else {
             User user = userService.findUserByUserid(userid);
             User otheruser = userService.findUserByNickname(other_nickname);
-            Couple couple = new Couple();
+
             System.out.println("user: " + user);
             System.out.println("otherUser: " + otheruser);
 
@@ -109,18 +112,6 @@ public class UserController {
             otheruser.setOtherID(user.getNickname());
             otheruser.setDday(dday);
 
-            if (user.getId().equals(userid)) {
-                couple.setMe(user);
-                couple.setOther(otheruser);
-            } else {
-                couple.setMe(otheruser);
-                couple.setOther(user);
-            }
-
-            user.setCouple(couple);
-            otheruser.setCouple(couple);
-
-            coupleRepository.save(couple);
             userRepository.save(user);
             return ResponseEntity.ok().body(user);
         }
@@ -130,7 +121,23 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> loginRequest(@RequestBody LoginRequest loginRequest) throws ExecutionException, InterruptedException {
         System.out.println("login:: " + loginRequest);
-        User userLogin = userService.login(loginRequest);
+
+        // 로그인한 사람이 me
+        // 상대방이 other(닉네임)
+
+        User userLogin = userService.login(loginRequest);  // 로그인한 사람 객체
+        User otherLogin = userService.findUserByNickname(userLogin.getOtherID());
+
+        Couple couple = new Couple();
+
+        couple.setMe(userLogin);
+        couple.setOther(otherLogin);
+
+        userLogin.setCouple(couple);
+        otherLogin.setCouple(couple);
+
+        coupleRepository.save(couple);
+
         if (userLogin == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body(userLogin);
     }
