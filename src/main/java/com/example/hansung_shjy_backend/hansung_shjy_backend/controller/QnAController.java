@@ -68,36 +68,45 @@ public class QnAController {
     // 오늘의 질문 저장 ============================================================
     @PostMapping("/qna/save")
     public ResponseEntity<Object> saveQnA(@RequestBody QnARequest qnARequest) throws ExecutionException, InterruptedException {
-        System.out.println("save QnA:: " + qnARequest);
         System.out.println("save QNANANANA:: " + qnARequest.getMyAnswer() +
                 qnARequest.getOtherAnswer() + qnARequest.getQnaNumber());
         // qnA -> Date, myAnswer, otherAnswer, userID, coupleID
 
         Couple couple = coupleRepository.findByCoupleID(qnARequest.getCoupleID());
         User me = userRepository.findUserByUserID(qnARequest.getUserID());
+
         QnA qna = qnAService.saveQnA(qnARequest, couple);
-//        QnA qnA = qnARepository.findQnAByQnaNumber(qnADTO.getQnaNumber()); // 중복 있으면 안됨
-//        if (qnA.getQnaNumber().equals(qnADTO.getQnaNumber())) {
-//            return new ResponseEntity<Object>("qnaNumber 중복", HttpStatus.BAD_REQUEST);
-//        }
+        QnA existingQnA = qnARepository.findByCoupleIdAndQnaNumber(couple.getCoupleID(), qnARequest.getQnaNumber());
 
+        if (existingQnA == null && me.getUserID().equals(couple.getMe().getUserID())) {
+            // If no entry exists, create a new one
 
-        System.out.println("me.getUserID:: " + me.getUserID());
-        System.out.println("couple.getMe().getUserID():: " + couple.getMe().getUserID());
-
-        if (me.getUserID().equals(couple.getMe().getUserID())) { // 나 = couple의 me
             qna.setMyAnswer(qnARequest.getMyAnswer());
             qna.setOtherAnswer(qnARequest.getOtherAnswer());
-            System.out.println("myAnswer:: " + qnARequest.getMyAnswer());
-            System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
-        } else if (me.getUserID().equals(couple.getOther().getUserID())) {  // 나 = couple의 other
-            qna.setMyAnswer(qnARequest.getOtherAnswer());
-            qna.setOtherAnswer(qnARequest.getMyAnswer());
-            System.out.println("myAnswer:: " + qnARequest.getMyAnswer());
-            System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
+
+            // Save the QnA object to the database
+            qnARepository.save(qna);
+        } else {
+            // If an entry already exists, update only the otherAnswer field
+            existingQnA.setOtherAnswer(qnARequest.getOtherAnswer());
+
+            // Save the updated QnA object to the database
+            qnARepository.save(existingQnA);
         }
 
-        qnARepository.save(qna);
+//        if (me.getUserID().equals(couple.getMe().getUserID())) { // 나 = couple의 me
+//            qna.setMyAnswer(qnARequest.getMyAnswer());
+//            qna.setOtherAnswer(qnARequest.getOtherAnswer());
+//            System.out.println("myAnswer:: " + qnARequest.getMyAnswer());
+//            System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
+//        } else if (me.getUserID().equals(couple.getOther().getUserID())) {  // 나 = couple의 other
+//            qna.setMyAnswer(qnARequest.getOtherAnswer());
+//            qna.setOtherAnswer(qnARequest.getMyAnswer());
+//            System.out.println("myAnswer:: " + qnARequest.getMyAnswer());
+//            System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
+//        }
+//
+//        qnARepository.save(qna);
 
         if (qna == null) return new ResponseEntity<Object>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>(qna, HttpStatus.CREATED);

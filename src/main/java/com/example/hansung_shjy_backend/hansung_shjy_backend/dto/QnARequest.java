@@ -30,4 +30,13 @@ public class QnARequest {
 
     @JsonProperty("userID")
     private Integer userID;
+
+    public QnARequest(Date qnaDate, String myAnswer, String otherAnswer, Integer coupleID, Integer qnaNumber, Integer userID) {
+        this.qnaDate = qnaDate;
+        this.myAnswer = myAnswer;
+        this.otherAnswer = otherAnswer;
+        this.coupleID = coupleID;
+        this.qnaNumber = qnaNumber;
+        this.userID = userID;
+    }
 }
