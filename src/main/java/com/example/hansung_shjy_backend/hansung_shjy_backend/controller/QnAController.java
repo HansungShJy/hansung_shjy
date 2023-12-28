@@ -68,6 +68,7 @@ public class QnAController {
     @PostMapping("/qna/save")
     public ResponseEntity<Object> saveQnA(@RequestBody QnADTO qnADTO) throws ExecutionException, InterruptedException {
         System.out.println("save QnA:: " + qnADTO);
+        System.out.println("save QNANANANA:: " + qnADTO.getUserID() + qnADTO.getMyAnswer() + qnADTO.getOtherAnswer());
         // qnA -> Date, myAnswer, otherAnswer, userID, coupleID
 
         Couple couple = coupleRepository.findByCoupleID(qnADTO.getCoupleID());
