@@ -19,6 +19,7 @@ public class QnADTO {
     private String otherAnswer;
     private Integer userID;
     private Integer coupleID;
+    private Integer qnaNumber;
 
     public static QnADTO toDTO(QnA entity) {
 
@@ -36,6 +37,7 @@ public class QnADTO {
                     .otherAnswer(entity.getOtherAnswer())
                     .userID(userid)
                     .coupleID(coupleid)
+                    .qnaNumber(entity.getQnaNumber())
                     .build();
         } catch (Error e) {
             return null;

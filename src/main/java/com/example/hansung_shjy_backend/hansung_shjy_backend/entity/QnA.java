@@ -33,6 +33,9 @@ public class QnA implements Serializable {
     @Column(name = "otherAnswer", nullable = true)
     private String otherAnswer;
 
+    @Column(name = "qnaNumber")
+    private Integer qnaNumber;
+
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: QNA, One: CoupleID
@@ -53,6 +56,7 @@ public class QnA implements Serializable {
                 .qnaDate(dto.getQnaDate())
                 .myAnswer(dto.getMyAnswer())
                 .otherAnswer(dto.getOtherAnswer())
+                .qnaNumber(dto.getQnaNumber())
                 .build();
     }
 }

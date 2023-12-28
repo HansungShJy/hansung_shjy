@@ -56,6 +56,7 @@ public class QnAServiceImpl implements QnAService {
         QnA qnA = new QnA();
         qnA.setQnaDate(qnADTO.getQnaDate());
         qnA.setCoupleID(couple);
+        qnA.setQnaNumber(qnADTO.getQnaNumber());
 
         return qnA;
     }
