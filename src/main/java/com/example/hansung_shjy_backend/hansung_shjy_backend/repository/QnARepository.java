@@ -26,4 +26,6 @@ public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecifica
 
     QnA findByCoupleIDAndQnaNumber(Couple coupleID, Integer qnaNumber);
 
+
+
 }
