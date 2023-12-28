@@ -80,7 +80,7 @@ public class QnAController {
         System.out.println("QnACouple:: " + couple);
 //        System.out.println("existingQNA:: " + existingQnA.getMyAnswer() + existingQnA.getQnaNumber() + existingQnA.getOtherAnswer());
 
-        if (existingQnA == null && me.getUserID().equals(couple.getMe().getUserID())) {
+        if (existingQnA == null) { //&& me.getUserID().equals(couple.getMe().getUserID())
             // If no entry exists, create a new one
 
             qna.setMyAnswer(qnARequest.getMyAnswer());
