@@ -4,8 +4,10 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +24,11 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>, JpaSpecifi
     // Plan Delete
 //    @Query(value = "DELETE * FROM Plan p WHERE p.planID = :planID", nativeQuery = true)
 //    Plan findByPlanID(@Param("planID") Integer planID);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = "DELETE FROM Plan p WHERE p.planID = :planID", nativeQuery = true)
+    Plan findByPlanID(@Param("planID") Integer planID);
 
     Plan deletePlanByPlanID(Integer planID);
 }
