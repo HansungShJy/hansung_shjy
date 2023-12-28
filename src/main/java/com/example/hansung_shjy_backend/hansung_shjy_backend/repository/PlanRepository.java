@@ -28,7 +28,7 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>, JpaSpecifi
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query(value = "DELETE FROM Plan p WHERE p.planID = :planID", nativeQuery = true)
-    Plan findByPlanID(@Param("planID") Integer planID);
+    Integer findByPlanID(@Param("planID") Integer planID);
 
     Plan deletePlanByPlanID(Integer planID);
 }
