@@ -80,23 +80,23 @@ public class QnAController {
         System.out.println("QnACouple:: " + couple);
 //        System.out.println("existingQNA:: " + existingQnA.getMyAnswer() + existingQnA.getQnaNumber() + existingQnA.getOtherAnswer());
 
+        System.out.println("me:: " + me.getUserID());
+        System.out.println("couple의 me:: " + couple.getMe().getUserID());
+
         if (existingQnA == null) { //&& me.getUserID().equals(couple.getMe().getUserID())
             // If no entry exists, create a new one
-            if (me.getUserID().equals(couple.getMe().getUserID())) {
+            if (me.getUserID().equals(couple.getMe().getUserID())) {  // 나 -> couple의 me면
                 qna.setMyAnswer(qnARequest.getMyAnswer());
-                qna.setOtherAnswer(qnARequest.getOtherAnswer());
-            } else {
-                qna.setMyAnswer(qnARequest.getOtherAnswer());
+            } else {                                                  // 나 -> couple의 other면
                 qna.setOtherAnswer(qnARequest.getMyAnswer());
             }
 
-            // Save the QnA object to the database
             qnARepository.save(qna);
         } else {
             // If an entry already exists, update only the otherAnswer field
-            if (me.getUserID().equals(couple.getOther().getUserID())) {
-                existingQnA.setOtherAnswer(qnARequest.getOtherAnswer());
-            } else {
+            if (me.getUserID().equals(couple.getOther().getUserID())) {  // 나 -> couple의 me면
+                existingQnA.setMyAnswer(qnARequest.getMyAnswer());
+            } else {                                                     // 나 -> couple의 other면
                 existingQnA.setOtherAnswer(qnARequest.getMyAnswer());
             }
             System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
