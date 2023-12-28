@@ -115,7 +115,7 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public String deletePlan(Integer plan_id) throws ExecutionException, InterruptedException {
         Plan p = planRepository.findAllByPlanID(plan_id);
-        Integer planDetail = planDetailRepository.findPlanDetailByPlanID(p);
+        Integer planDetail = planDetailRepository.findPlanDetailByPlanID(plan_id);
         Integer plan = planRepository.findByPlanID(plan_id);
 //        List<PlanDetail> planDetail = planDetailRepository.deletePlanDetailsByPlanID(p);
 //        Plan plan = planRepository.deletePlanByPlanID(plan_id);
