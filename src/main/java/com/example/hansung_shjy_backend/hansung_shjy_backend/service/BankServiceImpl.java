@@ -9,6 +9,8 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRe
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,9 +76,16 @@ public class BankServiceImpl implements BankService {
 
     // 우리의 지출 수정
     @Override
-    public Bank modifyBank(Integer bank_id) throws ExecutionException, InterruptedException {
+    public Bank modifyBank(Integer bank_id, BankDTO bankDTO) throws ExecutionException, InterruptedException {
         bank = bankRepository.findBankByBankID(bank_id);
-        System.out.println("modifyBank:: " + bank);
+
+        bank.setBankTitle(bankDTO.getBankTitle());
+        bank.setPayMethod(bankDTO.getPayMethod());
+        bank.setMoney(bankDTO.getMoney());
+
+        bankRepository.save(bank);
+        System.out.println("bankIDIDIDID:: "+ bank.getBankID() + bank.getBankTitle() + bank.getMoney());
+
         if (bank == null) return null;
 
         return bank;
