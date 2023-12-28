@@ -76,16 +76,17 @@ public class QnAController {
         QnA qna = qnAService.saveQnA(qnADTO, couple);
         qna.setUserID(me);
 
-        System.out.println("myAnswer:: " + qna.getMyAnswer());
-        System.out.println("otherAnswer:: " + qna.getOtherAnswer());
-
         System.out.println("me.getUserID:: " + me.getUserID());
         System.out.println("couple.getMe().getUserID():: " + couple.getMe().getUserID());
 
         if (me.getUserID().equals(couple.getMe().getUserID())) {
             qna.setMyAnswer(qnADTO.getMyAnswer());
+            System.out.println("myAnswer:: " + qna.getMyAnswer());
+            System.out.println("otherAnswer:: " + qna.getOtherAnswer());
         } else if (me.getUserID().equals(couple.getOther().getUserID())) {
             qna.setOtherAnswer(qnADTO.getOtherAnswer());
+            System.out.println("myAnswer:: " + qna.getMyAnswer());
+            System.out.println("otherAnswer:: " + qna.getOtherAnswer());
         }
 
         qnARepository.save(qna);
