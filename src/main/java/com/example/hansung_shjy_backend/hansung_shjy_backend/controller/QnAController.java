@@ -76,7 +76,7 @@ public class QnAController {
         QnA qna = qnAService.saveQnA(qnADTO, couple);
         qna.setUserID(me);
 
-        System.out.println("me.getUserID:: " + me.getUserID()); // 요섭 -> 2 상대방 -> 102
+        System.out.println("me.getUserID:: " + me.getUserID());
         System.out.println("couple.getMe().getUserID():: " + couple.getMe().getUserID());
 
         if (me.getUserID().equals(couple.getMe().getUserID())) {
