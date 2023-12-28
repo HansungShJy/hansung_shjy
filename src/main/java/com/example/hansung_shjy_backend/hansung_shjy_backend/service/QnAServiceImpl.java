@@ -44,7 +44,7 @@ public class QnAServiceImpl implements QnAService {
         System.out.println("detailQnADTO:: " + qnaID);
         if (qnaID == null) return null;
 
-        QnA qnA = qnARepository.findQnAByQnaID(qnaID);
+        QnA qnA = qnARepository.findQnAByQnaNumber(qnaID);
         System.out.println("detailQnA:: " + qnA);
         if (qnA == null) return null;
         else return qnA;
