@@ -1,5 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.repository;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.QnA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -25,6 +26,6 @@ public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecifica
 
     QnA findQnAByQnaNumber(Integer qnaNumber);
 
-    QnA findByCoupleIDAndQnaNumber(Integer coupleID, Integer qnaNumber);
+    QnA findByCoupleIDAndQnaNumber(Couple coupleID, Integer qnaNumber);
 
 }
