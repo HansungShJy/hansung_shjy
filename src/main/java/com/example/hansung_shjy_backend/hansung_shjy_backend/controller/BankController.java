@@ -71,7 +71,6 @@ public class BankController {
 
         if (bank == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
-//        bank.setBankDate(bankDTO.getBankDate());
         bank.setBankTitle(bankDTO.getBankTitle());
         bank.setPayMethod(bankDTO.getPayMethod());
         bank.setMoney(bankDTO.getMoney());

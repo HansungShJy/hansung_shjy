@@ -1,7 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.repository;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Bank;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,8 +23,11 @@ public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecifi
     List<Bank> findAllByCoupleDAndBankDate(@Param("coupleID") Integer coupleID, @Param("bank_date") LocalDate bank_date);
 
     // Bank Modify
-    @Query(value = "SELECT * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
-    Bank findBankByBankID(@Param("bankID") Integer bankID);
+//    User findUserByUserID(Integer user_id);
+//    @Query(value = "SELECT * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
+//    Bank findBankByBankID(@Param("bankID") Integer bankID);
+
+    Bank findBankByBankID(Integer bank_id);
 
     // Bank Delete
     @Modifying(clearAutomatically = true)
