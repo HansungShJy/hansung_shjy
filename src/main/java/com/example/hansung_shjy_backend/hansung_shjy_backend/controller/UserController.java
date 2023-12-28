@@ -109,8 +109,13 @@ public class UserController {
             otheruser.setOtherID(user.getNickname());
             otheruser.setDday(dday);
 
-            couple.setMe(user);   // 이게 맞나
-            couple.setOther(otheruser);
+            if (user.getId().equals(userid)) {
+                couple.setMe(user);
+                couple.setOther(otheruser);
+            } else {
+                couple.setMe(otheruser);
+                couple.setOther(user);
+            }
 
             user.setCouple(couple);
             otheruser.setCouple(couple);
