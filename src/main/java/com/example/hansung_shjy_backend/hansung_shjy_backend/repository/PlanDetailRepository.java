@@ -29,7 +29,7 @@ public interface PlanDetailRepository extends JpaRepository<PlanDetail, Integer>
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value = "DELETE FROM planDetail pd WHERE pd.planID = :planID", nativeQuery = true)
+    @Query(value = "DELETE FROM plan_detail pd WHERE pd.planID = :planID", nativeQuery = true)
     Integer findPlanDetailByPlanID(@Param("planID") Integer planID);
 
 }
