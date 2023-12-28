@@ -96,7 +96,10 @@ public class PlanController {
     @DeleteMapping("/plan/delete/{plan_id}")
     public ResponseEntity<Object> deletePlan(@PathVariable Integer plan_id) throws ExecutionException, InterruptedException {
         System.out.println("deletePlan:: " + plan_id);
-        planService.deletePlan(plan_id);
+//        planService.deletePlan(plan_id);
+
+        planDetailRepository.deletePlanDetailsByPlanID(plan_id);
+        planRepository.deletePlanByPlanID(plan_id);
 
         if (plan_id == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return ResponseEntity.ok().body("plan delete");
