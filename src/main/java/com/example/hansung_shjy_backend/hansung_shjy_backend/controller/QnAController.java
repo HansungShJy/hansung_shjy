@@ -58,8 +58,8 @@ public class QnAController {
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("qnaDetail", qnA);
-        resultMap.put("myNickname", myNickname);
-        resultMap.put("otherNickname", otherNickname);
+        resultMap.put("nickname1", myNickname);
+        resultMap.put("nickname2", otherNickname);
 
         return ResponseEntity.ok().body(resultMap);
     }
