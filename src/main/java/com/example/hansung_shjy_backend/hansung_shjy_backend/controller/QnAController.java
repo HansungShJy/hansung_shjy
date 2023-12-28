@@ -82,16 +82,23 @@ public class QnAController {
 
         if (existingQnA == null) { //&& me.getUserID().equals(couple.getMe().getUserID())
             // If no entry exists, create a new one
-
-            qna.setMyAnswer(qnARequest.getMyAnswer());
-            qna.setOtherAnswer(qnARequest.getOtherAnswer());
+            if (me.getUserID().equals(couple.getMe().getUserID())) {
+                qna.setMyAnswer(qnARequest.getMyAnswer());
+                qna.setOtherAnswer(qnARequest.getOtherAnswer());
+            } else {
+                qna.setMyAnswer(qnARequest.getOtherAnswer());
+                qna.setOtherAnswer(qnARequest.getMyAnswer());
+            }
 
             // Save the QnA object to the database
             qnARepository.save(qna);
         } else {
             // If an entry already exists, update only the otherAnswer field
-            assert existingQnA != null;
-            existingQnA.setOtherAnswer(qnARequest.getOtherAnswer());
+            if (me.getUserID().equals(couple.getOther().getUserID())) {
+                existingQnA.setOtherAnswer(qnARequest.getOtherAnswer());
+            } else {
+                existingQnA.setOtherAnswer(qnARequest.getMyAnswer());
+            }
             System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
 
             // Save the updated QnA object to the database
