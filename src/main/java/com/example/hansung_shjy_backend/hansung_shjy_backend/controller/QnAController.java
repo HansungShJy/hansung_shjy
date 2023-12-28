@@ -90,6 +90,7 @@ public class QnAController {
             qnARepository.save(qna);
         } else {
             // If an entry already exists, update only the otherAnswer field
+            assert existingQnA != null;
             existingQnA.setOtherAnswer(qnARequest.getOtherAnswer());
             System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
 
