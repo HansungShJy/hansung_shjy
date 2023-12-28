@@ -97,8 +97,8 @@ public class PlanController {
     public ResponseEntity<Object> deletePlan(@PathVariable Integer plan_id) throws ExecutionException, InterruptedException {
         System.out.println("deletePlan:: " + plan_id);
 //        planService.deletePlan(plan_id);
-
-        planDetailRepository.deletePlanDetailsByPlanID(plan_id);
+        Plan p = planRepository.findAllByPlanID(plan_id);
+        planDetailRepository.deletePlanDetailsByPlanID(p);
         planRepository.deletePlanByPlanID(plan_id);
 
         if (plan_id == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
