@@ -48,7 +48,7 @@ public class QnAController {
     }
 
     // 오늘의 질문 세부화면 =========================================================
-    @GetMapping("/qna/detail/{qna_id}")
+    @GetMapping("/qna/detail/{qna_number}")
     public ResponseEntity<Object> detailQnA(@PathVariable Integer qna_number, @RequestParam("coupleID") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("qnaDetail qnaID:: " + qna_number);
         System.out.println("qnaDetail coupleid:: " + couple_id);
