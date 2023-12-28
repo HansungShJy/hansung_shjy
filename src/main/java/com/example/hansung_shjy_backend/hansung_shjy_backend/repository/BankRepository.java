@@ -25,7 +25,7 @@ public interface BankRepository extends JpaRepository<Bank, Integer>, JpaSpecifi
 
     // Bank Modify
     @Query(value = "SELECT * FROM Bank b WHERE b.bankID = :bankID", nativeQuery = true)
-    Bank findAllByBankID(@Param("bankID") Integer bankID);
+    Bank findBankByBankID(@Param("bankID") Integer bankID);
 
     // Bank Delete
     @Modifying(clearAutomatically = true)

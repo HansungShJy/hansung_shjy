@@ -66,19 +66,19 @@ public class BankController {
     @PatchMapping("/pay/edit/{bank_id}")
     public ResponseEntity<Object> modifyBank(@PathVariable Integer bank_id, @RequestBody BankDTO bankDTO) throws ExecutionException, InterruptedException {
         System.out.println("bankmodifyId:: " + bank_id + ", " + bankDTO);
-        System.out.println("bamkModi:: " + bankDTO.getBankID() + bankDTO.getBankDate() + bankDTO.getBankTitle() + bankDTO.getPayMethod() + bankDTO.getMoney());
+        System.out.println("bamkModi:: " + bankDTO.getBankDate() + bankDTO.getBankTitle() + bankDTO.getPayMethod() + bankDTO.getMoney());
         Bank bank = bankService.modifyBank(bank_id);
 
         if (bank == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
-        bank.setBankDate(bankDTO.getBankDate());
+//        bank.setBankDate(bankDTO.getBankDate());
         bank.setBankTitle(bankDTO.getBankTitle());
         bank.setPayMethod(bankDTO.getPayMethod());
         bank.setMoney(bankDTO.getMoney());
 
-        System.out.println("bankIDIDIDID:: "+ bank.getBankID() + bank.getBankTitle() + bank.getMoney());
 
         bankRepository.save(bank);
+        System.out.println("bankIDIDIDID:: "+ bank.getBankID() + bank.getBankTitle() + bank.getMoney());
 
         return ResponseEntity.ok().body(bank);
     }

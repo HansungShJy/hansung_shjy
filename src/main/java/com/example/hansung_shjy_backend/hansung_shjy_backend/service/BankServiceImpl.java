@@ -75,7 +75,7 @@ public class BankServiceImpl implements BankService {
     // 우리의 지출 수정
     @Override
     public Bank modifyBank(Integer bank_id) throws ExecutionException, InterruptedException {
-        bank = bankRepository.findAllByBankID(bank_id);
+        bank = bankRepository.findBankByBankID(bank_id);
         System.out.println("modifyBank:: " + bank);
         if (bank == null) return null;
 
