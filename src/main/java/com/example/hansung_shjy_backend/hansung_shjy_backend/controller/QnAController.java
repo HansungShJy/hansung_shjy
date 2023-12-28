@@ -76,7 +76,7 @@ public class QnAController {
         User me = userRepository.findUserByUserID(qnARequest.getUserID());
 
         QnA qna = qnAService.saveQnA(qnARequest, couple);
-        QnA existingQnA = qnARepository.findByCoupleIdAndQnaNumber(couple.getCoupleID(), qnARequest.getQnaNumber());
+        QnA existingQnA = qnARepository.findByCoupleIDAndQnaNumber(couple.getCoupleID(), qnARequest.getQnaNumber());
 
         if (existingQnA == null && me.getUserID().equals(couple.getMe().getUserID())) {
             // If no entry exists, create a new one
