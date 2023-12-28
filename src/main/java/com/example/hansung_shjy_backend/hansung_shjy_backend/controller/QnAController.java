@@ -44,7 +44,7 @@ public class QnAController {
         System.out.println("qna coupleid:: " + couple_id);
         List<QnA> qnAList = qnAService.listQnA(couple_id);
         System.out.println("qnAList:: " + qnAList);
-        // couple의 me를 보내줘야됨
+
         Couple couple = coupleRepository.findByCoupleID(couple_id);
         Integer me = couple.getMe().getUserID();
 
@@ -52,7 +52,7 @@ public class QnAController {
         map.put("qnAList", qnAList);
         map.put("me", me);
 
-        return ResponseEntity.ok().body(qnAList);
+        return ResponseEntity.ok().body(map);
     }
 
     // 오늘의 질문 세부화면 =========================================================
