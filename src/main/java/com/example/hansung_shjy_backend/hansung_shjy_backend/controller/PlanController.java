@@ -96,25 +96,24 @@ public class PlanController {
     // 우리의 여행 계획 삭제
     @Transactional
     @DeleteMapping("/plan/delete/{plan_id}")
-    public ResponseEntity<Object> deletePlan(@PathVariable Integer plan_id) throws ExecutionException, InterruptedException {
+    public String deletePlan(@PathVariable Integer plan_id) throws ExecutionException, InterruptedException {
         System.out.println("deletePlan:: " + plan_id);
 //        planService.deletePlan(plan_id);
-        if (plan_id == null) {
-            return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        }
-
         Plan plan = planRepository.findAllByPlanID(plan_id);
 
         if (plan == null) {
-            return new ResponseEntity<>("Plan not found", HttpStatus.NOT_FOUND);
+            return null; // Plan not found
         }
 
-        PlanDetail planDetail = planDetailRepository.deletePlanDetailsByPlanID(plan);
 
-        planDetailRepository.delete(planDetail);
+        List<PlanDetail> planDetails = planDetailRepository.deletePlanDetailsByPlanID(plan);
+
         planRepository.delete(plan);
 
-        if (plan_id == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body("plan delete");
+        if (planDetails == null || planDetails.isEmpty()) {
+            return "plan delete"; // Only plan deleted
+        } else {
+            return "plan & planDetail delete"; // Plan and details deleted
+        }
     }
 }
