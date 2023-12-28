@@ -20,8 +20,8 @@ public interface QnARepository extends JpaRepository<QnA, Integer>, JpaSpecifica
         QnA findAllByCoupleIDAndQnaID(@Param("coupleID") Integer coupleID, @Param("qnaID") Integer qna_id);
 
     // QnA Detail
-    @Query(value = "SELECT * FROM QnA q WHERE q.qnaNumber = :qnaNumber", nativeQuery = true)
-        QnA findQnAByQnaNumber(@Param("qnaNumber") Integer qnaNumber);
+    @Query(value = "SELECT * FROM QnA q WHERE q.qna_number = :qna_number", nativeQuery = true)
+        QnA findQnAByQnaNumber(@Param("qna_number") Integer qna_number);
 
 
     QnA findByCoupleIDAndQnaNumber(Couple coupleID, Integer qnaNumber);
