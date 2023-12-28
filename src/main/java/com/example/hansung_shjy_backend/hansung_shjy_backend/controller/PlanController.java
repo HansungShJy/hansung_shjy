@@ -10,6 +10,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.service.UserService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -93,6 +94,7 @@ public class PlanController {
     }
 
     // 우리의 여행 계획 삭제
+    @Transactional
     @DeleteMapping("/plan/delete/{plan_id}")
     public ResponseEntity<Object> deletePlan(@PathVariable Integer plan_id) throws ExecutionException, InterruptedException {
         System.out.println("deletePlan:: " + plan_id);

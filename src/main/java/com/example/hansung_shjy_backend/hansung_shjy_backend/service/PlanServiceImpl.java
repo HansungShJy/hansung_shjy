@@ -14,6 +14,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -110,6 +111,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     // 우리의 여행 계획 삭제
+    @Transactional
     @Override
     public String deletePlan(Integer plan_id) throws ExecutionException, InterruptedException {
         Plan p = planRepository.findAllByPlanID(plan_id);
