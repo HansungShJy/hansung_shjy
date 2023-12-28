@@ -88,10 +88,10 @@ public class QnAController {
 
             qnARepository.save(qna);
         } else {
-            if (me.getUserID().equals(couple.getOther().getUserID())) {  // 나 -> couple의 me면
-                existingQnA.setMyAnswer(qnARequest.getMyAnswer());
-            } else {                                                     // 나 -> couple의 other면
+            if (me.getUserID().equals(couple.getOther().getUserID())) {  // 나 -> couple의 other면
                 existingQnA.setOtherAnswer(qnARequest.getMyAnswer());
+            } else {                                                     // 나 -> couple의 me면
+                existingQnA.setMyAnswer(qnARequest.getMyAnswer());
             }
             System.out.println("otherAnswer:: " + qnARequest.getOtherAnswer());
 
