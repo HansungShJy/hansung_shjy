@@ -186,6 +186,8 @@ hr {
   border-radius: 3px;
 }
 
-.delete_icon {
-  margin-left: 15px;
+.delete_icon,
+.edit_icon {
+  margin-left: 5px;
+  margin-bottom: -7px;
 }

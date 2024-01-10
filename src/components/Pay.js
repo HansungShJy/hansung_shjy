@@ -9,6 +9,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { Modal, Button } from "react-bootstrap";
 import "./Pay.css";
 import delete_icon from "../assets/delete_icon.png";
+import edit_icon from "../assets/edit_icon.png";
 
 function Pay() {
   const [showModal, setShowModal] = useState(false);
@@ -19,12 +20,18 @@ function Pay() {
   const [money, setMoney] = useState("");
   const [cookies] = useCookies(["couple_id"]);
   const couple_id = cookies.couple_id;
-  const [bank_id, setBank_ID] = useState(null);
+
   const [selectedEvent, setSelectedEvent] = useState(null);
   const calendarRef = useRef(null);
   const navigate = useNavigate();
   const handleShowModal = () => setShowModal(true);
   const handleShowModal2 = () => setShowModal2(true);
+  const [edit_bankid, setEdit_Bankid] = useState(null);
+  const [edit_method, setEdit_Method] = useState("");
+  const [edit_title, setEdit_Title] = useState("");
+  const [edit_money, setEdit_Money] = useState("");
+  const [edit_start, setEdit_Start] = useState("");
+  const [isEditing, setIsEditing] = useState(null);
 
   const handleCloseModal = () => {
     setPayMethod("");
@@ -39,6 +46,14 @@ function Pay() {
     setShowModal2(false);
   };
 
+  const onTitleHandler = (e) => {
+    setEdit_Title(e.target.value);
+  };
+
+  const onMoneyHandler = (e) => {
+    setEdit_Money(e.target.value);
+  };
+
   const [ViewData, setViewData] = useState([
     {
       bankid: "",
@@ -50,15 +65,6 @@ function Pay() {
   ]);
 
   const [ViewDataList, setViewDataList] = useState([
-    {
-      bankid: "",
-      title: "",
-      start: "",
-      method: "",
-      paymoney: "",
-    },
-  ]);
-  const [payDataEdit, setPayDataEdit] = useState([
     {
       bankid: "",
       title: "",
@@ -173,40 +179,39 @@ function Pay() {
       });
   };
 
+  const handleBankid = (event) => {
+    console.log(event);
+    setEdit_Bankid(event.extendedProps.bankid);
+    setEdit_Method(event.extendedProps.method);
+    setEdit_Money((prevMoney) =>
+      prevMoney === "" ? event.extendedProps.paymoney || "" : prevMoney
+    );
+    setEdit_Title((prevTitle) => (prevTitle === "" ? event.title : prevTitle));
+    setEdit_Start(event.start);
+
+    setIsEditing(event);
+  };
+
   const handleEditEvent = (event) => {
-    if (!selectedEvent || !selectedEvent.extendedProps) {
-      console.error("찾을수없음.");
-      return;
-    }
-    if (payDataEdit.bankid === selectedEvent.extendedProps.bankid) {
-      const updatedPayData = {
-        bankid: selectedEvent.extendedProps.bankid,
-        title: selectedEvent.title,
-        start: selectedEvent.start,
-        method: selectedEvent.extendedProps.method,
-        paymoney: selectedEvent.extendedProps.paymoney,
-      };
+    console.log(event);
+    console.log(edit_title);
+    console.log(edit_money);
 
-      setPayDataEdit(updatedPayData);
-
-      axios
-        .patch(
-          `http://localhost:3000/pay/edit/${selectedEvent.extendedProps.bankid}`,
-          {
-            bankDate: event.bankDate,
-            payMethod: event.paymethod,
-            bankTitle: event.banktitle,
-            money: event.money,
-          }
-        )
-        .then((res) => {
-          console.log(res + "수정완");
-          handleCloseModal2();
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+    axios
+      .patch(`http://localhost:3000/pay/edit/${edit_bankid}`, {
+        bankDate: edit_start,
+        payMethod: edit_method,
+        bankTitle: edit_title,
+        money: edit_money,
+      })
+      .then((res) => {
+        console.log(res + "수정완");
+        handleCloseModal2();
+        document.location.href = "./pay";
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const payDeleteEvent = (event) => {
@@ -360,19 +365,41 @@ function Pay() {
                           ? "입금"
                           : "출금"}{" "}
                       </p>
+
                       <input
                         className="editTitle_ip"
                         type="text"
+                        value={isEditing === event ? edit_title : event.title}
                         placeholder={event.title}
+                        onChange={(e) => {
+                          setEdit_Title(e.target.value);
+                        }}
+                        disabled={isEditing !== event}
                       />
                       <input
                         className="editMoney_ip"
                         type="text"
+                        value={
+                          isEditing === event
+                            ? edit_money
+                            : (event.extendedProps || {}).paymoney || ""
+                        }
+                        onChange={(e) => {
+                          setEdit_Money(e.target.value);
+                        }}
                         placeholder={
                           event.extendedProps
                             ? event.extendedProps.paymoney
                             : "N/A"
                         }
+                        disabled={isEditing !== event}
+                      />
+                      <img
+                        className="edit_icon"
+                        src={edit_icon}
+                        alt="edit_icon.png"
+                        width="25"
+                        onClick={() => handleBankid(event)}
                       />
                       <img
                         className="delete_icon"
@@ -399,7 +426,7 @@ function Pay() {
               <Button
                 className="edit-modal"
                 variant="edit-event"
-                onClick={handleEditEvent}
+                onClick={() => handleEditEvent(edit_bankid)}
               >
                 수정하기
               </Button>
