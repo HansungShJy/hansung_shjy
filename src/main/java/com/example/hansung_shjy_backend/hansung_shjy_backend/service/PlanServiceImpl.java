@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -46,6 +48,25 @@ public class PlanServiceImpl implements PlanService {
         System.out.println("plan first list :: "+ plan);
         if (plan == null) return null;
         else return plan;
+    }
+
+    // 우리의 여행 계획 디테일 화면
+    @Override
+    public Map<String, Object> detailPlan(Integer plan_id) throws ExecutionException, InterruptedException {
+        System.out.println("detailPlan plan_id:: " + plan_id);
+        if (plan_id == null) return null;
+
+        List<Plan> plan = planRepository.findPlansByPlanID(plan_id);
+        List<PlanDetail> planDetail = planDetailRepository.findByPlanID(plan_id);
+        System.out.println("plan first list :: "+ plan + ", " + planDetail);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put("plan", plan);
+        resultMap.put("planDetail", planDetail);
+
+        if (resultMap == null) return null;
+        else return resultMap;
     }
 
     // 우리의 여행 계획 등록 --> plan, planDetail

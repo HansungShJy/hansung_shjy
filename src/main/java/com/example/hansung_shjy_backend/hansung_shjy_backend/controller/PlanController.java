@@ -46,6 +46,16 @@ public class PlanController {
         return ResponseEntity.ok().body(planDTOList);
     }
 
+    // 우리의 여행 계획 세부화면 ===========================================================================
+    @GetMapping("/plan/detail/{plan_id}")
+    public ResponseEntity<Object> detailPlan(@PathVariable Integer plan_id) throws ExecutionException, InterruptedException {
+        System.out.println("planDetail plan_id:: " + plan_id);
+        Map<String, Object> planList = planService.detailPlan(plan_id);
+        System.out.println("planList:: " + planList);
+
+        return ResponseEntity.ok().body(planList);
+    }
+
     // 우리의 여행 계획 등록
     @PostMapping("/plan/save")
     public ResponseEntity<Object> createPlan(@RequestBody PlanRequest planRequest) throws ExecutionException, InterruptedException {
