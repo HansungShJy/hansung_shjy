@@ -57,7 +57,7 @@ public class PlanServiceImpl implements PlanService {
         if (plan_id == null) return null;
 
         List<Plan> plan = planRepository.findPlansByPlanID(plan_id);
-        List<PlanDetail> planDetail = planDetailRepository.findByPlanID(plan_id);
+        List<PlanDetail> planDetail = planDetailRepository.findPlanDetailsByPlanID(plan_id);
         System.out.println("plan first list :: "+ plan + ", " + planDetail);
 
         Map<String, Object> resultMap = new HashMap<>();
