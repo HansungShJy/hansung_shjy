@@ -6,7 +6,6 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.PlanRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Plan;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.PlanDetail;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanDetailRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.PlanRepository;
@@ -30,9 +29,6 @@ public class PlanServiceImpl implements PlanService {
 
     @Autowired
     private PlanDetailRepository planDetailRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private CoupleRepository coupleRepository;
