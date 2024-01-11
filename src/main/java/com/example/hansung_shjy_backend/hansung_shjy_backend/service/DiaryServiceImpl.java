@@ -40,8 +40,11 @@ public class DiaryServiceImpl implements DiaryService {
         diary.setDiaryDate(diaryDTO.getDiaryDate());
         diary.setMyDiary(diaryDTO.getMyDiary());
         diary.setOtherDiary(diaryDTO.getOtherDiary());
+        diary.setFileName(diaryDTO.getFileName());
+        diary.setFileOriName(diary.getFileOriName());
+        diary.setFileUrl(diary.getFileUrl());
         diary.setCouple(coupleRepository.findByCoupleID(diaryDTO.getCoupleID()));
-        diaryRepository.save(Diary.toEntity(diaryDTO));
+        diaryRepository.save(diary);
         return diaryDTO;
     }
 

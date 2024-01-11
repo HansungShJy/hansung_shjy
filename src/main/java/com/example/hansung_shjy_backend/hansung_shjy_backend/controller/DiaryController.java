@@ -4,11 +4,14 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -36,10 +39,30 @@ public class DiaryController {
     public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
         System.out.println("create Diary couple_id:: " + couple_id);
         System.out.println("create Diary:: " + diaryDTO);
-        DiaryDTO diary = diaryService.createDiary(diaryDTO);
+
+        Diary diary = new Diary();
+
+        String sourceFileName = diaryDTO.getFileOriName();
+        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
+        File destinationFile;
+        String destinationFileName;
+        String fileUrl = "C:/Users/jang/IdeaProjects/hansung_shjy_BackEnd/src/main/resources/static/images/";
+
+        do {
+        		destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+        		destinationFile = new File(fileUrl + destinationFileName);
+        } while (destinationFile.exists());
+
+        destinationFile.getParentFile().mkdirs();
+//        files.transferTo(destinationFile);
+
+        diary.setFileName(destinationFileName);
+        diary.setFileOriName(sourceFileName);
+        diary.setFileUrl(fileUrl);
+        DiaryDTO diaryDTO1 = diaryService.createDiary(diaryDTO);
 
         if (diaryDTO == null || diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(diary);
+        else return ResponseEntity.ok().body(diaryDTO1);
     }
 
     // 일기 수정 ===========================================================================
