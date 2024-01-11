@@ -12,22 +12,22 @@ function Qna() {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([
     {
-      id: "1",
+      id: 1,
       text: "오늘 저녁, 그 사람과 손잡고 걷고 싶은 산책 코스는 어디인가요?",
     },
     {
-      id: "2",
+      id: 2,
       text: "연인들이 이별하는 가장 큰 이유는 무엇이라고 생각하나요?",
     },
     {
-      id: "3",
+      id: 3,
       text: "만 원으로 종일 데이트를 한다면 어떤 하루를 보낼 수 있을까요?",
     },
   ]);
 
   const handleQuestionClick = (question) => {
     navigate(`/qnadetail/${question.id}`, {
-      state: { questionText: question.text },
+      state: { questionText: question.text, questionID: question.id },
     });
   };
 
@@ -39,7 +39,7 @@ function Qna() {
         },
       })
       .then((res) => {
-        console.log(res + "::res");
+        console.log(JSON.stringify(res.data));
       })
       .catch((err) => {
         console.log(err + "::err");

@@ -10,12 +10,22 @@ import editlogo from "../assets/edit_icon.png";
 const QnaDetail = () => {
   const location = useLocation();
   const questionText = location.state?.questionText;
+  const questionID = location.state?.questionID;
   const { qna_id } = useParams();
-  const [cookies] = useCookies(["couple_id", "user_id"]);
+  const [cookies] = useCookies(["couple_id", "user_id", "nickname"]);
   const couple_id = cookies.couple_id;
   const user_id = cookies.user_id;
+
+  const encodedNickname = decodeURIComponent(cookies.nickname);
+  const [userNN, setUserNN] = useState("");
+  const [otherNN, setOtherNN] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
   const [otherAnswer, setOtherAnswer] = useState("");
+  const [userqna, setUserQna] = useState("");
+  const [otherqna, setOtherQna] = useState("");
+  const [userID1, setUserID1] = useState("");
+  const [userID2, setUserID2] = useState("");
+
   const maxChar = 150;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -23,13 +33,6 @@ const QnaDetail = () => {
   const toggleEditing = () => {
     setIsEditing((prevEditing) => !prevEditing);
   };
-
-  const [nicknamelist, setNickNameList] = useState([
-    {
-      myNickname: "",
-      otherNickname: "",
-    },
-  ]);
 
   useEffect(() => {
     axios
@@ -40,13 +43,14 @@ const QnaDetail = () => {
       })
       .then((res) => {
         console.log(JSON.stringify(res.data) + "::res");
-        const username = res.data.myNickname;
-        const othername = res.data.otherNickname;
-        console.log(username, othername);
-        setNickNameList({
-          myNickname: username,
-          otherNickname: othername,
-        });
+
+        setUserNN(res.data.nickname1);
+        setOtherNN(res.data.nickname2);
+        setUserQna(res.data.qnaDetail.myAnswer);
+        setOtherQna(res.data.qnaDetail.otherAnswer);
+
+        setUserID1(res.data.userID1);
+        setUserID2(res.data.userID2);
       })
       .catch((err) => {
         console.log(err + "::err");
@@ -64,26 +68,28 @@ const QnaDetail = () => {
   };
 
   const QnaAnswerSave = () => {
+    console.log(questionID);
     axios
       .post(`http://localhost:3000/qna/save`, {
-        qnaTitle: questionText,
         qnaDate: new Date(),
         myAnswer: userAnswer,
-        user_id: user_id,
+        userID: user_id,
         coupleID: couple_id,
+        qnaNumber: questionID,
       })
       .then((res) => {
         console.log(JSON.stringify(res.data) + ":: save res");
+        alert("저장이 완료되었습니다.");
       })
       .catch((err) => {
         console.log(err + "save err");
+        alert("저장 오류. 다시 시도하세요.");
       });
   };
 
   const QnaAnswerEdit = () => {
     axios
       .patch(`http://localhost:3000/qna/edit/${qna_id}`, {
-        qnaTitle: questionText,
         qnaDate: new Date(),
         myAnswer: userAnswer,
         user_id: user_id,
@@ -100,7 +106,6 @@ const QnaDetail = () => {
 
   const charCount = userAnswer.length;
   const charCount2 = otherAnswer.length;
-  const { myNickname, otherNickname } = nicknamelist;
 
   var today = new Date();
   var year = today.getFullYear();
@@ -116,33 +121,40 @@ const QnaDetail = () => {
         <br />
         <div>
           <label className="Qnatext">{questionText}</label>
-          <img
-            className="edit_logo"
-            src={editlogo}
-            alt="edit_icon.png"
-            width="25"
-            onClick={toggleEditing}
-          />
         </div>
         <br />
-        <label className="QnaD_lb"> {myNickname} 님의 답변</label>
+        <label className="QnaD_lb">
+          {" "}
+          {decodeURIComponent(encodedNickname)} 님의 답변
+        </label>
+        <img
+          className="edit_logo"
+          src={editlogo}
+          alt="edit_icon.png"
+          width="25"
+          onClick={toggleEditing}
+        />
         <br />
         <textarea
           className="QnaD_tx"
           value={userAnswer}
+          placeholder={Number(userID2) === user_id ? otherqna : userqna}
           onChange={handleUserChange}
           maxLength={maxChar}
         ></textarea>
         <br />
         <label className="countChar">{`${charCount}/${maxChar}`}</label>
         <br />
-        <label className="QnaD_lb">{otherNickname} 님의 답변</label>
+        <label className="QnaD_lb">
+          {encodedNickname === userNN ? otherNN : userNN} 님의 답변
+        </label>
 
         <br />
         <textarea
           className="QnaD_tx"
           disabled
           value={otherAnswer}
+          placeholder={Number(userID1) === user_id ? otherqna : userqna}
           onChange={handleOtherChange}
           maxLength={maxChar}
         ></textarea>
