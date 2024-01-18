@@ -16,7 +16,7 @@ export function PlanEdit() {
   const [planTitle, setPlanTitle] = useState("");
   const [startDate, setStartDate] = useState(Date);
   const [endDate, setEndDate] = useState(Date);
-  const [traffic, setTraffic] = useState("");
+  const [traffic, setTraffic] = useState(trafficedit);
   const [planDHome, setPlanDHome] = useState("");
   const [planNumber, setPlanNumber] = useState(0);
   const [location, setLocation] = useState("");
@@ -24,6 +24,7 @@ export function PlanEdit() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [checkedbox, setCheckedBox] = useState(false);
+  const [planDetailID, setplanDetailID] = useState("");
   const { planID } = useParams();
 
   const [popup, setPopup] = useState(false);
@@ -45,6 +46,7 @@ export function PlanEdit() {
         const resData = res.data;
 
         const newLocations = resData.planDetail.map((detail) => ({
+          planDetailID: detail.planDetailID,
           planNumber: detail.planNumber,
           location: detail.planLocation,
           planPrice: detail.planPrice,
@@ -71,6 +73,7 @@ export function PlanEdit() {
     setLocations([
       ...locations,
       {
+        planDetailID: "",
         planNumber: Number(planNumber) + 1,
         location: "",
         planPrice: "",
@@ -101,7 +104,7 @@ export function PlanEdit() {
   const onTrafficBox = (e) => {
     console.log(e);
     var traffic = document.getElementById("planTraffic");
-    var value = traffic.options[e].text;
+    var value = traffic.options[trafficedit.selectedIndex].text;
     return value;
   };
 
@@ -211,6 +214,8 @@ export function PlanEdit() {
             coupleID: couple_id,
           },
           planDetailDTO: locations.map((loc) => ({
+            planDetailID: loc.planDetailID,
+            planNumber: loc.planNumber,
             planLocation: loc.location,
             planPrice: loc.planPrice,
             planDayNumber: 1,
@@ -280,7 +285,7 @@ export function PlanEdit() {
           id="planTraffic"
           //defaultValue={onTrafficBox}
           onChange={onTraffic}
-          value={trafficedit}
+          value={traffic}
         >
           <option value="" className="select_box">
             선택해주세요
