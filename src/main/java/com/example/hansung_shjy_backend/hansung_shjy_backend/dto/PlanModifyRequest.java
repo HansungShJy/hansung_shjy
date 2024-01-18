@@ -13,7 +13,7 @@ public class PlanModifyRequest {
     @JsonProperty("planDTO")
     private PlanDTO planDTO;
 
-    @JsonProperty("planDetailDTOs")
-    private List<PlanDetailDTO> planDetailDTOs;
+    @JsonProperty("planDetailDTO")
+    private List<PlanDetailDTO> planDetailDTO;
 }
 

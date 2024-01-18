@@ -72,7 +72,7 @@ public class PlanController {
             throws ExecutionException, InterruptedException {
 
         System.out.println("modifyPlan:: " + plan_id + ", plan:: " + planRequest.getPlanDTO() +
-                ", planDetail:: " + planRequest.getPlanDetailDTOs());
+                ", planDetail:: " + planRequest.getPlanDetailDTO());
 
         Plan plan = planService.modifyPlan(plan_id);
         List<PlanDetail> planDetails = planService.modifyPlanDetail(plan_id);
@@ -80,7 +80,7 @@ public class PlanController {
         Map<String, Object> resultMap = new HashMap<>();
 
         PlanDTO planDTO = planRequest.getPlanDTO();
-        List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTOs();
+        List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTO();
 
         if (plan == null) {
             return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
