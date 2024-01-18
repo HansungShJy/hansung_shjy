@@ -8,13 +8,12 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Modal, Button } from "react-bootstrap";
 import "./Plan.css";
-import delete_icon from "../assets/delete_icon.png";
+import go_icon from "../assets/go_icon.png";
 
 function Plan() {
   const [cookies] = useCookies(["couple_id"]);
   const couple_id = cookies.couple_id;
 
-  const [plan_id, setPlanID] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ function Plan() {
   const handleShowModal = (event) => {
     setShowModal(true);
     setSelectedEvent(event);
-    console.log(event);
+    //console.log(event);
   };
 
   const handleCloseModal = () => {
@@ -33,22 +32,45 @@ function Plan() {
     navigate("/planDetail");
   };
   const handleEventClick = (clickInfo) => {
-    console.log(clickInfo.event);
+    //console.log(clickInfo.event);
     handleDeletePlan(clickInfo.event.extendedProps.planID);
   };
   const [events, setEvents] = useState([]);
 
   const handleDeletePlan = (planID) => {
+    console.log(planID);
     if (window.confirm("여행 계획을 삭제하시겠습니까?")) {
       axios
         .delete(`http://localhost:3000/plan/delete/${planID}`)
         .then((res) => {
           console.log(res + "여행계획 삭제 완");
+          alert("삭제 완료");
           document.location.href = "./plan";
         })
         .catch((error) => {
           console.error(error + "여행계획 삭제 실패");
+          alert("삭제 오류");
         });
+    } else {
+      return;
+    }
+  };
+
+  const handleEditPlan = (event) => {
+    console.log(event.extendedProps.planID);
+    console.log(event.title);
+
+    if (window.confirm("여행 계획을 수정하시겠습니까?")) {
+      navigate(`/planedit/${event.extendedProps.planID}`, {
+        state: {
+          title: event.title,
+          start: event.start,
+          end: event.end,
+          trafficedit: event.extendedProps.planTraffic,
+          planHome: event.extendedProps.planHome,
+          planID: event.extendedProps.planID,
+        },
+      });
     } else {
       return;
     }
@@ -116,7 +138,7 @@ function Plan() {
         events={events}
         eventClick={handleEventClick}
         headerToolbar={{
-          start: "addEventButton,deleteEventButton",
+          start: "addEventButton,EditEventButton",
           center: "title",
           end: "today,prev,next",
         }}
@@ -125,9 +147,9 @@ function Plan() {
             text: "여행 등록",
             click: handleAddPlan,
           },
-          deleteEventButton: {
-            className: "deletebutton",
-            text: "여행 삭제",
+          EditEventButton: {
+            className: "editbutton",
+            text: "여행 수정",
             click: handleShowModal,
           },
         }}
@@ -162,11 +184,11 @@ function Plan() {
                 <label> ~ </label>
                 <label className="planD_end_lb">{event.end}</label>
                 <img
-                  className="delete_icon"
-                  src={delete_icon}
-                  alt="delete_icon.png"
+                  className="go_icon"
+                  src={go_icon}
+                  alt="go_icon.png"
                   width="20"
-                  onClick={() => handleDeletePlan(selectedEvent)}
+                  onClick={() => handleEditPlan(event)}
                 />
               </div>
             ))}

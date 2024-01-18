@@ -1,25 +1,30 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "./Header";
-import "./PlanDetail.css";
+import "./PlanEdit.css";
 import Post from "./Post";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { useLocation } from "react-router-dom";
 
-export function PlanDetail() {
+export function PlanEdit() {
   const uselocation = useLocation();
+  const title = uselocation.state?.title;
+  const start = uselocation.state?.start;
+  const end = uselocation.state?.end;
+  const trafficedit = uselocation.state?.trafficedit;
+  const planHome = uselocation.state?.planHome;
   const [planTitle, setPlanTitle] = useState("");
   const [startDate, setStartDate] = useState(Date);
   const [endDate, setEndDate] = useState(Date);
   const [traffic, setTraffic] = useState("");
   const [planDHome, setPlanDHome] = useState("");
+  const [planNumber, setPlanNumber] = useState(0);
   const [location, setLocation] = useState("");
   const [planPrice, setPlanPrice] = useState(0);
-  const [planNumber, setPlanNumber] = useState(0);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [checkedbox, setCheckedBox] = useState(false);
+  const { planID } = useParams();
 
   const [popup, setPopup] = useState(false);
   const [cookies] = useCookies(["couple_id"]);
@@ -31,6 +36,29 @@ export function PlanDetail() {
   const [enroll_company, setEnroll_company] = useState({
     address: "",
   });
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/plan/detail/${planID}`)
+      .then((res) => {
+        console.log(JSON.stringify(res.data) + "::res");
+        const resData = res.data;
+
+        const newLocations = resData.planDetail.map((detail) => ({
+          planNumber: detail.planNumber,
+          location: detail.planLocation,
+          planPrice: detail.planPrice,
+          startTime: detail.planStartTime,
+          endTime: detail.planEndTime,
+          checkedbox: detail.planCheck,
+        }));
+
+        setLocations(newLocations);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [planID, couple_id]);
 
   const onPlanHome = (e) => {
     setEnroll_company({
@@ -71,6 +99,13 @@ export function PlanDetail() {
   };
 
   const onTrafficBox = (e) => {
+    console.log(e);
+    var traffic = document.getElementById("planTraffic");
+    var value = traffic.options[e].text;
+    return value;
+  };
+
+  const onTraffic = (e) => {
     setTraffic(e.target.value);
   };
 
@@ -117,7 +152,7 @@ export function PlanDetail() {
     }
   };
 
-  const handleAddPlan = () => {
+  const handleEditPlan = () => {
     console.log(
       "빈칸 확인:",
       planTitle,
@@ -134,7 +169,6 @@ export function PlanDetail() {
     );
 
     if (
-      planTitle === "" ||
       startDate === "" ||
       endDate === "" ||
       traffic === "" ||
@@ -167,22 +201,21 @@ export function PlanDetail() {
       console.log(newEvent + "::newevent");
 
       axios
-        .post(`http://localhost:3000/plan/save`, {
+        .patch(`http://localhost:3000/plan/edit/${planID}`, {
           planDTO: {
             planTitle: planTitle,
-            planStartDate: startDate,
-            planEndDate: endDate,
+            //planStartDate: startDate,
+            //planEndDate: endDate,
             planTraffic: traffic,
             planHome: enroll_company.address + planDHome,
             coupleID: couple_id,
           },
           planDetailDTO: locations.map((loc) => ({
-            planNumber: loc.planNumber,
             planLocation: loc.location,
             planPrice: loc.planPrice,
             planDayNumber: 1,
-            planStartTime: loc.startTime,
-            planEndTime: loc.endTime,
+            //planStartTime: loc.startTime,
+            //planEndTime: loc.endTime,
             planCheck: loc.checkedbox,
           })),
         })
@@ -211,7 +244,8 @@ export function PlanDetail() {
           userName="PlanTitle"
           value={planTitle}
           onChange={onPlanTitle}
-        />
+          placeholder={title}
+        ></input>
 
         <br />
         <label className="date-lb">날짜</label>
@@ -222,7 +256,7 @@ export function PlanDetail() {
           type="date"
           className="plan-start-ip"
           userName="plan_start"
-          value={startDate}
+          value={start}
           onChange={onPlanStart}
         />
         <label
@@ -237,28 +271,40 @@ export function PlanDetail() {
           type="date"
           userName="plan_end"
           className="plan-end-ip"
-          value={endDate}
+          value={end}
           onChange={onPlanEnd}
         />
         <select
           type="dropbox"
           className="transfer_box"
           id="planTraffic"
-          onChange={onTrafficBox}
+          //defaultValue={onTrafficBox}
+          onChange={onTraffic}
+          value={trafficedit}
         >
           <option value="" className="select_box">
             선택해주세요
           </option>
-          <option value="0">버스</option>
-          <option value="1">지하철</option>
-          <option value="2">자동차</option>
-          <option value="3">KTX</option>
-          <option value="4">비행기</option>
+          <option name="traffic" value="0">
+            버스
+          </option>
+          <option name="traffic" value="1">
+            지하철
+          </option>
+          <option name="traffic" value="2">
+            자동차
+          </option>
+          <option name="traffic" value="3">
+            KTX
+          </option>
+          <option name="traffic" value="4">
+            비행기
+          </option>
         </select>
 
         <input
           type="text"
-          placeholder="도로명 주소"
+          placeholder={planHome}
           className="home-ip"
           userName="PlanHome"
           required={true}
@@ -299,6 +345,7 @@ export function PlanDetail() {
               userName="PlanLocation"
               value={location.location}
               onChange={(e) => onLocation(index, e)}
+              placeholder={location.planNumber.location}
             />
             <input
               type="text"
@@ -352,8 +399,8 @@ export function PlanDetail() {
           일정추가
         </button>
         <br />
-        <button className="plansave-btn" type="button" onClick={handleAddPlan}>
-          여행계획 등록
+        <button className="plansave-btn" type="button" onClick={handleEditPlan}>
+          여행계획 수정
         </button>
         <button className="plancancle-btn" type="button" onClick={handleCancel}>
           취소
@@ -363,4 +410,4 @@ export function PlanDetail() {
   );
 }
 
-export default PlanDetail;
+export default PlanEdit;
