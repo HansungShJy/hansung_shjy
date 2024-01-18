@@ -36,7 +36,7 @@ function Login() {
       })
       .catch((error) => {
         console.log(error);
-        if (error.message === 400) {
+        if (error.response.status === 400) {
           alert("ID나 PW를 확인해주세요.");
         }
       });

@@ -11,9 +11,11 @@ import Mypage from "./Mypage";
 import Qna from "./Qna";
 import Pay from "./Pay";
 import Plan from "./Plan";
-import Calendar from "./Calendar";
 import PlanDetail from "./PlanDetail";
 import QnaDetail from "./QnaDetail";
+import PlanEdit from "./PlanEdit";
+import DiaryDetail from "./DiaryDetail";
+import "./App.css";
 
 function App() {
   return (
@@ -31,9 +33,10 @@ function App() {
         <Route path="/plan" element={<Plan />} />
         <Route path="/pay" element={<Pay />} />
         <Route path="/mypage" element={<Mypage />} />
-        <Route path="/calendar" element={<Calendar />} />
         <Route path="/plandetail" element={<PlanDetail />} />
         <Route path="/qnadetail/:qna_id" element={<QnaDetail />} />
+        <Route path="/planedit/:planID" element={<PlanEdit />} />
+        <Route path="/diarydetail" element={<DiaryDetail />} />
       </Routes>
     </BrowserRouter>
   );
