@@ -81,7 +81,6 @@ public class PlanController {
 
         PlanDTO planDTO = planRequest.getPlanDTO();
         List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTO();
-        System.out.println("plkdkdk:: " + planDetailDTOs);
 
         if (plan == null) {
             return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
@@ -89,7 +88,6 @@ public class PlanController {
 
         for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
             // Find the corresponding PlanDetail entity by planDetailID
-            System.out.println("planDETIAL:: " + planDetailDTO + planDetailDTO.getPlanDetailID() + "planIDIDID:: " + planDetailDTO.getPlanID());
             PlanDetail planDetail = findPlanDetailByPlanDetailID(planDetails, planDetailDTO.getPlanDetailID());
 
             if (planDetail == null) {
