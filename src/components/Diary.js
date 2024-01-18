@@ -17,7 +17,7 @@ function Diary() {
         },
       })
       .then((res) => {
-        console.log(res.data + "res");
+        console.log(JSON.stringify(res.data) + "::res");
       })
       .catch((err) => {
         console.log(err);

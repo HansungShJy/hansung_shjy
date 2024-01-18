@@ -7,9 +7,11 @@
   border-radius: 5px;
   font-size: medium;
   font-weight: 700;
+  font-family: "Chassam";
 }
 
 .diarylist_btn {
+  font-family: "Chassam";
   margin-left: 120px;
   margin-top: 20px;
   background-color: rgba(176, 166, 255, 0.8);

@@ -6,7 +6,8 @@
 
 .diarydate_ip {
   margin-left: 150px;
-  font-size: medium;
+  font-size: 17px;
+  font-family: "Chassam";
 }
 
 .diaryphoto_lb {
@@ -43,4 +44,16 @@
   outline: none;
   font-family: "Chassam";
   font-size: 17px;
+}
+
+.diarysave_btn {
+  font-family: "Chassam";
+  font-size: 15px;
+  margin-left: 1198px;
+  background-color: rgba(176, 166, 255, 0.8);
+  border: none;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  font-weight: 700;
 }
