@@ -119,8 +119,8 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public PlanDetail modifyPlanDetail(Integer plan_id) throws ExecutionException, InterruptedException {
-        PlanDetail planDetail = planDetailRepository.findAllByPlanID(plan_id);
+    public List<PlanDetail> modifyPlanDetail(Integer plan_id) throws ExecutionException, InterruptedException {
+        List<PlanDetail> planDetail = planDetailRepository.findAllByPlanID(plan_id);
         System.out.println("modifyPlanDetail:: " + planDetail);
         if (planDetail == null) return null;
 

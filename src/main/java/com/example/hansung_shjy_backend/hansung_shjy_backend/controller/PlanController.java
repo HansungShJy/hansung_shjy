@@ -72,13 +72,16 @@ public class PlanController {
         System.out.println("modifyPlan:: " + plan_id + ", plan:: " + planRequest.getPlanDTO() +
                 ", planDetail:: " + planRequest.getPlanDetailDTOs());
         Plan plan = planService.modifyPlan(plan_id);
-        PlanDetail planDetail = planService.modifyPlanDetail(plan_id);
+        List<PlanDetail> planDetails = planService.modifyPlanDetail(plan_id); // unique X -> result : 2
+
         Map<String, Object> resultMap = new HashMap<>();
 
         PlanDTO planDTO = planRequest.getPlanDTO();
         List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTOs();
 
-        if (plan == null || planDetail == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        PlanDetail planDetail = findPlanDetail(planDetails, planDetailDTOs);  // 얘를 하나로 잡아야됨
+
+        if (planDetail == null) return new ResponseEntity<>("PlanDetail not found", HttpStatus.BAD_REQUEST);
 
         plan.setPlanTitle(planDTO.getPlanTitle());
         plan.setPlanTraffic(planDTO.getPlanTraffic());
@@ -92,7 +95,7 @@ public class PlanController {
         planDetail.setPlanPrice(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanPrice());
 //        planDetail.setPlanStartTime(planDetailDTOs.getPlanStartTime());
 //        planDetail.setPlanEndTime(planDetailDTOs.getPlanEndTime());
-        planDetail.setPlanCheck(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanCheck());
+        planDetail.setPlanCheck(planDetailDTOs.get(plan_id).getPlanCheck());
 
         planRepository.save(plan);
         planDetailRepository.save(planDetail);
@@ -101,6 +104,20 @@ public class PlanController {
         resultMap.put("planDetail", planDetail);
 
         return ResponseEntity.ok().body(resultMap);
+    }
+
+    private PlanDetail findPlanDetail(List<PlanDetail> planDetails, List<PlanDetailDTO> planDetailDTOs) {
+        // Iterate through planDetails and planDetailDTOs to find the matching PlanDetail
+        // Adjust the logic based on your specific criteria for matching
+        // For example, matching based on planDetailID
+        for (PlanDetail planDetail : planDetails) {
+            for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
+                if (planDetail.getPlanDetailID().equals(planDetailDTO.getPlanDetailID())) {
+                    return planDetail;
+                }
+            }
+        }
+        return null; // If no matching PlanDetail is found
     }
 
     // 우리의 여행 계획 삭제

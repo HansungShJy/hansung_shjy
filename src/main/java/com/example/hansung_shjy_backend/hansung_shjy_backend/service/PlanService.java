@@ -23,7 +23,7 @@ public interface PlanService {
 
     // 우리의 여행 계획 수정 ============================================================
     Plan modifyPlan(Integer plan_id) throws ExecutionException, InterruptedException;
-    PlanDetail modifyPlanDetail(Integer plan_id) throws ExecutionException, InterruptedException;
+    List<PlanDetail> modifyPlanDetail(Integer plan_id) throws ExecutionException, InterruptedException;
 
     // 우리의 여행 계획 삭제 ============================================================
     String deletePlan(Integer plan_id) throws ExecutionException, InterruptedException;

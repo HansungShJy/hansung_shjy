@@ -23,7 +23,7 @@ public interface PlanDetailRepository extends JpaRepository<PlanDetail, Integer>
 
     // Plan Modify
     @Query(value = "SELECT * FROM plan_detail pd WHERE pd.planID = :planID", nativeQuery = true)
-    PlanDetail findAllByPlanID(@Param("planID") Integer planID);
+    List<PlanDetail> findAllByPlanID(@Param("planID") Integer planID);
 
     @Modifying(clearAutomatically = true)
     @Transactional
