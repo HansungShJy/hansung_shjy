@@ -89,7 +89,7 @@ public class PlanController {
 
         for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
             // Find the corresponding PlanDetail entity by planDetailID
-            System.out.println("planDETIAL:: " + planDetailDTO.getPlanDetailID() + "planIDIDID:: " + planDetailDTO.getPlanID());
+            System.out.println("planDETIAL:: " + planDetailDTO + planDetailDTO.getPlanDetailID() + "planIDIDID:: " + planDetailDTO.getPlanID());
             PlanDetail planDetail = findPlanDetailByPlanDetailID(planDetails, planDetailDTO.getPlanDetailID());
 
             if (planDetail == null) {
