@@ -89,6 +89,7 @@ public class PlanController {
         for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
             // Find the corresponding PlanDetail entity by planDetailID
             PlanDetail planDetail = findPlanDetailByPlanDetailID(planDetails, planDetailDTO.getPlanDetailID());
+            System.out.println("planDETIAL:: " + planDetail.getPlanDetailID() + "planIDIDID:: " + planDetail.getPlanID());
 
             if (planDetail == null) {
                 return new ResponseEntity<>("PlanDetail not found for planDetailID: " + planDetailDTO.getPlanDetailID(),
