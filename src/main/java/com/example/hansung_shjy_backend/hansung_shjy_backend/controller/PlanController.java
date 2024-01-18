@@ -68,57 +68,67 @@ public class PlanController {
 
     // 우리의 여행 계획 수정
     @PatchMapping("/plan/edit/{plan_id}")
-    public ResponseEntity<Object> modifyPlan(@PathVariable Integer plan_id, @RequestBody PlanModifyRequest planRequest) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> modifyPlan(@PathVariable Integer plan_id, @RequestBody PlanModifyRequest planRequest)
+            throws ExecutionException, InterruptedException {
+
         System.out.println("modifyPlan:: " + plan_id + ", plan:: " + planRequest.getPlanDTO() +
                 ", planDetail:: " + planRequest.getPlanDetailDTOs());
+
         Plan plan = planService.modifyPlan(plan_id);
-        List<PlanDetail> planDetails = planService.modifyPlanDetail(plan_id); // unique X -> result : 2
+        List<PlanDetail> planDetails = planService.modifyPlanDetail(plan_id);
 
         Map<String, Object> resultMap = new HashMap<>();
 
         PlanDTO planDTO = planRequest.getPlanDTO();
         List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTOs();
 
-        PlanDetail planDetail = findPlanDetail(planDetails, planDetailDTOs);  // 얘를 하나로 잡아야됨
+        if (plan == null) {
+            return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        }
 
-        if (planDetail == null) return new ResponseEntity<>("PlanDetail not found", HttpStatus.BAD_REQUEST);
+        for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
+            // Find the corresponding PlanDetail entity by planDetailID
+            PlanDetail planDetail = findPlanDetailByPlanDetailID(planDetails, planDetailDTO.getPlanDetailID());
 
+            if (planDetail == null) {
+                return new ResponseEntity<>("PlanDetail not found for planDetailID: " + planDetailDTO.getPlanDetailID(),
+                        HttpStatus.BAD_REQUEST);
+            }
+
+            planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
+            planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
+            planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
+            planDetail.setPlanPrice(planDetailDTO.getPlanPrice());
+            // planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
+            // planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
+            planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
+
+            // Save the modified PlanDetail
+            planDetailRepository.save(planDetail);
+        }
+
+        // Update Plan properties (assuming they are common for all PlanDetailDTOs)
         plan.setPlanTitle(planDTO.getPlanTitle());
         plan.setPlanTraffic(planDTO.getPlanTraffic());
         plan.setPlanHome(planDTO.getPlanHome());
-//        plan.setPlanStartDate(planDTO.getPlanStartDate());
-//        plan.setPlanEndDate(planDTO.getPlanEndDate());
 
-        planDetail.setPlanDayNumber(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanDayNumber());
-        planDetail.setPlanNumber(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanNumber());
-        planDetail.setPlanLocation(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanLocation());
-        planDetail.setPlanPrice(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanPrice());
-//        planDetail.setPlanStartTime(planDetailDTOs.getPlanStartTime());
-//        planDetail.setPlanEndTime(planDetailDTOs.getPlanEndTime());
-        planDetail.setPlanCheck(planDetailDTOs.get(plan_id).getPlanCheck());
-
+        // Save the modified Plan
         planRepository.save(plan);
-        planDetailRepository.save(planDetail);
 
         resultMap.put("plan", plan);
-        resultMap.put("planDetail", planDetail);
+        resultMap.put("planDetails", planDetails);
 
         return ResponseEntity.ok().body(resultMap);
     }
 
-    private PlanDetail findPlanDetail(List<PlanDetail> planDetails, List<PlanDetailDTO> planDetailDTOs) {
-        // Iterate through planDetails and planDetailDTOs to find the matching PlanDetail
-        // Adjust the logic based on your specific criteria for matching
-        // For example, matching based on planDetailID
-        for (PlanDetail planDetail : planDetails) {
-            for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
-                if (planDetail.getPlanDetailID().equals(planDetailDTO.getPlanDetailID())) {
-                    return planDetail;
-                }
-            }
-        }
-        return null; // If no matching PlanDetail is found
+    private PlanDetail findPlanDetailByPlanDetailID(List<PlanDetail> planDetails, Integer planDetailID) {
+        // Find and return the matching PlanDetail by planDetailID
+        return planDetails.stream()
+                .filter(planDetail -> planDetail.getPlanDetailID().equals(planDetailID))
+                .findFirst()
+                .orElse(null);
     }
+
 
     // 우리의 여행 계획 삭제
     @Transactional
