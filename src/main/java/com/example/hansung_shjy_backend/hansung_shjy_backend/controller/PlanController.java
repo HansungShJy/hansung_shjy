@@ -81,6 +81,7 @@ public class PlanController {
 
         PlanDTO planDTO = planRequest.getPlanDTO();
         List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTO();
+        System.out.println("plkdkdk:: " + planDetailDTOs);
 
         if (plan == null) {
             return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
