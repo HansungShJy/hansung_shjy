@@ -1,4 +1,22 @@
-.Diary-main {
-  margin-left: 60px;
-  margin-right: 60px;
+.diary_btn {
+  margin-left: 930px;
+  background-color: rgb(253, 165, 200, 0.8);
+  border: none;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: 700;
+}
+
+.diarylist_btn {
+  margin-left: 120px;
+  margin-top: 20px;
+  background-color: rgba(176, 166, 255, 0.8);
+  border: none;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: 700;
 }

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import axios from "axios";
 import Header from "./Header";
 import "./Diary.css";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 function Diary() {
+  const navigate = useNavigate();
   const [cookies] = useCookies(["user_id"]);
-  const [events, setEvents] = useState([]);
   const couple_id = cookies.user_id;
   useEffect(() => {
     axios
@@ -17,31 +16,28 @@ function Diary() {
           couple_id: couple_id,
         },
       })
-      .then((res) => setEvents(res.data.event))
+      .then((res) => {
+        console.log(res.data + "res");
+      })
       .catch((err) => {
-        console.log(typeof couple_id);
-
         console.log(err);
       });
-  }, []);
+  }, [couple_id]);
+
+  const GotoDiary = () => {
+    navigate("/diarydetail");
+  };
 
   return (
     <div>
       <Header />
-      <div className="Diary-main">
-        <FullCalendar
-          defaultView="dayGridMonth"
-          height={"900px"}
-          plugins={[dayGridPlugin]}
-          contentHeight={"auto"}
-          dayMaxEventRows={3}
-          eventLimit={true}
-          headerToolbar={{
-            start: "today",
-            center: "title",
-            end: "prev,next",
-          }}
-        />
+      <div>
+        <button className="diarylist_btn" onClick={GotoDiary}>
+          일기 리스트
+        </button>
+        <button className="diary_btn" onClick={GotoDiary}>
+          일기 쓰기
+        </button>
       </div>
     </div>
   );

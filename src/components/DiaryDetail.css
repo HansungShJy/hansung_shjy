@@ -1,0 +1,46 @@
+.diarydate_lb {
+  margin-left: 150px;
+  margin-bottom: 0.8rem;
+  font-family: "Chassam";
+}
+
+.diarydate_ip {
+  margin-left: 150px;
+  font-size: medium;
+}
+
+.diaryphoto_lb {
+  margin-left: 150px;
+  font-family: "Chassam";
+}
+
+.diary_lb {
+  margin-left: 150px;
+  font-family: "Chassam";
+}
+
+.diaryuser_txt {
+  margin-left: 150px;
+  width: 530px;
+  height: 280px;
+  background-color: #ececec;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  outline: none;
+  font-family: "Chassam";
+  font-size: 17px;
+}
+
+.diaryother_txt {
+  margin-left: 50px;
+  width: 530px;
+  height: 280px;
+  background-color: #ececec;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  outline: none;
+  font-family: "Chassam";
+  font-size: 17px;
+}
