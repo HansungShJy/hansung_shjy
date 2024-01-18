@@ -86,13 +86,13 @@ public class PlanController {
 //        plan.setPlanStartDate(planDTO.getPlanStartDate());
 //        plan.setPlanEndDate(planDTO.getPlanEndDate());
 
-        planDetail.setPlanDayNumber(planDetailDTOs.get(plan_id).getPlanDayNumber());
-        planDetail.setPlanNumber(planDetailDTOs.get(plan_id).getPlanNumber());
-        planDetail.setPlanLocation(planDetailDTOs.get(plan_id).getPlanLocation());
-        planDetail.setPlanPrice(planDetailDTOs.get(plan_id).getPlanPrice());
+        planDetail.setPlanDayNumber(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanDayNumber());
+        planDetail.setPlanNumber(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanNumber());
+        planDetail.setPlanLocation(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanLocation());
+        planDetail.setPlanPrice(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanPrice());
 //        planDetail.setPlanStartTime(planDetailDTOs.getPlanStartTime());
 //        planDetail.setPlanEndTime(planDetailDTOs.getPlanEndTime());
-        planDetail.setPlanCheck(planDetailDTOs.get(plan_id).getPlanCheck());
+        planDetail.setPlanCheck(planDetailDTOs.get(planDetail.getPlanDetailID()).getPlanCheck());
 
         planRepository.save(plan);
         planDetailRepository.save(planDetail);
