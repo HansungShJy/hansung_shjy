@@ -70,13 +70,13 @@ public class PlanController {
     @PatchMapping("/plan/edit/{plan_id}")
     public ResponseEntity<Object> modifyPlan(@PathVariable Integer plan_id, @RequestBody PlanModifyRequest planRequest) throws ExecutionException, InterruptedException {
         System.out.println("modifyPlan:: " + plan_id + ", plan:: " + planRequest.getPlanDTO() +
-                ", planDetail:: " + planRequest.getPlanDetailDTO());
+                ", planDetail:: " + planRequest.getPlanDetailDTOs());
         Plan plan = planService.modifyPlan(plan_id);
         PlanDetail planDetail = planService.modifyPlanDetail(plan_id);
         Map<String, Object> resultMap = new HashMap<>();
 
         PlanDTO planDTO = planRequest.getPlanDTO();
-        List<PlanDetailDTO> planDetailDTOs = (List<PlanDetailDTO>) planRequest.getPlanDetailDTO();
+        List<PlanDetailDTO> planDetailDTOs = planRequest.getPlanDetailDTOs();
 
         if (plan == null || planDetail == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
@@ -90,8 +90,8 @@ public class PlanController {
         planDetail.setPlanNumber(planDetailDTOs.get(plan_id).getPlanNumber());
         planDetail.setPlanLocation(planDetailDTOs.get(plan_id).getPlanLocation());
         planDetail.setPlanPrice(planDetailDTOs.get(plan_id).getPlanPrice());
-//        planDetail.setPlanStartTime(planDetailDTOs.get(plan_id).getPlanStartTime());
-//        planDetail.setPlanEndTime(planDetailDTOs.get(plan_id).getPlanEndTime());
+//        planDetail.setPlanStartTime(planDetailDTOs.getPlanStartTime());
+//        planDetail.setPlanEndTime(planDetailDTOs.getPlanEndTime());
         planDetail.setPlanCheck(planDetailDTOs.get(plan_id).getPlanCheck());
 
         planRepository.save(plan);

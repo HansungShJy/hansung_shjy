@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 
 public class PlanDetailDTO {
-    List<PlanDetailDTO> planDetailDTOS;
 
     @JsonProperty("planDetailID")
     private Integer planDetailID;
