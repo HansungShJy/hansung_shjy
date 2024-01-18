@@ -4,7 +4,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.PlanDetail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.sql.Time;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +13,7 @@ import java.sql.Time;
 @Builder
 
 public class PlanDetailDTO {
+    List<PlanDetailDTO> planDetailDTOS;
 
     @JsonProperty("planDetailID")
     private Integer planDetailID;
