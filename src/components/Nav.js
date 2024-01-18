@@ -14,7 +14,7 @@ function Nav() {
             borderRadius: isActive ? "30px" : "0px",
           })}
         >
-          캘린더
+          우리의 일기
         </NavLink>
         <NavLink
           className="navbarMenu"
