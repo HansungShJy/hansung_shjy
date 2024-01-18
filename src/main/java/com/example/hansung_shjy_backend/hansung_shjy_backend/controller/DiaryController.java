@@ -46,6 +46,7 @@ public class DiaryController {
         String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
         File destinationFile;
         String destinationFileName;
+        // 상대경로 쓰면 안될 거 같은데
         String fileUrl = "C:/Users/jang/IdeaProjects/hansung_shjy_BackEnd/src/main/resources/static/images/";
 
         do {

@@ -76,7 +76,7 @@ public class PlanController {
         Map<String, Object> resultMap = new HashMap<>();
 
         PlanDTO planDTO = planRequest.getPlanDTO();
-        PlanDetailDTO planDetailDTO = planRequest.getPlanDetailDTO();
+        List<PlanDetailDTO> planDetailDTOs = (List<PlanDetailDTO>) planRequest.getPlanDetailDTO();
 
         if (plan == null || planDetail == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
 
@@ -86,13 +86,13 @@ public class PlanController {
         plan.setPlanStartDate(planDTO.getPlanStartDate());
         plan.setPlanEndDate(planDTO.getPlanEndDate());
 
-        planDetail.setPlanDayNumber(planDetailDTO.getPlanDayNumber());
-        planDetail.setPlanNumber(planDetailDTO.getPlanNumber());
-        planDetail.setPlanLocation(planDetailDTO.getPlanLocation());
-        planDetail.setPlanPrice(planDetailDTO.getPlanPrice());
-        planDetail.setPlanStartTime(planDetailDTO.getPlanStartTime());
-        planDetail.setPlanEndTime(planDetailDTO.getPlanEndTime());
-        planDetail.setPlanCheck(planDetailDTO.getPlanCheck());
+        planDetail.setPlanDayNumber(planDetailDTOs.get(plan_id).getPlanDayNumber());
+        planDetail.setPlanNumber(planDetailDTOs.get(plan_id).getPlanNumber());
+        planDetail.setPlanLocation(planDetailDTOs.get(plan_id).getPlanLocation());
+        planDetail.setPlanPrice(planDetailDTOs.get(plan_id).getPlanPrice());
+        planDetail.setPlanStartTime(planDetailDTOs.get(plan_id).getPlanStartTime());
+        planDetail.setPlanEndTime(planDetailDTOs.get(plan_id).getPlanEndTime());
+        planDetail.setPlanCheck(planDetailDTOs.get(plan_id).getPlanCheck());
 
         planRepository.save(plan);
         planDetailRepository.save(planDetail);
