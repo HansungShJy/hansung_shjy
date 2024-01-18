@@ -88,8 +88,8 @@ public class PlanController {
 
         for (PlanDetailDTO planDetailDTO : planDetailDTOs) {
             // Find the corresponding PlanDetail entity by planDetailID
+            System.out.println("planDETIAL:: " + planDetailDTO.getPlanDetailID() + "planIDIDID:: " + planDetailDTO.getPlanID());
             PlanDetail planDetail = findPlanDetailByPlanDetailID(planDetails, planDetailDTO.getPlanDetailID());
-            System.out.println("planDETIAL:: " + planDetail.getPlanDetailID() + "planIDIDID:: " + planDetail.getPlanID());
 
             if (planDetail == null) {
                 return new ResponseEntity<>("PlanDetail not found for planDetailID: " + planDetailDTO.getPlanDetailID(),
@@ -124,6 +124,7 @@ public class PlanController {
 
     private PlanDetail findPlanDetailByPlanDetailID(List<PlanDetail> planDetails, Integer planDetailID) {
         // Find and return the matching PlanDetail by planDetailID
+        System.out.println("FIND:: " + planDetails + "planDETAILID:: " + planDetailID);
         return planDetails.stream()
                 .filter(planDetail -> planDetail.getPlanDetailID().equals(planDetailID))
                 .findFirst()
