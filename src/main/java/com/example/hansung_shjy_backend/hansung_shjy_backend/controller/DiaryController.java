@@ -40,26 +40,30 @@ public class DiaryController {
         System.out.println("create Diary couple_id:: " + couple_id);
         System.out.println("create Diary:: " + diaryDTO);
 
+        //// TODO - diaryDTO 안에 image가 있는데 image는 MultipartFile로 보내줘야함 ... ---> 결국 테이블 새로 파기 ...
+
         Diary diary = new Diary();
 
-        String sourceFileName = diaryDTO.getFileOriName();
-        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-        File destinationFile;
-        String destinationFileName;
-        // 상대경로 쓰면 안될 거 같은데
-        String fileUrl = "C:/Users/jang/IdeaProjects/hansung_shjy_BackEnd/src/main/resources/static/images/";
-
-        do {
-        		destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
-        		destinationFile = new File(fileUrl + destinationFileName);
-        } while (destinationFile.exists());
-
-        destinationFile.getParentFile().mkdirs();
-//        files.transferTo(destinationFile);
-
-        diary.setFileName(destinationFileName);
-        diary.setFileOriName(sourceFileName);
-        diary.setFileUrl(fileUrl);
+//        String sourceFileName = diaryDTO.getFileOriName();
+//        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
+//        File destinationFile;
+//        String destinationFileName;
+//
+//        // TODO - 상대경로 쓰면 안되고 새로 경로 팔 것
+//
+//        String fileUrl = "C:/Users/jang/IdeaProjects/hansung_shjy_BackEnd/src/main/resources/static/images/";
+//
+//        do {
+//        		destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+//        		destinationFile = new File(fileUrl + destinationFileName);
+//        } while (destinationFile.exists());
+//
+//        destinationFile.getParentFile().mkdirs();
+////        files.transferTo(destinationFile);
+//
+//        diary.setFileName(destinationFileName);
+//        diary.setFileOriName(sourceFileName);
+//        diary.setFileUrl(fileUrl);
         DiaryDTO diaryDTO1 = diaryService.createDiary(diaryDTO);
 
         if (diaryDTO == null || diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);

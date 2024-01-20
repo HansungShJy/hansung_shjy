@@ -33,14 +33,6 @@ public class Diary implements Serializable {
     @Column(name = "otherDiary")
     private String otherDiary;
 
-    @Column(name = "fileName")
-    private String fileName;
-
-    @Column(name = "fileOriName")
-    private String fileOriName;
-
-    @Column(name = "fileurl")
-    private String fileUrl;
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
@@ -54,9 +46,6 @@ public class Diary implements Serializable {
                 .diaryDate(dto.getDiaryDate())
                 .myDiary(dto.getMyDiary())
                 .otherDiary(dto.getOtherDiary())
-                .fileName(dto.getFileName())
-                .fileOriName(dto.getFileOriName())
-                .fileUrl(dto.getFileUrl())
                 .build();
     }
 }

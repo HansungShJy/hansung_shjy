@@ -13,15 +13,12 @@ import java.sql.Date;
 
 public class DiaryDTO {
 
+    // 일기 관련
     private Integer diaryID;
     private Date diaryDate;
     private String myDiary;
     private String otherDiary;
     private Integer coupleID;
-
-    private String fileName;
-    private String fileOriName;
-    private String fileUrl;
 
     public static DiaryDTO toDTO(Diary entity) {
 
@@ -35,9 +32,6 @@ public class DiaryDTO {
                     .diaryDate(entity.getDiaryDate())
                     .myDiary(entity.getMyDiary())
                     .otherDiary(entity.getOtherDiary())
-                    .fileName(entity.getFileName())
-                    .fileOriName(entity.getFileOriName())
-                    .fileUrl(entity.getFileUrl())
                     .coupleID(coupleid)
                     .build();
         } catch (Error e) {
