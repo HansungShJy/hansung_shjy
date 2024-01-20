@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
@@ -65,13 +66,21 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 일기 저장 ============================================================
     @Override
-    public DiaryDTO createDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+    public DiaryDTO createDiary(Couple couple, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+        Map<String, Object> resultMap = new HashMap<>();
+
         Diary diary = new Diary();
         diary.setDiaryDate(diaryDTO.getDiaryDate());
         diary.setMyDiary(diaryDTO.getMyDiary());
         diary.setOtherDiary(diaryDTO.getOtherDiary());
-        diary.setCouple(coupleRepository.findByCoupleID(diaryDTO.getCoupleID()));
+        diary.setCouple(couple);
         diaryRepository.save(diary);
+
+//        Diary saveDiary = diaryRepository.findDiaryByCouple(couple.getCoupleID());  // TODO - coupleID 가지고는 못 찾을 거 같은데
+
+        resultMap.put("diary", diaryDTO);
+//        resultMap.put("diaryID", )
+
         return diaryDTO;
     }
 

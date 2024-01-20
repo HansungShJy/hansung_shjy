@@ -12,14 +12,12 @@ import java.util.List;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Integer>, JpaSpecificationExecutor<Diary> {
 
-    // 일기 홈 & 전체 보기
-    @Query(value = "SELECT d FROM Diary d LEFT JOIN FETCH d.image WHERE d.coupleID = :coupleID", nativeQuery = true)
-    List<Diary> findAllByDiaryID(@Param("coupleID") Integer coupleID);
-
-    // 일기 수정할 때 & 일기 디테일 화면
+    // 일기 디테일 화면
     @Query(value = "SELECT * FROM Diary d WHERE d.coupleID = :coupleID AND d.diaryID = :diary_id", nativeQuery = true)
         Diary findByDiaryID(@Param("coupleID") Integer coupleID, @Param("diary_id") Integer diary_id);
 
 
+    @Query(value = "SELECT * FROM Diary d WHERE d.couple.coupleID = :coupleID", nativeQuery = true)
+    Diary findDiaryByCouple(@Param("coupleID") Integer coupleID);
 
 }

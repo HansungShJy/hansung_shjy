@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Integer>, JpaSpecificationExecutor<Image> {
 
-    // 일기 홈 -> image 까지 같이
     @Query(value = "SELECT * FROM Image i WHERE i.diary.diaryID = :diaryID", nativeQuery = true)
-    List<Image> findAllByDiary(@Param("diaryID") Integer diaryID);
+    Image findImageByDiary(@Param("diaryID") Integer diaryID);
 }
