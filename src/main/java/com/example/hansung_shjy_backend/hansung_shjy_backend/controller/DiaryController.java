@@ -1,18 +1,21 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryRequest;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -27,11 +30,44 @@ public class DiaryController {
 
     // 홈 화면 ============================================================================
     @GetMapping("/diary")
-    public ResponseEntity<Object> diaryFirst(@RequestParam(value = "couple_id", required = false) Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> diaryFirst(@RequestParam("couple_id") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("diary couple_id:: " + couple_id);
-        List<Diary> diaryDTO = diaryService.listDiary(couple_id);
-        System.out.println("diaryDTO:: " + diaryDTO);
-        return ResponseEntity.ok().body(diaryDTO);
+
+        User me = coupleRepository.findByCoupleID(couple_id).getMe();
+        String myNickname = me.getNickname();
+        String otherNickname = me.getOtherID();
+        Integer coupleID = me.getCouple().getCoupleID();
+        Couple couple = coupleRepository.findByCoupleID(coupleID);
+        Integer myUserID = couple.getMe().getUserID();
+        Integer otherUserID = couple.getOther().getUserID();
+
+        Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
+
+        if (diaryImageMap.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
+                .map(entry -> {
+                    Diary diary = entry.getKey();
+                    Image image = entry.getValue();
+
+                    DiaryRequest diaryRequest = new DiaryRequest();
+                    diaryRequest.setDiary(diary);
+                    diaryRequest.setImage(image);
+                    return diaryRequest;    // diary & image 묶어서 같이 보내주기
+                })
+                .toList();
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("nickname1", myNickname);
+        resultMap.put("nickname2", otherNickname);
+        resultMap.put("userID1", myUserID);
+        resultMap.put("userID2", otherUserID);
+        resultMap.put("diaryDetail", diaryImageMap);
+
+        System.out.println("diaryDTO:: " + diaryDTOList);
+        return ResponseEntity.ok().body(resultMap);
     }
 
     // 일기 저장 ===========================================================================
@@ -40,34 +76,12 @@ public class DiaryController {
         System.out.println("create Diary couple_id:: " + couple_id);
         System.out.println("create Diary:: " + diaryDTO);
 
-        //// TODO - diaryDTO 안에 image가 있는데 image는 MultipartFile로 보내줘야함 ... ---> 결국 테이블 새로 파기 ...
+        DiaryDTO diary = diaryService.createDiary(diaryDTO);
 
-        Diary diary = new Diary();
-
-//        String sourceFileName = diaryDTO.getFileOriName();
-//        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-//        File destinationFile;
-//        String destinationFileName;
-//
-//        // TODO - 상대경로 쓰면 안되고 새로 경로 팔 것
-//
-//        String fileUrl = "C:/Users/jang/IdeaProjects/hansung_shjy_BackEnd/src/main/resources/static/images/";
-//
-//        do {
-//        		destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
-//        		destinationFile = new File(fileUrl + destinationFileName);
-//        } while (destinationFile.exists());
-//
-//        destinationFile.getParentFile().mkdirs();
-////        files.transferTo(destinationFile);
-//
-//        diary.setFileName(destinationFileName);
-//        diary.setFileOriName(sourceFileName);
-//        diary.setFileUrl(fileUrl);
-        DiaryDTO diaryDTO1 = diaryService.createDiary(diaryDTO);
+        // TODO - return을 image와 같이 보내야함
 
         if (diaryDTO == null || diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(diaryDTO1);
+        else return ResponseEntity.ok().body(diary);
     }
 
     // 일기 수정 ===========================================================================
@@ -86,9 +100,27 @@ public class DiaryController {
     @GetMapping("/diary/list/{couple_id}")
     public ResponseEntity<Object> listAllDiary(@PathVariable Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("<diary> couple_id::" + couple_id);
-        List<Diary> diaryDTO = diaryService.listDiary(couple_id);
-        System.out.println("diary listAll:: " + diaryDTO);
-        if (diaryDTO.isEmpty()) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(diaryDTO);
+
+        Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
+
+        if (diaryImageMap.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
+                .map(entry -> {
+                    Diary diary = entry.getKey();
+                    Image image = entry.getValue();
+
+                    DiaryRequest diaryRequest = new DiaryRequest();
+                    diaryRequest.setDiary(diary);
+                    diaryRequest.setImage(image);
+                    return diaryRequest;    // diary & image 묶어서 같이 보내주기
+                })
+                .toList();
+
+        System.out.println("diary listAll:: " + diaryDTOList);
+
+        return ResponseEntity.ok().body(diaryDTOList);
     }
 }

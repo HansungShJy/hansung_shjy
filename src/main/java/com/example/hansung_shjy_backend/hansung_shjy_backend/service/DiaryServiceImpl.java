@@ -2,14 +2,21 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRepository;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.ImageRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -25,12 +32,35 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     CoupleRepository coupleRepository;
 
+    @Autowired
+    ImageRepository imageRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
 
     // 홈 화면 & 전체 보기 리스트 =============================================================
     @Override
-    public List<Diary> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
+    public Map<Diary, Image> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("listDiary:: " + couple_id);
-        return diaryRepository.findAllByDiaryID(couple_id);
+        // Fetch diaries and their associated images using JPA join
+        List<Object[]> results = entityManager.createQuery(
+                        "SELECT d, i FROM Diary d LEFT JOIN Image i ON d.diaryID = i.diary.diaryID WHERE d.couple.coupleID = :couple_id", Object[].class)
+                .setParameter("couple_id", couple_id)
+                .getResultList();
+
+        if (results.isEmpty()) {
+            throw new EntityNotFoundException("No diaries found for couple_id: " + couple_id);
+        }
+
+        Map<Diary, Image> diaryImageMap = new HashMap<>();
+        for (Object[] result : results) {
+            Diary diary = (Diary) result[0];
+            Image image = (Image) result[1];
+            diaryImageMap.put(diary, image);
+        }
+
+        return diaryImageMap;
     }
 
     // 일기 저장 ============================================================
@@ -40,9 +70,6 @@ public class DiaryServiceImpl implements DiaryService {
         diary.setDiaryDate(diaryDTO.getDiaryDate());
         diary.setMyDiary(diaryDTO.getMyDiary());
         diary.setOtherDiary(diaryDTO.getOtherDiary());
-//        diary.setFileName(diaryDTO.getFileName());
-//        diary.setFileOriName(diary.getFileOriName());
-//        diary.setFileUrl(diary.getFileUrl());
         diary.setCouple(coupleRepository.findByCoupleID(diaryDTO.getCoupleID()));
         diaryRepository.save(diary);
         return diaryDTO;

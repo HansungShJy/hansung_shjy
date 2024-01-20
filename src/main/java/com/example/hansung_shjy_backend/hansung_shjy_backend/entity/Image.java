@@ -1,7 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.entity;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.ImageDTO;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
