@@ -1,0 +1,63 @@
+.month_header {
+  background-color: blanchedalmond;
+  font-size: 22px;
+  font-family: "Chassam";
+  width: 80rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-left: 5%;
+}
+
+.month_btn1 {
+  margin-right: 430px;
+  width: 5rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(139, 81, 0);
+  color: white;
+}
+
+.month_btn2 {
+  margin-left: 430px;
+  width: 5rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(139, 81, 0);
+  color: white;
+}
+
+.search_bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translate(-50%, -50%);
+}
+
+.search_ip {
+  width: 15vw;
+  height: 3vh;
+  outline: none;
+  padding-left: 10px;
+  font-family: "Chassam";
+  font-size: 17px;
+}
+
+.search_btn {
+  font-family: "Chassam";
+  margin-left: 10px;
+  background-color: rgba(231, 202, 172, 0.8);
+  border: none;
+  width: 6vw;
+  height: 3.8vh;
+  border-radius: 5px;
+  font-size: 17px;
+  font-weight: 700;
+}

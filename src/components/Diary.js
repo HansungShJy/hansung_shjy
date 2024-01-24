@@ -28,11 +28,15 @@ function Diary() {
     navigate("/diarydetail");
   };
 
+  const GotoList = () => {
+    navigate("/diarylist");
+  };
+
   return (
     <div>
       <Header />
       <div>
-        <button className="diarylist_btn" onClick={GotoDiary}>
+        <button className="diarylist_btn" onClick={GotoList}>
           일기 리스트
         </button>
         <button className="diary_btn" onClick={GotoDiary}>

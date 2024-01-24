@@ -64,18 +64,24 @@ function DiaryDetail() {
         </div>
 
         <h4 className="diaryphoto_lb">사진 등록</h4>
-        {/* 여기에 사진 등록하는 function 넣기 */}
+        <form className="file_upload" name="form" method="post">
+          <input
+            type="file"
+            name="image"
+            accept="image/png, image/jpeg, image/jpg"
+          />
+        </form>
         <br />
         <h4 className="diary_lb">오늘의 일기</h4>
         <textarea
           className="diaryuser_txt"
-          placeholder="닉네임1"
+          placeholder="일기는 수정할 수 없으니 등록하기 전에 확인 바랍니다."
           value={usercontent}
           onChange={onDiaryUser}
         />
         <textarea
           className="diaryother_txt"
-          placeholder="닉네임2"
+          placeholder="일기는 수정할 수 없으니 등록하기 전에 확인 바랍니다."
           value={othercontent}
           onChange={onDiaryOther}
         />
