@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +66,7 @@ public class DiaryServiceImpl implements DiaryService {
     public Diary createDiary(Couple couple, Date diaryDate) throws ExecutionException, InterruptedException {
 
         Diary diary = new Diary();
-        diary.setDiaryDate(diaryDate);
+        diary.setDiaryDate((java.sql.Date) diaryDate);
         diary.setCouple(couple);
 
         return diary;
