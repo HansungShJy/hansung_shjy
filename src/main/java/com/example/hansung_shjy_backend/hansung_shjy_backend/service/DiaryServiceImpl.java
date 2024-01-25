@@ -62,19 +62,13 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 일기 저장 ============================================================
     @Override
-    public DiaryDTO createDiary(Couple couple, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
-        Map<String, Object> resultMap = new HashMap<>();
+    public Diary createDiary(Couple couple, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
 
         Diary diary = new Diary();
         diary.setDiaryDate(diaryDTO.getDiaryDate());
-        diary.setMyDiary(diaryDTO.getMyDiary());
-        diary.setOtherDiary(diaryDTO.getOtherDiary());
         diary.setCouple(couple);
-        diaryRepository.save(diary);
 
-        resultMap.put("diary", diary);
-
-        return diaryDTO;
+        return diary;
     }
 
     // 일기 수정 ============================================================

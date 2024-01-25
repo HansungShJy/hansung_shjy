@@ -14,4 +14,7 @@ public class DiarySaveRequest {
 
     @JsonProperty("imageFile")
     private MultipartFile imageDTO;
+
+    @JsonProperty("userID")
+    private Integer userID;
 }

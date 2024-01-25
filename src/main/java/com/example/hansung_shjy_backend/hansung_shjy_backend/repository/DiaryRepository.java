@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -19,5 +20,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Integer>, JpaSpeci
 
     @Query(value = "SELECT * FROM Diary d WHERE d.couple.coupleID = :coupleID", nativeQuery = true)
     Diary findDiaryByCouple(@Param("coupleID") Integer coupleID);
+
+    @Query(value = "SELECT * FROM Diary d WHERE d.couple.coupleID = :coupleID AND d.diaryDate = :diaryDate", nativeQuery = true)
+    Diary findDiaryByCoupleAndAndDiaryDate(@Param("coupleID") Integer coupleID, @Param("diaryDate") Date diaryDate);
+
 
 }

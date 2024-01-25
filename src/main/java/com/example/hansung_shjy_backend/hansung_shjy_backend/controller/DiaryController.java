@@ -9,6 +9,8 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRepository;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,12 @@ public class DiaryController {
 
     @Autowired
     private CoupleRepository coupleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private DiaryRepository diaryRepository;
 
 
     // 홈 화면 ============================================================================
@@ -93,7 +101,29 @@ public class DiaryController {
 
         Couple couple = coupleRepository.findByCoupleID(couple_id);  // diary 저장
 
-        DiaryDTO diary = diaryService.createDiary(couple, diarySaveRequest.getDiaryDTO());
+        User me = userRepository.findUserByUserID(diarySaveRequest.getUserID());
+
+        Diary diary = diaryService.createDiary(couple, diarySaveRequest.getDiaryDTO());
+        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, diarySaveRequest.getDiaryDTO().getDiaryDate());
+
+        if (existingDiary == null) {
+            if (me.getUserID().equals(couple.getMe().getUserID())) {
+                diary.setMyDiary(diarySaveRequest.getDiaryDTO().getMyDiary());
+            } else {
+                diary.setOtherDiary(diarySaveRequest.getDiaryDTO().getOtherDiary());
+            }
+
+            diaryRepository.save(diary);
+        } else {
+            if (me.getUserID().equals(couple.getOther().getUserID())) {
+                existingDiary.setOtherDiary(diarySaveRequest.getDiaryDTO().getMyDiary());
+            } else {
+                existingDiary.setMyDiary(diarySaveRequest.getDiaryDTO().getMyDiary());
+            }
+
+            diaryRepository.save(existingDiary);
+        }
+
 
         ImageDTO imgDto = new ImageDTO();
 
@@ -131,7 +161,7 @@ public class DiaryController {
                         .diaryID(diary.getDiaryID())
                         .build();
 
-                imageService.saveImage(imgDto, diary);
+                imageService.saveImage(imgDto, DiaryDTO.toDTO(diary));
             }
         } catch (Exception e) {
             e.printStackTrace();
