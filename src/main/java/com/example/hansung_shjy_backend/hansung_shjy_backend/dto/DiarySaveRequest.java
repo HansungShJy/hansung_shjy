@@ -9,10 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 
 public class DiarySaveRequest {
-    @JsonProperty("diaryDTO")
+    @JsonProperty("diary")
     private DiaryDTO diaryDTO;
 
-//    @JsonProperty("imageFile")
+    @JsonProperty("image")
     private MultipartFile imageDTO;
 
     @JsonProperty("userID")
