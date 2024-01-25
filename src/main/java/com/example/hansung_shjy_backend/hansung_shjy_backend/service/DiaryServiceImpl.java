@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,10 +63,10 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 일기 저장 ============================================================
     @Override
-    public Diary createDiary(Couple couple, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+    public Diary createDiary(Couple couple, Date diaryDate) throws ExecutionException, InterruptedException {
 
         Diary diary = new Diary();
-        diary.setDiaryDate(diaryDTO.getDiaryDate());
+        diary.setDiaryDate(diaryDate);
         diary.setCouple(couple);
 
         return diary;

@@ -5,6 +5,7 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -15,7 +16,7 @@ public interface DiaryService {
     Map<Diary, Image> listDiary(Integer user_id) throws ExecutionException, InterruptedException;
 
     // 일기 저장 =============================================================
-    Diary createDiary(Couple couple, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;
+    Diary createDiary(Couple couple, Date diaryDate) throws ExecutionException, InterruptedException;
 
     // 일기 수정 =============================================================
     DiaryDTO modifyDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;

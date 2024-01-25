@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,34 +94,36 @@ public class DiaryController {
 
     // 일기 저장 ===========================================================================
     @PostMapping("/diary/save/{couple_id}")
-    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestPart(value = "data") DiarySaveRequest diarySaveRequest,
-                                              @RequestPart(value = "file") MultipartFile file) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestParam(value = "diaryDate") Date diaryDate,
+                                              @RequestParam(value = "myDiary") String myDiary,
+                                              @RequestParam(value = "otherDiary") String otherDiary,
+                                              @RequestParam(value = "userID") Integer userID,
+                                              @RequestParam(value = "file") MultipartFile file) throws ExecutionException, InterruptedException {
         System.out.println("create Diary couple_id:: " + couple_id);
-        System.out.println("create diaryDTO:: " + diarySaveRequest.getDiary() + ", imageDTO:: " + file);
-        //@RequestPart(value="key", required=false) DTO dto,
-        //			@RequestPart(value="file", required=true) MultipartFile file
+        System.out.println("create diaryDTO:: " + diaryDate + myDiary + userID + ", imageDTO:: " + file);
+
         Map<String, Object> resultMap = new HashMap<>();
 
         Couple couple = coupleRepository.findByCoupleID(couple_id);  // diary 저장
 
-        User me = userRepository.findUserByUserID(diarySaveRequest.getUserID());
+        User me = userRepository.findUserByUserID(userID);
 
-        Diary diary = diaryService.createDiary(couple, diarySaveRequest.getDiary());
-        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, diarySaveRequest.getDiary().getDiaryDate());
+        Diary diary = diaryService.createDiary(couple, diaryDate);
+        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, diaryDate);
 
         if (existingDiary == null) {
             if (me.getUserID().equals(couple.getMe().getUserID())) {
-                diary.setMyDiary(diarySaveRequest.getDiary().getMyDiary());
+                diary.setMyDiary(myDiary);
             } else {
-                diary.setOtherDiary(diarySaveRequest.getDiary().getOtherDiary());
+                diary.setOtherDiary(otherDiary);
             }
 
             diaryRepository.save(diary);
         } else {
             if (me.getUserID().equals(couple.getOther().getUserID())) {
-                existingDiary.setOtherDiary(diarySaveRequest.getDiary().getMyDiary());
+                existingDiary.setOtherDiary(myDiary);
             } else {
-                existingDiary.setMyDiary(diarySaveRequest.getDiary().getMyDiary());
+                existingDiary.setMyDiary(myDiary);
             }
 
             diaryRepository.save(existingDiary);
