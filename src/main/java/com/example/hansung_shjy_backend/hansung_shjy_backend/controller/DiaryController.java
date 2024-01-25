@@ -2,7 +2,6 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryRequest;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiarySaveRequest;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.ImageDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,24 +110,6 @@ public class DiaryController {
         Diary diary = diaryService.createDiary(couple, diaryDate);
         Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, java.sql.Date.valueOf(diaryDate));
 
-        if (existingDiary == null) {
-            if (me.getUserID().equals(couple.getMe().getUserID())) {
-                diary.setMyDiary(myDiary);
-            } else {
-                diary.setOtherDiary(otherDiary);
-            }
-
-            diaryRepository.save(diary);
-        } else {
-            if (me.getUserID().equals(couple.getOther().getUserID())) {
-                existingDiary.setOtherDiary(myDiary);
-            } else {
-                existingDiary.setMyDiary(myDiary);
-            }
-
-            diaryRepository.save(existingDiary);
-        }
-
 
         ImageDTO imgDto = new ImageDTO();
 
@@ -148,30 +128,70 @@ public class DiaryController {
         String absolutePath = new File("/Users/project/images/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
         String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
         String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
-        String path = "images/" + year + "/" + month + "/" + day; // 저장될 폴더 경로
+        String path = "images/" + year + "-" + month + "-" + day; // 저장될 폴더 경로
 
-        try {
-            if(!image.isEmpty()) {
-                File files = new File(absolutePath + path);
-                if(!files.exists()){
-                    files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
-                }
-
-                files = new File(absolutePath + path + "/" + newFileName + fileExtension);
-                image.transferTo(files);
-
-                imgDto = ImageDTO.builder()
-                        .imageName((newFileName + fileExtension))
-                        .imageOriName(image.getOriginalFilename())
-                        .imageUrl(path)
-                        .diaryID(diary.getDiaryID())
-                        .build();
-
-                imageService.saveImage(imgDto, DiaryDTO.toDTO(diary));
+        if (existingDiary == null) {
+            if (me.getUserID().equals(couple.getMe().getUserID())) {
+                diary.setMyDiary(myDiary);
+            } else {
+                diary.setOtherDiary(otherDiary);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            diaryRepository.save(diary);
+            try {
+                if(!image.isEmpty()) {
+                    File files = new File(absolutePath + path);
+                    if(!files.exists()){
+                        files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
+                    }
+
+                    files = new File(absolutePath + path + "/" + newFileName + fileExtension);
+                    image.transferTo(files);
+
+                    imgDto = ImageDTO.builder()
+                            .imageName((newFileName + fileExtension))
+                            .imageOriName(image.getOriginalFilename())
+                            .imageUrl(path)
+                            .diaryID(diary.getDiaryID())
+                            .build();
+
+                    imageService.saveImage(imgDto, DiaryDTO.toDTO(diary));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        else {
+            if (me.getUserID().equals(couple.getOther().getUserID())) {
+                existingDiary.setOtherDiary(myDiary);
+            } else {
+                existingDiary.setMyDiary(myDiary);
+            }
+            diaryRepository.save(existingDiary);
+
+            try {
+                if(!image.isEmpty()) {
+                    File files = new File(absolutePath + path);
+                    if(!files.exists()){
+                        files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
+                    }
+
+                    files = new File(absolutePath + path + "/" + newFileName + fileExtension);
+                    image.transferTo(files);
+
+                    imgDto = ImageDTO.builder()
+                            .imageName((newFileName + fileExtension))
+                            .imageOriName(image.getOriginalFilename())
+                            .imageUrl(path)
+                            .diaryID(existingDiary.getDiaryID())
+                            .build();
+
+                    imageService.saveImage(imgDto, DiaryDTO.toDTO(existingDiary));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
 
         resultMap.put("diary", diary);
         resultMap.put("image", imgDto);
