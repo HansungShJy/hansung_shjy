@@ -43,14 +43,6 @@ public class DiaryController {
     public ResponseEntity<Object> diaryFirst(@RequestParam("couple_id") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("diary couple_id:: " + couple_id);
 
-        User me = coupleRepository.findByCoupleID(couple_id).getMe();
-        String myNickname = me.getNickname();
-        String otherNickname = me.getOtherID();
-        Integer coupleID = me.getCouple().getCoupleID();
-        Couple couple = coupleRepository.findByCoupleID(coupleID);
-        Integer myUserID = couple.getMe().getUserID();
-        Integer otherUserID = couple.getOther().getUserID();
-
         Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
 
         List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
@@ -65,14 +57,29 @@ public class DiaryController {
                 })
                 .toList();
 
+        System.out.println("diaryDTO:: " + diaryDTOList);
+        return ResponseEntity.ok().body(diaryDTOList);
+    }
+
+    // 일기 세부 첫 화면 ====================================================================
+    @GetMapping("/diary/detail")
+    public ResponseEntity<Object> firstDetail(@RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+        System.out.println("Fist Diary Detail" + couple_id);
+
+        User me = coupleRepository.findByCoupleID(couple_id).getMe();
+        String myNickname = me.getNickname();
+        String otherNickname = me.getOtherID();
+        Integer coupleID = me.getCouple().getCoupleID();
+        Couple couple = coupleRepository.findByCoupleID(coupleID);
+        Integer myUserID = couple.getMe().getUserID();
+        Integer otherUserID = couple.getOther().getUserID();
+
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("nickname1", myNickname);
         resultMap.put("nickname2", otherNickname);
         resultMap.put("userID1", myUserID);
         resultMap.put("userID2", otherUserID);
-        resultMap.put("diaryDetail", diaryImageMap);
 
-        System.out.println("diaryDTO:: " + diaryDTOList);
         return ResponseEntity.ok().body(resultMap);
     }
 
@@ -142,6 +149,14 @@ public class DiaryController {
     public ResponseEntity<Object> editDiary(@PathVariable Integer diary_id, @RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("diaryDetail diary_id:: " + diary_id);
         System.out.println("diaryDetail couple_id:: " + couple_id);
+
+        User me = coupleRepository.findByCoupleID(couple_id).getMe();
+        String myNickname = me.getNickname();
+        String otherNickname = me.getOtherID();
+        Integer coupleID = me.getCouple().getCoupleID();
+        Couple couple = coupleRepository.findByCoupleID(coupleID);
+        Integer myUserID = couple.getMe().getUserID();
+        Integer otherUserID = couple.getOther().getUserID();
 
         Image image = imageService.detailImage(diary_id);
 
