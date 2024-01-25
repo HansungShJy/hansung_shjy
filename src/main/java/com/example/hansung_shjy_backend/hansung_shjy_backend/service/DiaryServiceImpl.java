@@ -47,7 +47,7 @@ public class DiaryServiceImpl implements DiaryService {
         System.out.println("listDiary:: " + couple_id);
 
         List<Object[]> results = entityManager.createQuery(
-                        "SELECT d, i FROM Diary d LEFT JOIN Image i ON d.diaryID = i.diary.diaryID WHERE d.couple = :couple_id", Object[].class)
+                        "SELECT d, i FROM Diary d LEFT JOIN Image i ON d.diaryID = i.diary.diaryID WHERE d.couple.coupleID = :couple_id", Object[].class)
                 .setParameter("couple_id", couple_id)
                 .getResultList();
         System.out.println("resulttltt:: " + results);
