@@ -50,10 +50,6 @@ public class DiaryServiceImpl implements DiaryService {
                 .setParameter("couple_id", couple_id)
                 .getResultList();
 
-        if (results.isEmpty()) {
-            throw new EntityNotFoundException("No diaries found for couple_id: " + couple_id);
-        }
-
         Map<Diary, Image> diaryImageMap = new HashMap<>();
         for (Object[] result : results) {
             Diary diary = (Diary) result[0];
