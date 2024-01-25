@@ -94,7 +94,8 @@ public class DiaryController {
 
     // 일기 저장 ===========================================================================
     @PostMapping("/diary/save/{couple_id}")
-    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestParam(value = "diaryDate") Date diaryDate,
+    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id,
+                                              @RequestParam(value = "diaryDate") String diaryDate,
                                               @RequestParam(value = "myDiary") String myDiary,
                                               @RequestParam(value = "otherDiary") String otherDiary,
                                               @RequestParam(value = "userID") Integer userID,
@@ -109,7 +110,7 @@ public class DiaryController {
         User me = userRepository.findUserByUserID(userID);
 
         Diary diary = diaryService.createDiary(couple, diaryDate);
-        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, diaryDate);
+        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, java.sql.Date.valueOf(diaryDate));
 
         if (existingDiary == null) {
             if (me.getUserID().equals(couple.getMe().getUserID())) {

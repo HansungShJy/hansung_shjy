@@ -16,7 +16,7 @@ public interface DiaryService {
     Map<Diary, Image> listDiary(Integer user_id) throws ExecutionException, InterruptedException;
 
     // 일기 저장 =============================================================
-    Diary createDiary(Couple couple, Date diaryDate) throws ExecutionException, InterruptedException;
+    Diary createDiary(Couple couple, String diaryDate) throws ExecutionException, InterruptedException;
 
     // 일기 수정 =============================================================
     DiaryDTO modifyDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;

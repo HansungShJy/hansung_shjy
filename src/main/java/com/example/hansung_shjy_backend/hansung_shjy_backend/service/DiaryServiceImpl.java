@@ -63,10 +63,10 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 일기 저장 ============================================================
     @Override
-    public Diary createDiary(Couple couple, Date diaryDate) throws ExecutionException, InterruptedException {
+    public Diary createDiary(Couple couple, String diaryDate) throws ExecutionException, InterruptedException {
 
         Diary diary = new Diary();
-        diary.setDiaryDate((java.sql.Date.valueOf(String.valueOf(diaryDate))));
+        diary.setDiaryDate((java.sql.Date.valueOf(diaryDate)));
         diary.setCouple(couple);
 
         return diary;
