@@ -66,7 +66,7 @@ public class DiaryServiceImpl implements DiaryService {
     public Diary createDiary(Couple couple, Date diaryDate) throws ExecutionException, InterruptedException {
 
         Diary diary = new Diary();
-        diary.setDiaryDate((java.sql.Date) diaryDate);
+        diary.setDiaryDate((java.sql.Date.valueOf(String.valueOf(diaryDate))));
         diary.setCouple(couple);
 
         return diary;
