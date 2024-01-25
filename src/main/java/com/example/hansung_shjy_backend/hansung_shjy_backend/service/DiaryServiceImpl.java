@@ -45,11 +45,12 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Map<Diary, Image> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("listDiary:: " + couple_id);
-        // Fetch diaries and their associated images using JPA join
+
         List<Object[]> results = entityManager.createQuery(
-                        "SELECT d, i FROM Diary d LEFT JOIN Image i ON d.diaryID = i.diary.diaryID WHERE d.couple.coupleID = :couple_id", Object[].class)
+                        "SELECT d, i FROM Diary d LEFT JOIN Image i ON d.diaryID = i.diary.diaryID WHERE d.couple = :couple_id", Object[].class)
                 .setParameter("couple_id", couple_id)
                 .getResultList();
+        System.out.println("resulttltt:: " + results);
 
         Map<Diary, Image> diaryImageMap = new HashMap<>();
         for (Object[] result : results) {
@@ -57,6 +58,8 @@ public class DiaryServiceImpl implements DiaryService {
             Image image = (Image) result[1];
             diaryImageMap.put(diary, image);
         }
+
+        System.out.println();
 
         return diaryImageMap;
     }
