@@ -17,4 +17,14 @@ public class DiarySaveRequest {
 
     @JsonProperty("userID")
     private Integer userID;
+
+    public DiarySaveRequest() {
+
+    }
+
+    public DiarySaveRequest(DiaryDTO diaryDTO, MultipartFile imageDTO, Integer userID) {
+        this.diaryDTO = diaryDTO;
+        this.imageDTO = imageDTO;
+        this.userID = userID;
+    }
 }
