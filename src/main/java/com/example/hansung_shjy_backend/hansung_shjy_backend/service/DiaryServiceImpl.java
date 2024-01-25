@@ -46,11 +46,8 @@ public class DiaryServiceImpl implements DiaryService {
     public Map<Diary, Image> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("listDiary:: " + couple_id);
 
-        List<Object[]> results = entityManager.createQuery(
-                        "SELECT d, i FROM Diary d LEFT JOIN Image i ON d.diaryID = i.diary.diaryID WHERE d.couple.coupleID = :couple_id", Object[].class)
-                .setParameter("couple_id", couple_id)
-                .getResultList();
-        System.out.println("resulttltt:: " + results);
+        List<Object[]> results = diaryRepository.findDiaryByCouple(couple_id);
+        System.out.println("ressusu:: " + results);
 
         Map<Diary, Image> diaryImageMap = new HashMap<>();
         for (Object[] result : results) {
