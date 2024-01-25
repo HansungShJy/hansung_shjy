@@ -2,6 +2,7 @@ package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.ImageDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,12 @@ public class ImageServiceImpl implements ImageService {
     private ImageRepository imageRepository;
 
     @Override
-    public ImageDTO saveImage(ImageDTO imageDTO, DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
+    public ImageDTO saveImage(ImageDTO imageDTO, Diary diary) throws ExecutionException, InterruptedException {
         Image img = new Image();
         img.setImageName(imageDTO.getImageName());
         img.setImageOriName(imageDTO.getImageOriName());
         img.setImageUrl(imageDTO.getImageUrl());
-        img.setDiary(toEntity(diaryDTO));
+        img.setDiary(diary);
         imageRepository.save(img);
         return imageDTO;
     }

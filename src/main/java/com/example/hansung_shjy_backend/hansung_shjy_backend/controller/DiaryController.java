@@ -101,17 +101,12 @@ public class DiaryController {
         System.out.println("create Diary couple_id:: " + couple_id);
         System.out.println("create diaryDTO:: " + diaryDate + myDiary + userID + ", imageDTO:: " + file);
 
-        Map<String, Object> resultMap = new HashMap<>();
-
         Couple couple = coupleRepository.findByCoupleID(couple_id);  // diary 저장
 
         User me = userRepository.findUserByUserID(userID);
 
         Diary diary = diaryService.createDiary(couple, diaryDate);
         Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, java.sql.Date.valueOf(diaryDate));
-
-
-        ImageDTO imgDto = new ImageDTO();
 
         MultipartFile image = file;
 
@@ -128,7 +123,7 @@ public class DiaryController {
         String absolutePath = new File("/Users/project/images/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
         String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
         String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
-        String path = "images/" + year + "-" + month + "-" + day; // 저장될 폴더 경로
+        String path = "images/" + year + "/" + month + "/" + day; // 저장될 폴더 경로
 
         if (existingDiary == null) {
             if (me.getUserID().equals(couple.getMe().getUserID())) {
@@ -147,14 +142,15 @@ public class DiaryController {
                     files = new File(absolutePath + path + "/" + newFileName + fileExtension);
                     image.transferTo(files);
 
-                    imgDto = ImageDTO.builder()
+                    ImageDTO imgDto = ImageDTO.builder()
                             .imageName((newFileName + fileExtension))
                             .imageOriName(image.getOriginalFilename())
                             .imageUrl(path)
                             .diaryID(diary.getDiaryID())
                             .build();
 
-                    imageService.saveImage(imgDto, DiaryDTO.toDTO(diary));
+                    imageService.saveImage(imgDto, diary);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -178,26 +174,22 @@ public class DiaryController {
                     files = new File(absolutePath + path + "/" + newFileName + fileExtension);
                     image.transferTo(files);
 
-                    imgDto = ImageDTO.builder()
+                    ImageDTO imgDto = ImageDTO.builder()
                             .imageName((newFileName + fileExtension))
                             .imageOriName(image.getOriginalFilename())
                             .imageUrl(path)
                             .diaryID(existingDiary.getDiaryID())
                             .build();
 
-                    imageService.saveImage(imgDto, DiaryDTO.toDTO(existingDiary));
+                    imageService.saveImage(imgDto, existingDiary);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-
-        resultMap.put("diary", diary);
-        resultMap.put("image", imgDto);
-
         if (diary == null || image == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(resultMap);
+        else return new ResponseEntity<>("200 ok", HttpStatus.CREATED);
     }
 
     // 일기 세부 ===========================================================================
