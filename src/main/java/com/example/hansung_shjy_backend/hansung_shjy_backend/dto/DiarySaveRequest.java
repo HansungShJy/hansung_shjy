@@ -12,7 +12,7 @@ public class DiarySaveRequest {
     @JsonProperty("diaryDTO")
     private DiaryDTO diaryDTO;
 
-    @JsonProperty("imageFile")
+//    @JsonProperty("imageFile")
     private MultipartFile imageDTO;
 
     @JsonProperty("userID")
