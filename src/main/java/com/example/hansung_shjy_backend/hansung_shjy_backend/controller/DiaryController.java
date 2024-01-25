@@ -53,10 +53,6 @@ public class DiaryController {
 
         Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
 
-        if (diaryImageMap.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
         List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
                 .map(entry -> {
                     Diary diary = entry.getKey();
