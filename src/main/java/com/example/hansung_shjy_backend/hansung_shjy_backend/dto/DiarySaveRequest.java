@@ -10,21 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class DiarySaveRequest {
     @JsonProperty("diary")
-    private DiaryDTO diaryDTO;
+    private DiaryDTO diary;
 
-    @JsonProperty("image")
-    private MultipartFile imageDTO;
+//    @JsonProperty("image")
+//    private MultipartFile image;
 
     @JsonProperty("userID")
     private Integer userID;
-
-    public DiarySaveRequest() {
-
-    }
-
-    public DiarySaveRequest(DiaryDTO diaryDTO, MultipartFile imageDTO, Integer userID) {
-        this.diaryDTO = diaryDTO;
-        this.imageDTO = imageDTO;
-        this.userID = userID;
-    }
 }

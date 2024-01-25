@@ -93,32 +93,34 @@ public class DiaryController {
 
     // 일기 저장 ===========================================================================
     @PostMapping("/diary/save/{couple_id}")
-    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestBody DiarySaveRequest diarySaveRequest) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> createDiary(@PathVariable Integer couple_id, @RequestPart(value = "data") DiarySaveRequest diarySaveRequest,
+                                              @RequestPart(value = "file") MultipartFile file) throws ExecutionException, InterruptedException {
         System.out.println("create Diary couple_id:: " + couple_id);
-        System.out.println("create diaryDTO:: " + diarySaveRequest.getDiaryDTO() + ", imageDTO:: " + diarySaveRequest.getImageDTO());
-
+        System.out.println("create diaryDTO:: " + diarySaveRequest.getDiary() + ", imageDTO:: " + file);
+        //@RequestPart(value="key", required=false) DTO dto,
+        //			@RequestPart(value="file", required=true) MultipartFile file
         Map<String, Object> resultMap = new HashMap<>();
 
         Couple couple = coupleRepository.findByCoupleID(couple_id);  // diary 저장
 
         User me = userRepository.findUserByUserID(diarySaveRequest.getUserID());
 
-        Diary diary = diaryService.createDiary(couple, diarySaveRequest.getDiaryDTO());
-        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, diarySaveRequest.getDiaryDTO().getDiaryDate());
+        Diary diary = diaryService.createDiary(couple, diarySaveRequest.getDiary());
+        Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, diarySaveRequest.getDiary().getDiaryDate());
 
         if (existingDiary == null) {
             if (me.getUserID().equals(couple.getMe().getUserID())) {
-                diary.setMyDiary(diarySaveRequest.getDiaryDTO().getMyDiary());
+                diary.setMyDiary(diarySaveRequest.getDiary().getMyDiary());
             } else {
-                diary.setOtherDiary(diarySaveRequest.getDiaryDTO().getOtherDiary());
+                diary.setOtherDiary(diarySaveRequest.getDiary().getOtherDiary());
             }
 
             diaryRepository.save(diary);
         } else {
             if (me.getUserID().equals(couple.getOther().getUserID())) {
-                existingDiary.setOtherDiary(diarySaveRequest.getDiaryDTO().getMyDiary());
+                existingDiary.setOtherDiary(diarySaveRequest.getDiary().getMyDiary());
             } else {
-                existingDiary.setMyDiary(diarySaveRequest.getDiaryDTO().getMyDiary());
+                existingDiary.setMyDiary(diarySaveRequest.getDiary().getMyDiary());
             }
 
             diaryRepository.save(existingDiary);
@@ -127,7 +129,7 @@ public class DiaryController {
 
         ImageDTO imgDto = new ImageDTO();
 
-        MultipartFile image = diarySaveRequest.getImageDTO();
+        MultipartFile image = file;
 
         // 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
         LocalDateTime now = LocalDateTime.now();
@@ -146,13 +148,13 @@ public class DiaryController {
 
         try {
             if(!image.isEmpty()) {
-                File file = new File(absolutePath + path);
-                if(!file.exists()){
-                    file.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
+                File files = new File(absolutePath + path);
+                if(!files.exists()){
+                    files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
                 }
 
-                file = new File(absolutePath + path + "/" + newFileName + fileExtension);
-                image.transferTo(file);
+                files = new File(absolutePath + path + "/" + newFileName + fileExtension);
+                image.transferTo(files);
 
                 imgDto = ImageDTO.builder()
                         .imageName((newFileName + fileExtension))
