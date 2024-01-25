@@ -129,9 +129,7 @@ public class DiaryController {
             if (me.getUserID().equals(couple.getMe().getUserID())) {
                 diary.setMyDiary(myDiary);
             } else {
-                diary.setOtherDiary(otherDiary);
-                System.out.printf("ds" + myDiary);
-                System.out.printf("dd" + otherDiary);
+                diary.setOtherDiary(myDiary);
             }
             diaryRepository.save(diary);
             try {
