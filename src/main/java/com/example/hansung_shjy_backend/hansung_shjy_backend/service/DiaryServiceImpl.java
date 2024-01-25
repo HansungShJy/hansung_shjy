@@ -72,10 +72,7 @@ public class DiaryServiceImpl implements DiaryService {
         diary.setCouple(couple);
         diaryRepository.save(diary);
 
-//        Diary saveDiary = diaryRepository.findDiaryByCouple(couple.getCoupleID());  // TODO - coupleID 가지고는 못 찾을 거 같은데
-
-        resultMap.put("diary", diaryDTO);
-//        resultMap.put("diaryID", )
+        resultMap.put("diary", diary);
 
         return diaryDTO;
     }

@@ -122,7 +122,7 @@ public class DiaryController {
                 }
 
                 file = new File(absolutePath + path + "/" + newFileName + fileExtension);
-//                imageV1.transferTo(file);
+                image.transferTo(file);
 
                 imgDto = ImageDTO.builder()
                         .imageName((newFileName + fileExtension))
@@ -150,14 +150,6 @@ public class DiaryController {
         System.out.println("diaryDetail diary_id:: " + diary_id);
         System.out.println("diaryDetail couple_id:: " + couple_id);
 
-        User me = coupleRepository.findByCoupleID(couple_id).getMe();
-        String myNickname = me.getNickname();
-        String otherNickname = me.getOtherID();
-        Integer coupleID = me.getCouple().getCoupleID();
-        Couple couple = coupleRepository.findByCoupleID(coupleID);
-        Integer myUserID = couple.getMe().getUserID();
-        Integer otherUserID = couple.getOther().getUserID();
-
         Image image = imageService.detailImage(diary_id);
 
         if (image == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
@@ -170,10 +162,6 @@ public class DiaryController {
         System.out.println("<diary> couple_id::" + couple_id);
 
         Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
-
-        if (diaryImageMap.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
 
         List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
                 .map(entry -> {
