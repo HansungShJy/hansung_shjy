@@ -18,7 +18,5 @@ public interface DiaryService {
     // 일기 저장 =============================================================
     Diary createDiary(Couple couple, String diaryDate) throws ExecutionException, InterruptedException;
 
-    // 일기 수정 =============================================================
-    DiaryDTO modifyDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException;
 
 }

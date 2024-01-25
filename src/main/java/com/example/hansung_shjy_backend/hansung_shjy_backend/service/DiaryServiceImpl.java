@@ -72,18 +72,4 @@ public class DiaryServiceImpl implements DiaryService {
         return diary;
     }
 
-    // 일기 수정 ============================================================
-    @Override
-    public DiaryDTO modifyDiary(DiaryDTO diaryDTO) throws ExecutionException, InterruptedException {
-        Diary diary = diaryRepository.findByDiaryID(diaryDTO.getCoupleID(), diaryDTO.getDiaryID());
-        System.out.println("modifyDiary:: " + diary);
-        if (diary == null) return null;
-
-        diary.setDiaryDate(diaryDTO.getDiaryDate());
-        diary.setMyDiary(diary.getMyDiary());
-        diary.setOtherDiary(diary.getOtherDiary());
-
-        diaryRepository.save(Diary.toEntity(diaryDTO));
-        return diaryDTO;
-    }
 }

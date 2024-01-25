@@ -12,13 +12,14 @@ import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRep
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.ImageService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.HashMap;
@@ -123,7 +124,7 @@ public class DiaryController {
         String absolutePath = new File("/Users/project/images/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
         String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
         String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
-        String path = "images/" + year + "-" + month + "-" + day; // 저장될 폴더 경로
+        String path = "images/" + diaryDate; // 저장될 폴더 경로
 
         if (existingDiary == null) {
             if (me.getUserID().equals(couple.getMe().getUserID())) {
@@ -194,14 +195,25 @@ public class DiaryController {
 
     // 일기 세부 ===========================================================================
     @GetMapping("/diary/detail/{diary_id}")
-    public ResponseEntity<Object> editDiary(@PathVariable Integer diary_id, @RequestParam Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> editDiary(@PathVariable Integer diary_id, @RequestParam Integer couple_id) throws ExecutionException, InterruptedException, IOException {
         System.out.println("diaryDetail diary_id:: " + diary_id);
         System.out.println("diaryDetail couple_id:: " + couple_id);
 
-        Image image = imageService.detailImage(diary_id);
+        HashMap<String, Object> map = new HashMap<>();
+        Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
 
-        if (image == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
-        else return ResponseEntity.ok().body(image);
+        Image image = imageService.detailImage(diary_id);
+        String imageName = image.getImageOriName(); // 사용자 이름
+        String imageUrl = image.getImageUrl();  // 경로
+
+        InputStream imageStream = new FileInputStream("/Users/project/images/" + imageUrl + imageName);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+
+        map.put("diaryDetail", diary);
+        map.put("image", imageByteArray);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     // 일기 전체 보기 리스트 =================================================================

@@ -18,8 +18,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Integer>, JpaSpeci
         Diary findByDiaryID(@Param("coupleID") Integer coupleID, @Param("diary_id") Integer diary_id);
 
 
-    @Query(value = "SELECT * FROM Diary d WHERE d.couple.coupleID = :coupleID", nativeQuery = true)
-    Diary findDiaryByCouple(@Param("coupleID") Integer coupleID);
+    @Query(value = "SELECT * FROM Diary d WHERE d.diaryID = :diaryID", nativeQuery = true)
+    Diary findDiaryByDiaryID(@Param("diaryID") Integer diaryID);
 
     @Query(value = "SELECT * FROM Diary d WHERE d.coupleid = :coupleID AND d.diary_date = :diaryDate", nativeQuery = true)
     Diary findDiaryByCoupleAndAndDiaryDate(@Param("coupleID") Integer coupleID, @Param("diaryDate") Date diaryDate);
