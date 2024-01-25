@@ -123,7 +123,7 @@ public class DiaryController {
         String absolutePath = new File("/Users/project/images/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
         String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
         String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
-        String path = "images/" + year + "/" + month + "/" + day; // 저장될 폴더 경로
+        String path = "images/" + year + "-" + month + "-" + day; // 저장될 폴더 경로
 
         if (existingDiary == null) {
             if (me.getUserID().equals(couple.getMe().getUserID())) {
