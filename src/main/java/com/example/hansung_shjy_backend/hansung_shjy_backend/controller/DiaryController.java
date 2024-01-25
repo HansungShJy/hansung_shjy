@@ -130,6 +130,8 @@ public class DiaryController {
                 diary.setMyDiary(myDiary);
             } else {
                 diary.setOtherDiary(otherDiary);
+                System.out.printf("ds" + myDiary);
+                System.out.printf("dd" + otherDiary);
             }
             diaryRepository.save(diary);
             try {
