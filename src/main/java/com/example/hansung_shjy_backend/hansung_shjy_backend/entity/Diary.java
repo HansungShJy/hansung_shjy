@@ -33,6 +33,15 @@ public class Diary implements Serializable {
     @Column(name = "otherDiary")
     private String otherDiary;
 
+    @Column(name = "imageName")
+    private String imageName;
+
+    @Column(name = "imageOriName")
+    private String imageOriName;
+
+    @Column(name = "imageurl")
+    private String imageUrl;
+
 
     //foreign key
     @ManyToOne(cascade = CascadeType.ALL)  // Many: User, One: Couple
@@ -46,6 +55,9 @@ public class Diary implements Serializable {
                 .diaryDate(dto.getDiaryDate())
                 .myDiary(dto.getMyDiary())
                 .otherDiary(dto.getOtherDiary())
+                .imageName(dto.getImageName())
+                .imageOriName(dto.getImageOriName())
+                .imageUrl(dto.getImageUrl())
                 .build();
     }
 }

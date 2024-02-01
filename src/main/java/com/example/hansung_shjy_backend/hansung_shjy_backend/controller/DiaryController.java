@@ -1,17 +1,12 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryRequest;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.ImageDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.service.DiaryService;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.service.ImageService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,9 +29,6 @@ public class DiaryController {
     private DiaryService diaryService;
 
     @Autowired
-    private ImageService imageService;
-
-    @Autowired
     private CoupleRepository coupleRepository;
 
     @Autowired
@@ -51,22 +43,11 @@ public class DiaryController {
     public ResponseEntity<Object> diaryFirst(@RequestParam("couple_id") Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("diary couple_id:: " + couple_id);
 
-        Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
+        List<Diary> diaryList = diaryService.listDiary(couple_id);
 
-        List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
-                .map(entry -> {
-                    Diary diary = entry.getKey();
-                    Image image = entry.getValue();
 
-                    DiaryRequest diaryRequest = new DiaryRequest();
-                    diaryRequest.setDiary(diary);
-                    diaryRequest.setImage(image);
-                    return diaryRequest;    // diary & image 묶어서 같이 보내주기
-                })
-                .toList();
-
-        System.out.println("diaryDTO:: " + diaryDTOList);
-        return ResponseEntity.ok().body(diaryDTOList);
+        System.out.println("diaryList:: " + diaryList);
+        return ResponseEntity.ok().body(diaryList);
     }
 
     // 일기 세부 첫 화면 ====================================================================
@@ -132,7 +113,7 @@ public class DiaryController {
             } else {
                 diary.setOtherDiary(myDiary);
             }
-            diaryRepository.save(diary);
+
             try {
                 if(!image.isEmpty()) {
                     File files = new File(absolutePath + path);
@@ -143,19 +124,19 @@ public class DiaryController {
                     files = new File(absolutePath + path + "/" + newFileName + fileExtension);
                     image.transferTo(files);
 
-                    ImageDTO imgDto = ImageDTO.builder()
-                            .imageName((newFileName + fileExtension))
-                            .imageOriName(image.getOriginalFilename())
-                            .imageUrl(path)
-                            .diaryID(diary.getDiaryID())
-                            .build();
 
-                    imageService.saveImage(imgDto, diary);
+                    diary.setImageName((newFileName + fileExtension));
+                    diary.setImageUrl(path);
+                    diary.setImageOriName(image.getOriginalFilename());
+
 
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            diaryRepository.save(diary);
+
         }
         else {
             if (me.getUserID().equals(couple.getOther().getUserID())) {
@@ -163,7 +144,6 @@ public class DiaryController {
             } else {
                 existingDiary.setMyDiary(myDiary);
             }
-            diaryRepository.save(existingDiary);
 
             try {
                 if(!image.isEmpty()) {
@@ -175,18 +155,15 @@ public class DiaryController {
                     files = new File(absolutePath + path + "/" + newFileName + fileExtension);
                     image.transferTo(files);
 
-                    ImageDTO imgDto = ImageDTO.builder()
-                            .imageName((newFileName + fileExtension))
-                            .imageOriName(image.getOriginalFilename())
-                            .imageUrl(path)
-                            .diaryID(existingDiary.getDiaryID())
-                            .build();
+                    existingDiary.setImageName((newFileName + fileExtension));
+                    existingDiary.setImageUrl(path);
+                    existingDiary.setImageOriName(image.getOriginalFilename());
 
-                    imageService.saveImage(imgDto, existingDiary);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            diaryRepository.save(existingDiary);
         }
 
         if (diary == null || image == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);

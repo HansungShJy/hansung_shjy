@@ -1,24 +1,17 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.service;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Image;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.CoupleRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.DiaryRepository;
-import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.ImageRepository;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -34,29 +27,19 @@ public class DiaryServiceImpl implements DiaryService {
     @Autowired
     CoupleRepository coupleRepository;
 
-    @Autowired
-    ImageRepository imageRepository;
-
     @PersistenceContext
     private EntityManager entityManager;
 
 
     // 홈 화면 & 전체 보기 리스트 =============================================================
     @Override
-    public Map<Diary, Image> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
+    public List<Diary> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("listDiary:: " + couple_id);
 
-        List<Object[]> results = diaryRepository.findDiaryByCouple(couple_id);
+        List<Diary> results = diaryRepository.findDiaryByCouple(couple_id);
         System.out.println("resulttltt:: " + results);
 
-        Map<Diary, Image> diaryImageMap = new HashMap<>();
-        for (Object[] result : results) {
-            Diary diary = (Diary) result[0];
-            Image image = (Image) result[1];
-            diaryImageMap.put(diary, image);
-        }
-
-        return diaryImageMap;
+        return results;
     }
 
     // 일기 저장 ============================================================

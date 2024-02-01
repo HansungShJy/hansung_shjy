@@ -18,6 +18,9 @@ public class DiaryDTO {
     private Date diaryDate;
     private String myDiary;
     private String otherDiary;
+    private String imageName;    // 업로드한 이미지의 원래 파일명
+    private String imageOriName; // 실제 저장되는 파일 (이미지 중복 방지 위해)
+    private String imageUrl;     // 이미지 경로
     private Integer coupleID;
 
     public static DiaryDTO toDTO(Diary entity) {
@@ -32,6 +35,9 @@ public class DiaryDTO {
                     .diaryDate(entity.getDiaryDate())
                     .myDiary(entity.getMyDiary())
                     .otherDiary(entity.getOtherDiary())
+                    .imageName(entity.getImageName())
+                    .imageOriName(entity.getImageOriName())
+                    .imageUrl(entity.getImageUrl())
                     .coupleID(coupleid)
                     .build();
         } catch (Error e) {
