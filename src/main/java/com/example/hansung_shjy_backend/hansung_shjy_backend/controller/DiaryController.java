@@ -48,7 +48,7 @@ public class DiaryController {
         HashMap<String, Object> map = new HashMap<>();
 
         for (Diary diary : diaryList) {
-            String imageName = diary.getImageOriName();  // 사진 이름
+            String imageName = diary.getImageName();  // 사진 이름
             String imageUrl = diary.getImageUrl();  // 경로
 
             InputStream imageStream = new FileInputStream("/Users/project/" + imageUrl + imageName);
@@ -188,7 +188,7 @@ public class DiaryController {
         HashMap<String, Object> map = new HashMap<>();
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
 
-        String imageName = diary.getImageOriName();  // 사진 이름
+        String imageName = diary.getImageName();  // 사진 이름
         String imageUrl = diary.getImageUrl();  // 경로
 
         InputStream imageStream = new FileInputStream("/Users/project/" + imageUrl + imageName);
