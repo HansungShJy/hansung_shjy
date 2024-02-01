@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Integer>, JpaSpecificationExecutor<Image> {
 
-    @Query(value = "SELECT * FROM Image i WHERE i.diary.diaryID = :diaryID", nativeQuery = true)
-    Image findImageByDiary(@Param("diaryID") Integer diaryID);
+    @Query(value = "SELECT * FROM Image i WHERE i.diary.diary_diaryid = :diaryid", nativeQuery = true)
+    Image findImageByDiary(@Param("diaryid") Integer diaryid);
 }
