@@ -94,9 +94,6 @@ public class DiaryController {
 
         // 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
         LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int day = now.getDayOfMonth();
         int hour = now.getHour();
         int minute = now.getMinute();
         int second = now.getSecond();
@@ -179,9 +176,8 @@ public class DiaryController {
         HashMap<String, Object> map = new HashMap<>();
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
 
-        Image image = imageService.detailImage(diary_id);
-        String imageName = image.getImageOriName(); // 사용자 이름
-        String imageUrl = image.getImageUrl();  // 경로
+        String imageName = diary.getImageOriName(); // 사용자 이름
+        String imageUrl = diary.getImageUrl();  // 경로
 
         InputStream imageStream = new FileInputStream("/Users/project/images/" + imageUrl + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
@@ -198,22 +194,11 @@ public class DiaryController {
     public ResponseEntity<Object> listAllDiary(@PathVariable Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("<diary> couple_id::" + couple_id);
 
-        Map<Diary, Image> diaryImageMap = diaryService.listDiary(couple_id);
+        List<Diary> diaryList = diaryService.listDiary(couple_id);
 
-        List<DiaryRequest> diaryDTOList = diaryImageMap.entrySet().stream()
-                .map(entry -> {
-                    Diary diary = entry.getKey();
-                    Image image = entry.getValue();
 
-                    DiaryRequest diaryRequest = new DiaryRequest();
-                    diaryRequest.setDiary(diary);
-                    diaryRequest.setImage(image);
-                    return diaryRequest;    // diary & image 묶어서 같이 보내주기
-                })
-                .toList();
+        System.out.println("diary listAll:: " + diaryList);
 
-        System.out.println("diary listAll:: " + diaryDTOList);
-
-        return ResponseEntity.ok().body(diaryDTOList);
+        return ResponseEntity.ok().body(diaryList);
     }
 }
