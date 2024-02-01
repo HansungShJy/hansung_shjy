@@ -45,7 +45,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Map<Diary, Image> listDiary(Integer couple_id) throws ExecutionException, InterruptedException {
         System.out.println("listDiary:: " + couple_id);
-        // Fetch diaries and their associated images using JPA join
+
         List<Object[]> results = diaryRepository.findDiaryByCouple(couple_id);
         System.out.println("resulttltt:: " + results);
 
