@@ -40,14 +40,26 @@ public class DiaryController {
 
     // 홈 화면 ============================================================================
     @GetMapping("/diary")
-    public ResponseEntity<Object> diaryFirst(@RequestParam("couple_id") Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> diaryFirst(@RequestParam("couple_id") Integer couple_id) throws ExecutionException, InterruptedException, IOException {
         System.out.println("diary couple_id:: " + couple_id);
 
         List<Diary> diaryList = diaryService.listDiary(couple_id);
 
+        HashMap<String, Object> map = new HashMap<>();
 
+        for (Diary diary : diaryList) {
+            String imageName = diary.getImageOriName();  // 사진 이름
+            String imageUrl = diary.getImageUrl();  // 경로
+
+            InputStream imageStream = new FileInputStream("/Users/project/" + imageUrl + imageName);
+            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+            imageStream.close();
+
+            map.put("diaryDetail", diary);
+            map.put("image", imageByteArray);
+        }
         System.out.println("diaryList:: " + diaryList);
-        return ResponseEntity.ok().body(diaryList);
+        return ResponseEntity.ok().body(map);
     }
 
     // 일기 세부 첫 화면 ====================================================================
@@ -176,10 +188,10 @@ public class DiaryController {
         HashMap<String, Object> map = new HashMap<>();
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
 
-        String imageName = diary.getImageOriName(); // 사용자 이름
+        String imageName = diary.getImageOriName();  // 사진 이름
         String imageUrl = diary.getImageUrl();  // 경로
 
-        InputStream imageStream = new FileInputStream("/Users/project/images/" + imageUrl + imageName);
+        InputStream imageStream = new FileInputStream("/Users/project/" + imageUrl + imageName);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
 
