@@ -48,7 +48,7 @@ public class DiaryController {
 
             for (Diary diary : diaryList) {
                 Map<String, Object> entryMap = new HashMap<>();
-                entryMap.put("diaryDetail", diary);
+                entryMap.put("diary_id", diary.getDiaryID());
 
                 String imageName = diary.getImageName();
                 String imageUrl = diary.getImageUrl();
