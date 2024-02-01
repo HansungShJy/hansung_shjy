@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,26 +42,31 @@ public class DiaryController {
     // 홈 화면 ============================================================================
     @GetMapping("/diary")
     public ResponseEntity<Object> diaryFirst(@RequestParam("couple_id") Integer couple_id) throws ExecutionException, InterruptedException, IOException {
-        System.out.println("diary couple_id:: " + couple_id);
 
-        List<Diary> diaryList = diaryService.listDiary(couple_id);
+            List<Diary> diaryList = diaryService.listDiary(couple_id);
+            List<Map<String, Object>> resultList = new ArrayList<>();
 
-        HashMap<String, Object> map = new HashMap<>();
+            for (Diary diary : diaryList) {
+                Map<String, Object> entryMap = new HashMap<>();
+                entryMap.put("diaryDetail", diary);
 
-        for (Diary diary : diaryList) {
-            String imageName = diary.getImageName();  // 사진 이름
-            String imageUrl = diary.getImageUrl();  // 경로
+                String imageName = diary.getImageName();
+                String imageUrl = diary.getImageUrl();
+                File imageFile = new File("/Users/project/" + imageUrl + imageName);
 
-            InputStream imageStream = new FileInputStream("/Users/project/" + imageUrl + imageName);
-            byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-            imageStream.close();
+                if (imageFile.exists()) {
+                    try (InputStream imageStream = new FileInputStream(imageFile)) {
+                        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+                        entryMap.put("image", imageByteArray);
+                    }
+                }
 
-            map.put("diaryDetail", diary);
-            map.put("image", imageByteArray);
-        }
-        System.out.println("diaryList:: " + diaryList);
-        return ResponseEntity.ok().body(map);
+                resultList.add(entryMap);
+            }
+
+            return ResponseEntity.ok().body(resultList);
     }
+
 
     // 일기 세부 첫 화면 ====================================================================
     @GetMapping("/diary/detail")
@@ -203,14 +209,33 @@ public class DiaryController {
 
     // 일기 전체 보기 리스트 =================================================================
     @GetMapping("/diary/list/{couple_id}")
-    public ResponseEntity<Object> listAllDiary(@PathVariable Integer couple_id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Object> listAllDiary(@PathVariable Integer couple_id) throws ExecutionException, InterruptedException, IOException {
         System.out.println("<diary> couple_id::" + couple_id);
 
         List<Diary> diaryList = diaryService.listDiary(couple_id);
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        for (Diary diary : diaryList) {
+            Map<String, Object> entryMap = new HashMap<>();
+            entryMap.put("diaryDetail", diary);
+
+            String imageName = diary.getImageName();
+            String imageUrl = diary.getImageUrl();
+            File imageFile = new File("/Users/project/" + imageUrl + imageName);
+
+            if (imageFile.exists()) {
+                try (InputStream imageStream = new FileInputStream(imageFile)) {
+                    byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+                    entryMap.put("image", imageByteArray);
+                }
+            }
+
+            resultList.add(entryMap);
+        }
 
 
-        System.out.println("diary listAll:: " + diaryList);
+        System.out.println("diary listAll:: " + resultList);
 
-        return ResponseEntity.ok().body(diaryList);
+        return ResponseEntity.ok().body(resultList);
     }
 }
