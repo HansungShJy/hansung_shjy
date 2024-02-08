@@ -16,6 +16,7 @@ import QnaDetail from "./QnaDetail";
 import PlanEdit from "./PlanEdit";
 import DiaryDetail from "./DiaryDetail";
 import DiaryList from "./DiaryList";
+import EditDiary from "./EditDiary";
 import "./App.css";
 
 function App() {
@@ -38,7 +39,8 @@ function App() {
         <Route path="/qnadetail/:qna_id" element={<QnaDetail />} />
         <Route path="/planedit/:planID" element={<PlanEdit />} />
         <Route path="/diarydetail" element={<DiaryDetail />} />
-        <Route path="/diarylist" element={<DiaryList />} />
+        <Route path="/diary/list" element={<DiaryList />} />
+        <Route path="/editdiary/:diary_id" element={<EditDiary />} />
       </Routes>
     </BrowserRouter>
   );
