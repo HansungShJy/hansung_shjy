@@ -1,6 +1,7 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryEditDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
@@ -170,7 +171,7 @@ public class DiaryController {
 
     // 일기 수정 ===========================================================================
     @PatchMapping("/diary/edit/{diary_id}")  // file, diaryDate, myDiary, otherDiary, userID
-    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException, IOException {
+    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @RequestBody DiaryEditDTO diaryEditDTO) throws ExecutionException, InterruptedException, IOException {
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
         Integer couple_id = diary.getDiaryID();
 
@@ -182,9 +183,40 @@ public class DiaryController {
         Integer myUserID = couple.getMe().getUserID();
         Integer otherUserID = couple.getOther().getUserID();
 
-        diary.setImageOriName(diaryDTO.getImageOriName());
-        diary.setImageUrl(diaryDTO.getImageUrl());
-        diary.setImageName(diaryDTO.getImageName());
+        MultipartFile image = diaryEditDTO.getFile();
+
+        LocalDateTime now = LocalDateTime.now();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond();
+        int millis = now.get(ChronoField.MILLI_OF_SECOND);
+
+        String absolutePath = new File("/Users/project/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
+        String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
+        String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
+        String path = "images/"; // 저장될 폴더 경로
+
+        try {
+            if(!image.isEmpty()) {
+                File files = new File(absolutePath + path);
+                if(!files.exists()){
+                    files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
+                }
+
+                files = new File(absolutePath + path + "/" + newFileName + fileExtension);
+                image.transferTo(files);
+
+
+                diary.setImageName((newFileName + fileExtension));
+                diary.setImageUrl(path);
+                diary.setImageOriName(image.getOriginalFilename());
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         if (me.getUserID().equals(couple.getMe().getUserID())) {
             diary.setMyDiary(diary.getMyDiary());
