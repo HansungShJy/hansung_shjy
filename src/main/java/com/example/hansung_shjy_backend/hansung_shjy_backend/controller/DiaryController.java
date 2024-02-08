@@ -1,5 +1,6 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
+import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.User;
@@ -160,31 +161,47 @@ public class DiaryController {
                 existingDiary.setMyDiary(myDiary);
             }
 
-
-
-//            try {
-//                if(!image.isEmpty()) {
-//                    File files = new File(absolutePath + path);
-//                    if(!files.exists()){
-//                        files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
-//                    }
-//
-//                    files = new File(absolutePath + path + "/" + newFileName + fileExtension);
-//                    image.transferTo(files);
-//
-//                    existingDiary.setImageName((newFileName + fileExtension));
-//                    existingDiary.setImageUrl(path);
-//                    existingDiary.setImageOriName(image.getOriginalFilename());
-//
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
             diaryRepository.save(existingDiary);
         }
 
         if (diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>("200 ok", HttpStatus.CREATED);
+    }
+
+    // 일기 수정 ===========================================================================
+    @PatchMapping("/diary/edit/{diary_id}")  // file, diaryDate, myDiary, otherDiary, userID
+    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @RequestBody DiaryDTO diaryDTO) throws ExecutionException, InterruptedException, IOException {
+        Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
+        Integer couple_id = diary.getDiaryID();
+
+        User me = coupleRepository.findByCoupleID(couple_id).getMe();
+        String myNickname = me.getNickname();
+        String otherNickname = me.getOtherID();
+        Integer coupleID = me.getCouple().getCoupleID();
+        Couple couple = coupleRepository.findByCoupleID(coupleID);
+        Integer myUserID = couple.getMe().getUserID();
+        Integer otherUserID = couple.getOther().getUserID();
+
+        diary.setImageOriName(diaryDTO.getImageOriName());
+        diary.setImageUrl(diaryDTO.getImageUrl());
+        diary.setImageName(diaryDTO.getImageName());
+
+        if (me.getUserID().equals(couple.getMe().getUserID())) {
+            diary.setMyDiary(diary.getMyDiary());
+        } else {
+            diary.setOtherDiary(diary.getMyDiary());
+        }
+
+        diaryRepository.save(diary);
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("nickname1", myNickname);
+        resultMap.put("nickname2", otherNickname);
+        resultMap.put("userID1", myUserID);
+        resultMap.put("userID2", otherUserID);
+        resultMap.put("diaryDTO", diary);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     // 일기 세부 ===========================================================================
