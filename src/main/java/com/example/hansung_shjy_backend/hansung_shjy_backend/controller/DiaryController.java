@@ -281,17 +281,6 @@ public class DiaryController {
             Map<String, Object> entryMap = new HashMap<>();
             entryMap.put("diaryDetail", diary);
 
-            String imageName = diary.getImageName();
-            String imageUrl = diary.getImageUrl();
-            File imageFile = new File("/Users/project/" + imageUrl + imageName);
-
-            if (imageFile.exists()) {
-                try (InputStream imageStream = new FileInputStream(imageFile)) {
-                    byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-                    entryMap.put("image", imageByteArray);
-                }
-            }
-
             resultList.add(entryMap);
         }
 
