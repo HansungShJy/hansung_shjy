@@ -77,9 +77,8 @@ public class DiaryController {
         User me = coupleRepository.findByCoupleID(couple_id).getMe();
         String myNickname = me.getNickname();
         String otherNickname = me.getOtherID();
-        Integer coupleID = me.getCouple().getCoupleID();
-        Couple couple = coupleRepository.findByCoupleID(coupleID);
-        Integer myUserID = couple.getMe().getUserID();
+        Couple couple = coupleRepository.findByCoupleID(couple_id);
+        Integer myUserID = me.getUserID();
         Integer otherUserID = couple.getOther().getUserID();
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -174,12 +173,10 @@ public class DiaryController {
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
         Integer couple_id = diary.getCouple().getCoupleID();
 
-        System.out.println("myDiary::: " + diaryEditDTO.getMyDiary());
         User me = coupleRepository.findByCoupleID(couple_id).getMe();
         String myNickname = me.getNickname();
         String otherNickname = me.getOtherID();
-        Integer coupleID = me.getCouple().getCoupleID();
-        Couple couple = coupleRepository.findByCoupleID(coupleID);
+        Couple couple = coupleRepository.findByCoupleID(couple_id);
         Integer myUserID = couple.getMe().getUserID();
         Integer otherUserID = couple.getOther().getUserID();
 
@@ -221,9 +218,9 @@ public class DiaryController {
 
 
         if (me.getUserID().equals(couple.getMe().getUserID())) {
-            diary.setMyDiary(diary.getMyDiary());
+            diary.setMyDiary(diaryEditDTO.getMyDiary());
         } else {
-            diary.setOtherDiary(diary.getMyDiary());
+            diary.setOtherDiary(diaryEditDTO.getMyDiary());
         }
 
         diaryRepository.save(diary);
