@@ -1,6 +1,5 @@
 package com.example.hansung_shjy_backend.hansung_shjy_backend.controller;
 
-import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.dto.DiaryEditDTO;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Couple;
 import com.example.hansung_shjy_backend.hansung_shjy_backend.entity.Diary;
@@ -171,7 +170,7 @@ public class DiaryController {
 
     // 일기 수정 ===========================================================================
     @PatchMapping("/diary/edit/{diary_id}")  // file, diaryDate, myDiary, otherDiary, userID
-    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @RequestBody DiaryEditDTO diaryEditDTO) throws ExecutionException, InterruptedException, IOException {
+    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @ModelAttribute DiaryEditDTO diaryEditDTO) throws ExecutionException, InterruptedException, IOException {
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
         Integer couple_id = diary.getDiaryID();
 
