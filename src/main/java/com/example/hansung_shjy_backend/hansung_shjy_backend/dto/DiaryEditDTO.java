@@ -12,5 +12,4 @@ public class DiaryEditDTO {
     @JsonProperty("myDiary") private String myDiary;
     @JsonProperty("otherDiary") private String otherDiary;
     @JsonProperty("userID") private Integer userID;
-//    @JsonProperty("file") private MultipartFile file;
 }
