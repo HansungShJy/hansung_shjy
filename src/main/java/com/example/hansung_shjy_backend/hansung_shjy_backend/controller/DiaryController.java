@@ -159,25 +159,25 @@ public class DiaryController {
             } else {
                 existingDiary.setMyDiary(myDiary);
             }
-
-            try {
-                if(!image.isEmpty()) {
-                    File files = new File(absolutePath + path);
-                    if(!files.exists()){
-                        files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
-                    }
-
-                    files = new File(absolutePath + path + "/" + newFileName + fileExtension);
-                    image.transferTo(files);
-
-                    existingDiary.setImageName((newFileName + fileExtension));
-                    existingDiary.setImageUrl(path);
-                    existingDiary.setImageOriName(image.getOriginalFilename());
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//
+//            try {
+//                if(!image.isEmpty()) {
+//                    File files = new File(absolutePath + path);
+//                    if(!files.exists()){
+//                        files.mkdirs(); // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
+//                    }
+//
+//                    files = new File(absolutePath + path + "/" + newFileName + fileExtension);
+//                    image.transferTo(files);
+//
+//                    existingDiary.setImageName((newFileName + fileExtension));
+//                    existingDiary.setImageUrl(path);
+//                    existingDiary.setImageOriName(image.getOriginalFilename());
+//
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             diaryRepository.save(existingDiary);
         }
 
