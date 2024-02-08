@@ -275,12 +275,7 @@ public class DiaryController {
         System.out.println("<diary> couple_id::" + couple_id);
 
         List<Diary> diaryList = diaryService.listDiary(couple_id);
-        Map<String, Object> entryMap = new HashMap<>();
 
-        for (Diary diary : diaryList) {
-            entryMap.put("diaryDetail", diary);
-        }
-
-        return ResponseEntity.ok().body(entryMap);
+        return ResponseEntity.ok().body(diaryList);
     }
 }
