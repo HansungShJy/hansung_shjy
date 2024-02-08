@@ -38,7 +38,6 @@ function EditDiary() {
     const reader = new FileReader();
     const formData = new FormData();
     const uploadFile = fileBlob;
-    console.log(uploadFile);
     formData.append("file", uploadFile);
     setFile(uploadFile);
 
@@ -46,13 +45,41 @@ function EditDiary() {
 
     return new Promise((resolve) => {
       reader.onload = () => {
-        setImageSrc(reader.result);
+        const img = new Image();
+        img.src = reader.result;
 
-        resolve();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 10, 10, width, height);
+
+          const resizedBase64 = canvas.toDataURL("image/jpeg");
+          setImageSrc(resizedBase64);
+          resolve();
+        };
       };
     });
   };
-
   useEffect(() => {
     axios
       .get(`http://localhost:3000/diary/detail/${diary_id}`, {
@@ -64,16 +91,12 @@ function EditDiary() {
         const diaryDetail = res.data.diaryDetail;
         //console.log(JSON.stringify(diaryDetail) + "::first res");
         setUploadImg(res.data.image);
-        //console.log(JSON.stringify(imgfile) + "::1 res");
+
         const { diaryDate, myDiary, otherDiary } = diaryDetail;
 
         setDiaryDate(diaryDate);
         setUserContent(myDiary || "");
         setOtherContent(otherDiary || "");
-        //setImageSrc(`/User/project/images/${imageName}`); //404 에러. 사진을 찾을 수 없음
-        //setImageSrc(imgfile); request header fields too large
-
-        //console.log(JSON.stringify(res.data) + "::nickname plus");
 
         setUserNN(res.data.nickname1);
         setOtherNN(res.data.nickname2);
