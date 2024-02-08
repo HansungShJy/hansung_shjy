@@ -108,8 +108,6 @@ public class DiaryController {
         Diary diary = diaryService.createDiary(couple, diaryDate);
         Diary existingDiary = diaryRepository.findDiaryByCoupleAndAndDiaryDate(couple_id, java.sql.Date.valueOf(diaryDate));
 
-        MultipartFile image = file;
-
         // 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
         LocalDateTime now = LocalDateTime.now();
         int hour = now.getHour();
@@ -117,12 +115,14 @@ public class DiaryController {
         int second = now.getSecond();
         int millis = now.get(ChronoField.MILLI_OF_SECOND);
 
-        String absolutePath = new File("/Users/project/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
-        String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
-        String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
-        String path = "images/"; // 저장될 폴더 경로
-
         if (existingDiary == null) {
+            MultipartFile image = file;
+
+            String absolutePath = new File("/Users/project/").getAbsolutePath() + "/"; // 파일이 저장될 절대 경로
+            String newFileName = "image" + hour + minute + second + millis; // 새로 부여한 이미지명
+            String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1"); // 정규식 이용하여 확장자만 추출
+            String path = "images/"; // 저장될 폴더 경로
+
             if (me.getUserID().equals(couple.getMe().getUserID())) {
                 diary.setMyDiary(myDiary);
             } else {
@@ -159,7 +159,9 @@ public class DiaryController {
             } else {
                 existingDiary.setMyDiary(myDiary);
             }
-//
+
+
+
 //            try {
 //                if(!image.isEmpty()) {
 //                    File files = new File(absolutePath + path);
@@ -181,7 +183,7 @@ public class DiaryController {
             diaryRepository.save(existingDiary);
         }
 
-        if (diary == null || image == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
+        if (diary == null) return new ResponseEntity<>("null exception", HttpStatus.BAD_REQUEST);
         else return new ResponseEntity<>("200 ok", HttpStatus.CREATED);
     }
 
