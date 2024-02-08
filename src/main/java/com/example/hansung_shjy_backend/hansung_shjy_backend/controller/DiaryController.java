@@ -173,6 +173,8 @@ public class DiaryController {
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
         Integer couple_id = diary.getCouple().getCoupleID();
 
+        System.out.println("editdiary:: " + diaryEditDTO.getFile());
+
         User me = coupleRepository.findByCoupleID(couple_id).getMe();
         String myNickname = me.getNickname();
         String otherNickname = me.getOtherID();
