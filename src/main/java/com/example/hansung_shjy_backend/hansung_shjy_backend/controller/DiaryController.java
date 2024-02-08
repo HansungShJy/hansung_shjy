@@ -172,7 +172,7 @@ public class DiaryController {
     @PatchMapping("/diary/edit/{diary_id}")  // file, diaryDate, myDiary, otherDiary, userID
     public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @ModelAttribute DiaryEditDTO diaryEditDTO) throws ExecutionException, InterruptedException, IOException {
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
-        Integer couple_id = diary.getDiaryID();
+        Integer couple_id = diary.getCouple().getCoupleID();
 
         User me = coupleRepository.findByCoupleID(couple_id).getMe();
         String myNickname = me.getNickname();
