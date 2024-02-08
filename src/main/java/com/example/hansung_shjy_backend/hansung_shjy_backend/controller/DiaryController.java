@@ -97,7 +97,7 @@ public class DiaryController {
                                               @RequestParam(value = "myDiary") String myDiary,
                                               @RequestParam(value = "otherDiary") String otherDiary,
                                               @RequestParam(value = "userID") Integer userID,
-                                              @RequestParam(value = "file") MultipartFile file) throws ExecutionException, InterruptedException {
+                                              @RequestParam(value = "file", required = false) MultipartFile file) throws ExecutionException, InterruptedException {
         System.out.println("create Diary couple_id:: " + couple_id);
         System.out.println("create diaryDTO:: " + diaryDate + myDiary + userID + ", imageDTO:: " + file);
 
