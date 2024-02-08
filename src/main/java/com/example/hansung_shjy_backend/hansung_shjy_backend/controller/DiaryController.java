@@ -201,8 +201,20 @@ public class DiaryController {
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
 
+        User me = coupleRepository.findByCoupleID(couple_id).getMe();
+        String myNickname = me.getNickname();
+        String otherNickname = me.getOtherID();
+        Integer coupleID = me.getCouple().getCoupleID();
+        Couple couple = coupleRepository.findByCoupleID(coupleID);
+        Integer myUserID = couple.getMe().getUserID();
+        Integer otherUserID = couple.getOther().getUserID();
+
         map.put("diaryDetail", diary);
         map.put("image", imageByteArray);
+        map.put("nickname1", myNickname);
+        map.put("nickname2", otherNickname);
+        map.put("userID1", myUserID);
+        map.put("userID2", otherUserID);
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
