@@ -37,8 +37,9 @@ function DiaryDetail() {
     console.log(uploadFile);
     formData.append("file", uploadFile);
     setFile(uploadFile);
-
-    reader.readAsDataURL(fileBlob);
+    if (fileBlob) {
+      reader.readAsDataURL(fileBlob);
+    }
 
     return new Promise((resolve) => {
       reader.onload = () => {
@@ -70,24 +71,13 @@ function DiaryDetail() {
   }, [couple_id]);
 
   const DiarySave = (e) => {
-    // const value = [
-    //   {
-    //     diaryDate: diarydate,
-    //     myDiary: usercontent,
-    //     otherDiary: othercontent,
-    //     userID: user_id,
-    //   },
-    // ];
     const formData = new FormData();
     formData.append("file", file);
     formData.append("diaryDate", diarydate);
     formData.append("myDiary", usercontent);
     formData.append("otherDiary", othercontent);
     formData.append("userID", user_id);
-    // const blob = new Blob([JSON.stringify(value)], {
-    //   type: "application/json",
-    // });
-    // formData.append("data", blob);
+
     axios
       .post(`http://localhost:3000/diary/save/${couple_id}`, formData)
       .then((response) => {
@@ -124,7 +114,7 @@ function DiaryDetail() {
           method="post"
           encType="multipart/form-data"
         >
-          {imageSrc && <img src={imageSrc} alt="preview-img" />}
+          {imageSrc && <img height="100px" src={imageSrc} alt="preview-img" />}
           <br />
           <input
             type="file"
