@@ -22,3 +22,19 @@
   font-size: medium;
   font-weight: 700;
 }
+
+.outputImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.image_div {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-left: 6%;
+  margin-right: 4%;
+  justify-content: start;
+}

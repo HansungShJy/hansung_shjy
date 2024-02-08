@@ -42,22 +42,24 @@
 }
 
 .search_ip {
-  width: 15vw;
+  width: 20vw;
   height: 3vh;
   outline: none;
   padding-left: 10px;
   font-family: "Chassam";
   font-size: 17px;
+  text-align: center;
 }
 
-.search_btn {
+.Diaryborder {
   font-family: "Chassam";
-  margin-left: 10px;
-  background-color: rgba(231, 202, 172, 0.8);
-  border: none;
-  width: 6vw;
-  height: 3.8vh;
-  border-radius: 5px;
-  font-size: 17px;
+  border: 2px solid;
+  border-color: rgba(231, 202, 172, 0.8);
+  border-radius: 7px;
+  padding: 12px;
+  margin-left: 130px;
+  margin-right: 130px;
+  margin-top: 20px;
+  text-align: center;
   font-weight: 700;
 }

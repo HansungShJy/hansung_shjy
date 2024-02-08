@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Header from "./Header";
-import "./DiaryDetail.css";
+import "./EditDiary.css";
 import { useCookies } from "react-cookie";
+import { useLocation } from "react-router-dom";
 
-function DiaryDetail() {
+function EditDiary() {
+  const location = useLocation();
+  const diary_id = location.state?.diary_id;
   const [cookies] = useCookies(["couple_id", "user_id", "nickname"]);
   const couple_id = cookies.couple_id;
   const user_id = cookies.user_id;
@@ -19,6 +22,7 @@ function DiaryDetail() {
   const [file, setFile] = useState(null);
   const thumbnailInput = useRef();
   const [imageSrc, setImageSrc] = useState("");
+  const [uploadimg, setUploadImg] = useState(null);
 
   const onDiaryDate = (e) => {
     setDiaryDate(e.target.value);
@@ -51,13 +55,25 @@ function DiaryDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/diary/detail`, {
+      .get(`http://localhost:3000/diary/detail/${diary_id}`, {
         params: {
           couple_id: couple_id,
         },
       })
       .then((res) => {
-        console.log(JSON.stringify(res.data) + "::res");
+        const diaryDetail = res.data.diaryDetail;
+        //console.log(JSON.stringify(diaryDetail) + "::first res");
+        setUploadImg(res.data.image);
+        //console.log(JSON.stringify(imgfile) + "::1 res");
+        const { diaryDate, myDiary, otherDiary } = diaryDetail;
+
+        setDiaryDate(diaryDate);
+        setUserContent(myDiary || "");
+        setOtherContent(otherDiary || "");
+        //setImageSrc(`/User/project/images/${imageName}`); //404 에러. 사진을 찾을 수 없음
+        //setImageSrc(imgfile); request header fields too large
+
+        //console.log(JSON.stringify(res.data) + "::nickname plus");
 
         setUserNN(res.data.nickname1);
         setOtherNN(res.data.nickname2);
@@ -65,31 +81,19 @@ function DiaryDetail() {
         setUserID2(res.data.userID2);
       })
       .catch((err) => {
-        console.log(err + "::err");
+        console.log(err);
       });
-  }, [couple_id]);
+  }, [diary_id, couple_id]);
 
   const DiarySave = (e) => {
-    // const value = [
-    //   {
-    //     diaryDate: diarydate,
-    //     myDiary: usercontent,
-    //     otherDiary: othercontent,
-    //     userID: user_id,
-    //   },
-    // ];
     const formData = new FormData();
     formData.append("file", file);
     formData.append("diaryDate", diarydate);
     formData.append("myDiary", usercontent);
     formData.append("otherDiary", othercontent);
     formData.append("userID", user_id);
-    // const blob = new Blob([JSON.stringify(value)], {
-    //   type: "application/json",
-    // });
-    // formData.append("data", blob);
     axios
-      .post(`http://localhost:3000/diary/save/${couple_id}`, formData)
+      .patch(`http://localhost:3000/diary/edit/${diary_id}`, formData)
       .then((response) => {
         console.log(response);
         document.location.href = "/diary";
@@ -105,7 +109,7 @@ function DiaryDetail() {
 
       <div>
         <button className="diarysave_btn" onClick={(e) => DiarySave(e)}>
-          일기 등록
+          일기 수정
         </button>
         <div className="diary_div">
           <h4 className="diarydate_lb">오늘의 날짜</h4>
@@ -124,7 +128,11 @@ function DiaryDetail() {
           method="post"
           encType="multipart/form-data"
         >
-          {imageSrc && <img src={imageSrc} alt="preview-img" />}
+          {imageSrc ? (
+            <img src={imageSrc} alt="preview-img" />
+          ) : (
+            <img src={`data:image/png;base64,${uploadimg}`} alt="uploadimg" />
+          )}
           <br />
           <input
             type="file"
@@ -149,15 +157,14 @@ function DiaryDetail() {
         <br />
         <textarea
           className="diaryuser_txt"
-          placeholder="일기는 수정할 수 없으니 등록하기 전에 확인 바랍니다."
-          value={usercontent}
+          placeholder={Number(userID2) === user_id ? othercontent : usercontent}
           onChange={onDiaryUser}
         />
 
         <textarea
           disabled
           className="diaryother_txt"
-          placeholder="일기는 수정할 수 없으니 등록하기 전에 확인 바랍니다."
+          placeholder={Number(userID1) === user_id ? othercontent : usercontent}
           value={othercontent}
           onChange={onDiaryOther}
         />
@@ -166,4 +173,4 @@ function DiaryDetail() {
   );
 }
 
-export default DiaryDetail;
+export default EditDiary;
