@@ -183,6 +183,7 @@ public class DiaryController {
         Integer otherUserID = couple.getOther().getUserID();
 
         MultipartFile image = diaryEditDTO.getFile();
+        System.out.println("image:: " + diaryEditDTO.getFile());
 
         LocalDateTime now = LocalDateTime.now();
         int hour = now.getHour();
