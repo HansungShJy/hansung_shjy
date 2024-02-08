@@ -169,11 +169,11 @@ public class DiaryController {
 
     // 일기 수정 ===========================================================================
     @PatchMapping("/diary/edit/{diary_id}")  // file, diaryDate, myDiary, otherDiary, userID
-    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @ModelAttribute DiaryEditDTO diaryEditDTO) throws ExecutionException, InterruptedException, IOException {
+    public ResponseEntity<Object> patchDiary(@PathVariable Integer diary_id, @ModelAttribute DiaryEditDTO diaryEditDTO, @RequestParam(value = "file", required = false) MultipartFile file) throws ExecutionException, InterruptedException, IOException {
         Diary diary = diaryRepository.findDiaryByDiaryID(diary_id);
         Integer couple_id = diary.getCouple().getCoupleID();
 
-        System.out.println("editdiary:: " + diaryEditDTO.getFile());
+        System.out.println("editdiary:: " + file);
 
         User me = coupleRepository.findByCoupleID(couple_id).getMe();
         String myNickname = me.getNickname();
@@ -184,9 +184,9 @@ public class DiaryController {
 
         try {
 
-            if(!diaryEditDTO.getFile().isEmpty()) {
+            if(!file.isEmpty()) {
 
-                MultipartFile image = diaryEditDTO.getFile();
+                MultipartFile image = file;
 
                 LocalDateTime now = LocalDateTime.now();
                 int hour = now.getHour();
