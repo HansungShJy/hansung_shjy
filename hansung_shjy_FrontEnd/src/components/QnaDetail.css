@@ -1,0 +1,53 @@
+.QnaD {
+  margin-top: 60px;
+}
+
+.QnaD_date {
+  color: #938888;
+  margin-left: 250px;
+}
+
+.QnaD_lb {
+  font-weight: bold;
+  margin-left: 250px;
+}
+
+.QnaD_tx {
+  margin-left: 250px;
+  width: 900px;
+  height: 23px;
+  padding: 10px;
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: rgba(154, 191, 223, 0.6);
+  outline: none;
+  margin-top: 10px;
+  font-size: large;
+}
+
+.QnaD_btn {
+  border-radius: 10px;
+  border: 0;
+  margin-left: 565px;
+  border-color: #d9d9d9;
+  width: 230px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  background-color: rgba(175, 205, 245, 0.4);
+}
+
+.countChar {
+  margin-left: 1130px;
+}
+
+.Qnatext {
+  font-size: larger;
+  margin-left: 450px;
+}
+
+.edit_logo {
+  margin-left: 10px;
+  margin-bottom: -6px;
+}

@@ -1,0 +1,193 @@
+.custom-modal {
+  width: 700px;
+  height: 250px;
+  display: none;
+  border: 4px;
+  border-color: grba(96, 159, 213, 0.8);
+  border-width: 10px;
+  border-style: ridge;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  max-width: 80%;
+}
+
+.custom-modal2 {
+  width: 500px;
+  height: 280px;
+  display: none;
+  border: 4px;
+  border-color: grba(96, 159, 213, 0.8);
+  border-width: 10px;
+  border-style: ridge;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  border-radius: 15px;
+  max-width: 80%;
+  overflow: scroll;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 130px;
+  margin-bottom: 40px;
+}
+
+.modal-title2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 198px;
+  margin-bottom: 25px;
+}
+
+.pay-method-lb {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 120px;
+}
+
+.pay-detail-lb {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 155px;
+  padding-left: 15px;
+}
+.pay-money-lb {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 165px;
+  padding-left: 15px;
+}
+
+.pay-method-drop {
+  font-weight: bold;
+  margin-left: 100px;
+  width: 120px;
+  height: 23px;
+  outline: none;
+  border: 0;
+}
+
+.pay-detail-ip,
+.pay-money-ip {
+  border-radius: 6px;
+  margin-left: 60px;
+  border-color: #d9d9d9;
+  width: 150px;
+  height: 25px;
+  font-size: 13px;
+  font-weight: bold;
+  outline: none;
+}
+
+.modal-close {
+  border-radius: 10px;
+  border: 0;
+  margin-left: 100px;
+  margin-top: 10px;
+  border-color: #d9d9d9;
+  width: 230px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  background-color: rgba(175, 205, 245, 0.7);
+}
+
+.modal-close2 {
+  border-radius: 10px;
+  border: 0;
+  margin-left: 100px;
+  margin-top: 10px;
+  border-color: #d9d9d9;
+  width: 150px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  background-color: rgba(175, 205, 245, 0.7);
+}
+
+.edit-modal {
+  border-radius: 10px;
+  border: 0;
+  margin-left: 10px;
+  margin-top: 10px;
+  border-color: #d9d9d9;
+  width: 150px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  background-color: rgba(175, 205, 245, 0.7);
+}
+
+.modal-addevent {
+  border-radius: 10px;
+  border: 0;
+  margin-left: 40px;
+  margin-top: 10px;
+  border-color: #d9d9d9;
+  width: 230px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  background-color: rgba(175, 205, 245, 0.7);
+}
+
+.event-list {
+  margin-left: 40px;
+  margin-top: -20px;
+  font-weight: 400;
+  font-size: medium;
+}
+
+hr {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.editTitle_ip {
+  margin-left: 100px;
+  border-radius: 6px;
+  padding-left: 10px;
+  border-color: #d9d9d9;
+  width: 130px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  outline: none;
+}
+
+.editMoney_ip {
+  margin-left: 20px;
+  border-radius: 6px;
+  padding-left: 10px;
+  border-color: #d9d9d9;
+  width: 130px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  outline: none;
+}
+.event-color {
+  margin-left: 50px;
+  width: 28px;
+  font-weight: bold;
+  margin-top: -20px;
+  border-radius: 3px;
+}
+
+.delete_icon,
+.edit_icon {
+  margin-left: 5px;
+  margin-bottom: -7px;
+}

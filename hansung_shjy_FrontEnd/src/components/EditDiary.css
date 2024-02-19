@@ -1,0 +1,77 @@
+.diarydate_lb {
+  margin-left: 150px;
+  margin-bottom: 0.8rem;
+  font-family: "Chassam";
+}
+
+.diarydate_ip {
+  margin-left: 150px;
+  font-size: 17px;
+  font-family: "Chassam";
+}
+
+.diaryphoto_lb {
+  margin-left: 150px;
+  font-family: "Chassam";
+}
+
+.diary_lb {
+  margin-left: 150px;
+  font-family: "Chassam";
+}
+
+.file_upload {
+  margin-left: 150px;
+}
+
+.diaryuser_txt {
+  margin-left: 150px;
+  width: 530px;
+  height: 280px;
+  background-color: #ececec;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  outline: none;
+  font-family: "Chassam";
+  font-size: 17px;
+}
+
+.diaryother_txt {
+  margin-left: 50px;
+  width: 530px;
+  height: 280px;
+  background-color: #ececec;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  outline: none;
+  font-family: "Chassam";
+  font-size: 17px;
+}
+
+.diarysave_btn {
+  font-family: "Chassam";
+  font-size: 15px;
+  margin-left: 1198px;
+  background-color: rgba(176, 166, 255, 0.8);
+  border: none;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.DiaryD_lb,
+.DiaryD1_lb {
+  font-weight: 600;
+  font-family: "Chassam";
+}
+
+.DiaryD_lb {
+  margin-left: 155px;
+}
+
+.DiaryD1_lb {
+  margin-left: 530px;
+}

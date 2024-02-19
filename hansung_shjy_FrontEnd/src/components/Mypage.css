@@ -1,0 +1,50 @@
+.mypage-ip {
+  width: 280px;
+  height: 40px;
+  font-size: 15px;
+  left: 200px;
+  background-color: rgba(202, 225, 245, 0.3);
+  border-radius: 8px;
+  border: none;
+  margin-top: 30px;
+  margin-left: 100px;
+  padding-left: 15px;
+}
+
+.type-lb1 {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 800px;
+}
+
+.type-lb2 {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 785px;
+}
+
+.btn-edit {
+  font-size: 15px;
+  font-weight: bold;
+  width: 200px;
+  height: 30px;
+  background-color: rgba(175, 205, 245, 0.4);
+  color: black;
+  border: 0px;
+  border-radius: 4px;
+  margin-top: 40px;
+  margin-left: 700px;
+}
+
+.btn-delete {
+  font-size: 15px;
+  font-weight: bold;
+  width: 180px;
+  height: 30px;
+  background-color: rgba(175, 205, 245, 0.4);
+  color: #d32f2f;
+  border: 0px;
+  border-radius: 4px;
+  margin-top: 40px;
+  margin-left: 100px;
+}

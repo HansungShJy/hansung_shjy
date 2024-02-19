@@ -1,0 +1,23 @@
+.QnaTop {
+  margin-top: 60px;
+}
+
+.Qnaborder {
+  border: 2px solid;
+  border-color: rgba(154, 191, 223, 0.6);
+  border-radius: 7px;
+  padding: 12px;
+  margin-left: 130px;
+  margin-right: 130px;
+  margin-top: 20px;
+}
+
+.Qnahr {
+  width: 1150px;
+  margin-left: 135px;
+  margin-top: 20px;
+}
+
+.Qnaindex_lb {
+  font-weight: bold;
+}

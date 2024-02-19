@@ -1,0 +1,230 @@
+.title-lb {
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 250px;
+}
+
+.title-ip {
+  width: 700px;
+  height: 35px;
+  font-size: 18px;
+  background-color: rgba(202, 225, 245, 0.5);
+  border-radius: 25px;
+  border: none;
+  margin-left: 32px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  outline: none;
+  padding-left: 15px;
+}
+
+.date-lb {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 105px;
+}
+
+.trans-lb {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 310px;
+}
+
+.home-lb {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 155px;
+}
+
+.plan-start-ip {
+  width: 120px;
+  height: 25px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-left: 100px;
+  margin-top: 13px;
+}
+
+.plan-end-ip {
+  width: 120px;
+  height: 25px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-left: 16px;
+  margin-top: 10px;
+}
+
+.transfer_box {
+  font-weight: bold;
+  margin-left: 45px;
+  width: 140px;
+  height: 26px;
+  outline: none;
+  border-radius: 10px;
+  border-color: #afcdf5;
+}
+
+.home-ip {
+  width: 280px;
+  height: 35px;
+  font-size: 15px;
+  background-color: rgba(202, 225, 245, 0.5);
+  border-radius: 25px;
+  border: none;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  outline: none;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.homedetail-ip {
+  width: 280px;
+  height: 35px;
+  font-size: 15px;
+  background-color: rgba(202, 225, 245, 0.5);
+  border-radius: 25px;
+  border: none;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  outline: none;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.location-btn {
+  font-size: 11px;
+  width: 70px;
+  height: 25px;
+  margin-left: 20px;
+  margin-top: 20px;
+  background-color: rgba(175, 205, 245, 0.4);
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.day1_plan {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 180px;
+}
+
+.location-lb {
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 310px;
+}
+
+.price-lb {
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 270px;
+}
+
+.time-lb {
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 200px;
+}
+
+.reservation-lb {
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 260px;
+}
+
+.day1-1-lb {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 250px;
+}
+
+.location-ip {
+  width: 250px;
+  height: 35px;
+  font-size: 18px;
+  background-color: rgba(202, 225, 245, 0.5);
+  border-radius: 25px;
+  border: none;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  outline: none;
+  padding-left: 15px;
+}
+
+.price-ip {
+  width: 150px;
+  height: 35px;
+  font-size: 18px;
+  background-color: rgba(202, 225, 245, 0.5);
+  border-radius: 25px;
+  border: none;
+  margin-left: 25px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  outline: none;
+  padding-left: 15px;
+}
+
+.timestart-ip {
+  width: 100px;
+  height: 25px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-top: 13px;
+  margin-left: 50px;
+}
+
+.timeend-ip {
+  width: 100px;
+  height: 25px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-top: 13px;
+  margin-left: 16px;
+}
+
+.plusplan-btn {
+  width: 500px;
+  height: 28px;
+  font-weight: bold;
+  margin-left: 450px;
+  background-color: rgba(175, 205, 245, 0.7);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.plansave-btn {
+  width: 120px;
+  height: 30px;
+  font-weight: bold;
+  margin-left: 570px;
+  margin-top: 15px;
+  background-color: rgba(175, 205, 245, 0.4);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.plancancle-btn {
+  width: 120px;
+  height: 30px;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-top: 5px;
+  background-color: rgba(175, 205, 245, 0.4);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.plan_date_loop {
+  margin-top: -6px;
+  margin-bottom: -20px;
+}

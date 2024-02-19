@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "Chassam";
+  src: url("../fonts/KCC-Chassam.ttf");
+}
+
+@font-face {
+  font-family: "kotra";
+  src: url("../fonts/KOTRA\ HOPE.ttf");
+}
+
+@font-face {
+  font-family: "cafe24";
+  src: url("../fonts/Cafe24Ohsquare-v2.0.ttf");
+}
+
+@font-face {
+  font-family: "binggrae";
+  src: url("../fonts/Binggrae2.ttf");
+}
+
+@font-face {
+  font-family: "binggrae_bold";
+  src: url("../fonts/Binggrae2-Bold.ttf");
+}

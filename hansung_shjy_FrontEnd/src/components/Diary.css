@@ -1,0 +1,40 @@
+.diary_btn {
+  margin-left: 930px;
+  background-color: rgb(253, 165, 200, 0.8);
+  border: none;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: 700;
+  font-family: "Chassam";
+}
+
+.diarylist_btn {
+  font-family: "Chassam";
+  margin-left: 120px;
+  margin-top: 20px;
+  background-color: rgba(176, 166, 255, 0.8);
+  border: none;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: 700;
+}
+
+.outputImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.image_div {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-left: 6%;
+  margin-right: 4%;
+  justify-content: start;
+}
