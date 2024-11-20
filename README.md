@@ -34,4 +34,9 @@ Database : MySQL 8.2.0
 1일 1질문
 마이페이지
 
+##1.
+  - 로그인
+    <img width="1435" alt="스크린샷 2024-11-20 오후 4 15 29" src="https://github.com/user-attachments/assets/163aa8c3-1038-4aec-b1fb-55be1dc19f75">
+
+
 
